@@ -5,7 +5,14 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode2022", "AdventOfCode2022\AdventOfCode2022.csproj", "{E3A40680-219C-4259-83C5-EC08AA8EE4A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCodeTests", "AdventOfCodeTests\AdventOfCodeTests.csproj", "{6B4D6E97-D360-4710-90AF-7C78366F8B24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCodeTests", "AdventOfCodeTests\AdventOfCodeTests.csproj", "{6B4D6E97-D360-4710-90AF-7C78366F8B24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{4F89F9E9-5163-4C6E-A037-ADD9B46B9945}"
+	ProjectSection(SolutionItems) = preProject
+		templates\00.txt = templates\00.txt
+		templates\Day00.cs = templates\Day00.cs
+		templates\Test00.cs = templates\Test00.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
