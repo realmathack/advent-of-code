@@ -1,4 +1,4 @@
-﻿using AdventOfCode2022.Abstractions;
+﻿global using AdventOfCode;
 using System.Diagnostics;
 
 //var day = "01";
@@ -33,7 +33,7 @@ static string GetDay()
 
 static ISolver GetSolver(string day)
 {
-    var type = Type.GetType($"AdventOfCode2022.Solvers.Day{day}");
+    var type = Type.GetType($"AdventOfCode.Y2022.Solvers.Day{day}");
     if (type is null)
     {
         throw new InvalidOperationException($"Type not found for day {day}");

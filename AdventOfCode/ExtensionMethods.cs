@@ -1,6 +1,6 @@
-﻿namespace AdventOfCode2022
+﻿namespace AdventOfCode
 {
-    internal static class ExtensionMethods
+    public static class ExtensionMethods
     {
         public static string[] SplitIntoLines(this string input)
         {

@@ -1,7 +1,4 @@
-using AdventOfCode2022.Abstractions;
-using System.Linq;
-
-namespace AdventOfCode2022.Solvers
+namespace AdventOfCode.Y2022.Solvers
 {
     public class Day04 : SolverWithLines
     {

@@ -1,32 +1,29 @@
-namespace AdventOfCodeTests
+namespace AdventOfCode.Y2022.Tests
 {
-    public class Test02
+    public class Test06
     {
         [Fact]
         public void TestPart1()
         {
-            var subject = new Day02();
+            var subject = new Day06();
             subject.SetInput(_input);
 
             var result = subject.SolvePart1();
 
-            Assert.Equal(15, result);
+            Assert.Equal(7, result);
         }
 
         [Fact]
         public void TestPart2()
         {
-            var subject = new Day02();
+            var subject = new Day06();
             subject.SetInput(_input);
 
             var result = subject.SolvePart2();
 
-            Assert.Equal(12, result);
+            Assert.Equal(19, result);
         }
 
-        private const string _input = @"A Y
-B X
-C Z
-";
+        private const string _input = @"mjqjpqmgbljsphdztnvjfqwrcgsmlb";
     }
 }

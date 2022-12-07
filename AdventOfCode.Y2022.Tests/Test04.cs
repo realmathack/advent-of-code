@@ -1,43 +1,35 @@
-namespace AdventOfCodeTests
+namespace AdventOfCode.Y2022.Tests
 {
-    public class Test01
+    public class Test04
     {
         [Fact]
         public void TestPart1()
         {
-            var subject = new Day01();
+            var subject = new Day04();
             subject.SetInput(_input);
 
             var result = subject.SolvePart1();
 
-            Assert.Equal(24000, result);
+            Assert.Equal(2, result);
         }
 
         [Fact]
         public void TestPart2()
         {
-            var subject = new Day01();
+            var subject = new Day04();
             subject.SetInput(_input);
 
             var result = subject.SolvePart2();
 
-            Assert.Equal(45000, result);
+            Assert.Equal(4, result);
         }
 
-        private const string _input = @"1000
-2000
-3000
-
-4000
-
-5000
-6000
-
-7000
-8000
-9000
-
-10000
+        private const string _input = @"2-4,6-8
+2-3,4-5
+5-7,7-9
+2-8,3-7
+6-6,4-6
+2-6,4-8
 ";
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2022.Abstractions
+﻿namespace AdventOfCode
 {
     public interface ISolver
     {
