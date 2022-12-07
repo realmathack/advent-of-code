@@ -1,26 +1,25 @@
+using AdventOfCode2022.Abstractions;
+
 namespace AdventOfCode2022.Solvers
 {
-    public class Day07 : IBaseSolver
+    public class Day07 : SolverWithLines
     {
-        public string SolvePart1(string input)
+        public override object SolvePart1(string[] input)
         {
-            var data = ParseInput(input);
-            var total = data.Where(x => x <= 100000).Sum();
-            return total.ToString();
+            var sizes = GetFolderSizes(input);
+            return sizes.Where(x => x <= 100000).Sum();
         }
 
-        public string SolvePart2(string input)
+        public override object SolvePart2(string[] input)
         {
-            var data = ParseInput(input);
-            var toDelete = 30000000 - (70000000 - data.Max());
-            var total = data.Where(x => x > toDelete).Min();
-            return total.ToString();
+            var sizes = GetFolderSizes(input);
+            var toDelete = 30000000 - (70000000 - sizes.Max());
+            return sizes.Where(x => x > toDelete).Min();
         }
 
-        private static List<int> ParseInput(string input)
+        private static List<int> GetFolderSizes(string[] lines)
         {
             var result = new Dictionary<string, int>();
-            var lines = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
             var current = string.Empty;
             foreach (var line in lines)
             {
@@ -30,8 +29,7 @@ namespace AdventOfCode2022.Solvers
                 }
                 if (line.StartsWith("$ cd"))
                 {
-                    var dirChange = line[5..];
-                    current = ExecuteDirChange(current, dirChange);
+                    current = ExecuteDirChange(current, line[5..]);
                     if (!result.ContainsKey(current))
                     {
                         result.Add(current, 0);
@@ -39,8 +37,7 @@ namespace AdventOfCode2022.Solvers
                 }
                 else
                 {
-                    var parts = line.Split(' ');
-                    var size = int.Parse(parts[0]);
+                    var size = int.Parse(line.Split(' ')[0]);
                     foreach (var folder in GetCurrentAndParentFolders(current))
                     {
                         result[folder] += size;
@@ -69,8 +66,8 @@ namespace AdventOfCode2022.Solvers
             {
                 return current;
             }
-            var pos = current.LastIndexOf('/', current.Length - 2);
-            return current[..(pos + 1)];
+            var end = current.LastIndexOf('/', current.Length - 2) + 1;
+            return current[..end];
         }
 
         private static IEnumerable<string> GetCurrentAndParentFolders(string current)
@@ -78,8 +75,7 @@ namespace AdventOfCode2022.Solvers
             yield return current;
             while (current != "/")
             {
-                current = RemoveLastFolder(current);
-                yield return current;
+                yield return current = RemoveLastFolder(current);
             }
         }
     }

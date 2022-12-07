@@ -6,20 +6,22 @@
         public void TestPart1()
         {
             var subject = new Day00();
+            subject.SetInput(_input);
 
-            var result = subject.SolvePart1(_input);
+            var result = subject.SolvePart1();
 
-            Assert.Equal("", result);
+            Assert.Equal(null, result);
         }
 
         [Fact]
         public void TestPart2()
         {
             var subject = new Day00();
+            subject.SetInput(_input);
 
-            var result = subject.SolvePart2(_input);
+            var result = subject.SolvePart2();
 
-            Assert.Equal("", result);
+            Assert.Equal(null, result);
         }
 
         private const string _input = @"";

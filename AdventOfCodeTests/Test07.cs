@@ -6,20 +6,22 @@ namespace AdventOfCodeTests
         public void TestPart1()
         {
             var subject = new Day07();
+            subject.SetInput(_input);
 
-            var result = subject.SolvePart1(_input);
+            var result = subject.SolvePart1();
 
-            Assert.Equal("95437", result);
+            Assert.Equal(95437, result);
         }
 
         [Fact]
         public void TestPart2()
         {
             var subject = new Day07();
+            subject.SetInput(_input);
 
-            var result = subject.SolvePart2(_input);
+            var result = subject.SolvePart2();
 
-            Assert.Equal("24933642", result);
+            Assert.Equal(24933642, result);
         }
 
         private const string _input = @"$ cd /

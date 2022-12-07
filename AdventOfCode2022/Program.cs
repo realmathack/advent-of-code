@@ -1,48 +1,46 @@
-﻿using AdventOfCode2022;
+﻿using AdventOfCode2022.Abstractions;
 using System.Diagnostics;
 
-//var dayNumber = "01";
-var dayNumber = GetDayNumber();
-var solver = GetSolver(dayNumber);
-var input = GetInput(dayNumber);
+//var day = "01";
+var day = GetDay();
+var solver = GetSolver(day);
+solver.SetInput(File.ReadAllText(@$"inputs\{day}.txt"));
 
-var stopwatch = new Stopwatch();
-stopwatch.Start();
-Console.WriteLine($"Part1:\t{solver.SolvePart1(input)}");
-Console.WriteLine($"Part2:\t{solver.SolvePart2(input)}");
-stopwatch.Stop();
+var sw = new Stopwatch();
+sw.Start();
+var part1Answer = solver.SolvePart1();
+var part1Time = sw.Elapsed;
+sw.Restart();
+var part2Answer = solver.SolvePart2();
+var part2Time = sw.Elapsed;
+sw.Stop();
 Console.WriteLine();
-Console.WriteLine($"Time:\t{stopwatch.ElapsedMilliseconds}ms");
+Console.WriteLine($"Part1:\t{part1Answer}\t\t\tin {part1Time.TotalMilliseconds}ms");
+Console.WriteLine($"Part2:\t{part2Answer}\t\t\tin {part2Time.TotalMilliseconds}ms");
 Console.WriteLine();
 
-static string GetDayNumber()
+static string GetDay()
 {
-    string? numberInput;
-    int dayNumber;
+    string? input;
+    int day;
     do
     {
-        Console.Write("Type day number: ");
-        numberInput = Console.ReadLine();
-    } while (!int.TryParse(numberInput, out dayNumber) || dayNumber < 1 || dayNumber > 25);
-    return dayNumber.ToString("00");
+        Console.Write("Show solutions for day: ");
+        input = Console.ReadLine();
+    } while (!int.TryParse(input, out day) || day < 1 || day > 25);
+    return day.ToString("D2");
 }
 
-static IBaseSolver GetSolver(string dayNumber)
+static ISolver GetSolver(string day)
 {
-    var typeName = $"AdventOfCode2022.Solvers.Day{dayNumber}";
-    var type = Type.GetType(typeName);
+    var type = Type.GetType($"AdventOfCode2022.Solvers.Day{day}");
     if (type is null)
     {
-        throw new InvalidOperationException($"Type not found: {typeName}");
+        throw new InvalidOperationException($"Type not found for day {day}");
     }
-    if (Activator.CreateInstance(type) is IBaseSolver solver)
+    if (Activator.CreateInstance(type) is ISolver solver)
     {
         return solver;
     }
-    throw new InvalidOperationException($"Type {typeName} is not a IBaseSolver");
-}
-
-static string GetInput(string dayNumber)
-{
-    return File.ReadAllText(@$"inputs\{dayNumber}.txt");
+    throw new InvalidOperationException($"Type {type.FullName} is not a IBaseSolver");
 }

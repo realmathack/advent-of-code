@@ -1,32 +1,28 @@
-﻿namespace AdventOfCode2022.Solvers
+﻿using AdventOfCode2022.Abstractions;
+
+namespace AdventOfCode2022.Solvers
 {
-    public class Day01 : IBaseSolver
+    public class Day01 : SolverWithSections
     {
-        public string SolvePart1(string input)
+        public override object SolvePart1(string[] input)
         {
-            var values = ParseInput(input);
-            var highest = values.Max();
-            return highest.ToString();
+            return CalculateGroupTotals(input).Max();
         }
 
-        public string SolvePart2(string input)
+        public override object SolvePart2(string[] input)
         {
-            var values = ParseInput(input);
-            var top3 = values.OrderByDescending(x => x).Take(3).Sum();
-            return top3.ToString();
+            return CalculateGroupTotals(input).OrderByDescending(x => x).Take(3).Sum();
         }
 
-        private static List<int> ParseInput(string input)
+        private static List<int> CalculateGroupTotals(string[] sections)
         {
-            var result = new List<int>();
-            var blocks = input.Split(Environment.NewLine + Environment.NewLine);
-            foreach (var block in blocks)
+            var totals = new List<int>(sections.Length);
+            foreach (var section in sections)
             {
-                var lines = block.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-                var total = lines.Sum(line => int.Parse(line));
-                result.Add(total);
+                var total = section.SplitIntoLines().Sum(int.Parse);
+                totals.Add(total);
             }
-            return result;
+            return totals;
         }
     }
 }

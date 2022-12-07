@@ -1,28 +1,24 @@
-using System.Data;
+using AdventOfCode2022.Abstractions;
 
 namespace AdventOfCode2022.Solvers
 {
-    public class Day06 : IBaseSolver
+    public class Day06 : SolverWithText
     {
-        public string SolvePart1(string input)
+        public override object SolvePart1(string input)
         {
-            var data = input.Trim();
-            var result = GetMarkerPosition(data, 4);
-            return result.ToString();
+            return GetMarkerPosition(input, 4);
         }
 
-        public string SolvePart2(string input)
+        public override object SolvePart2(string input)
         {
-            var data = input.Trim();
-            var result = GetMarkerPosition(data, 14);
-            return result.ToString();
+            return GetMarkerPosition(input, 14);
         }
 
-        private static int GetMarkerPosition(string data, int charCount)
+        private static int GetMarkerPosition(string input, int charCount)
         {
-            for (int i = 0; i < data.Length - charCount; i++)
+            for (int i = 0; i < input.Length - charCount; i++)
             {
-                var checkSet = new HashSet<char>(data.Substring(i, charCount));
+                var checkSet = new HashSet<char>(input.Substring(i, charCount));
                 if (checkSet.Count == charCount)
                 {
                     return i + charCount;

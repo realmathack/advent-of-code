@@ -1,28 +1,30 @@
+using AdventOfCode2022.Abstractions;
+
 namespace AdventOfCode2022.Solvers
 {
-    public class Day03 : IBaseSolver
+    public class Day03 : SolverWithLines
     {
-        public string SolvePart1(string input)
+        public override object SolvePart1(string[] input)
         {
-            var rucksacks = ParseIntoCompartments(input);
+            var rucksacks = GetRucksacks(input);
             var total = 0;
             foreach (var rucksack in rucksacks)
             {
-                foreach (var item in rucksack.Item1)
+                foreach (var item in rucksack.first)
                 {
-                    if (rucksack.Item2.Contains(item))
+                    if (rucksack.second.Contains(item))
                     {
                         total += GetPriority(item);
                         break;
                     }
                 }
             }
-            return total.ToString();
+            return total;
         }
 
-        public string SolvePart2(string input)
+        public override object SolvePart2(string[] input)
         {
-            var groups = ParseIntoGroups(input);
+            var groups = GetGroups(input);
             var total = 0;
             foreach (var group in groups)
             {
@@ -35,38 +37,34 @@ namespace AdventOfCode2022.Solvers
                     }
                 }
             }
-            return total.ToString();
+            return total;
         }
 
-        private static List<(string, string)> ParseIntoCompartments(string input)
+        private static List<(string first, string second)> GetRucksacks(string[] lines)
         {
-            var result = new List<(string, string)>();
-            var lines = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            var result = new List<(string, string)>(lines.Length);
             foreach (var line in lines)
             {
-                var compartmentLength = line.Length / 2;
-                var compartment1 = line.Substring(0, compartmentLength);
-                var compartment2 = line.Substring(compartmentLength, compartmentLength);
-                result.Add((compartment1, compartment2));
+                var length = line.Length / 2;
+                result.Add((line[..length], line[length..]));
             }
             return result;
         }
 
-        private static List<List<string>> ParseIntoGroups(string input)
+        private static List<string[]> GetGroups(string[] lines)
         {
-            var result = new List<List<string>>();
-            var lines = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
             var groupCount = lines.Length / 3;
+            var result = new List<string[]>(groupCount);
             for (int i = 0; i < groupCount; i++)
             {
-                result.Add(new List<string>(lines.Skip(i * 3).Take(3)));
+                result.Add(lines.Skip(i * 3).Take(3).ToArray());
             }
             return result;
         }
 
         private static int GetPriority(char item)
         {
-            return (item > 'Z') ? item - 96 : item - 38;
+            return (item > 'Z') ? item - 'a' + 1 : item - 'A' + 27;
         }
     }
 }

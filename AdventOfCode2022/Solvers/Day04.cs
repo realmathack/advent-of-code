@@ -1,75 +1,47 @@
+using AdventOfCode2022.Abstractions;
+using System.Linq;
+
 namespace AdventOfCode2022.Solvers
 {
-    public class Day04 : IBaseSolver
+    public class Day04 : SolverWithLines
     {
-        public string SolvePart1(string input)
+        public override object SolvePart1(string[] input)
         {
-            var pairs = ParseInput(input);
-            var total = 0;
-            foreach (var pair in pairs)
-            {
-                if (pair.Item1.Count > pair.Item2.Count)
-                {
-                    if (DoesPairContainsOtherPair(pair.Item1, pair.Item2))
-                    {
-                        total++;
-                    }
-                }
-                else
-                {
-                    if (DoesPairContainsOtherPair(pair.Item2, pair.Item1))
-                    {
-                        total++;
-                    }
-                }
-            }
-            return total.ToString();
+            return GetPairs(input).Count(pair => FullOverlap(pair.pair1, pair.pair2));
         }
 
-        public string SolvePart2(string input)
+        public override object SolvePart2(string[] input)
         {
-            var pairs = ParseInput(input);
-            var total = 0;
-            foreach (var pair in pairs)
-            {
-                if (DoesPairOverlapWithOtherPair(pair.Item1, pair.Item2))
-                {
-                    total++;
-                }
-            }
-            return total.ToString();
+            return GetPairs(input).Count(pair => AnyOverlap(pair.pair1, pair.pair2));
         }
 
-        private static List<(List<int>, List<int>)> ParseInput(string input)
+        private static List<(Pair pair1, Pair pair2)> GetPairs(string[] lines)
         {
-            var result = new List<(List<int>, List<int>)>();
-            var lines = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            var result = new List<(Pair, Pair)>();
             foreach (var line in lines)
             {
                 var assignments = line.Split(',');
-                var assignment1 = GetSections(assignments[0]);
-                var assignment2 = GetSections(assignments[1]);
-                result.Add((assignment1, assignment2));
+                result.Add((GetSections(assignments[0]), GetSections(assignments[1])));
             }
             return result;
         }
 
-        private static List<int> GetSections(string sectionBounds)
+        private static Pair GetSections(string assignment)
         {
-            var bounds = sectionBounds.Split('-');
-            var lower = int.Parse(bounds[0]);
-            var upper = int.Parse(bounds[1]);
-            return Enumerable.Range(lower, upper - lower + 1).ToList();
+            var bounds = assignment.Split('-');
+            return new(int.Parse(bounds[0]), int.Parse(bounds[1]));
         }
 
-        private static bool DoesPairContainsOtherPair(List<int> biggerPair, List<int> smallerPair)
+        private static bool FullOverlap(Pair pair1, Pair pair2)
         {
-            return biggerPair.Contains(smallerPair.Min()) && biggerPair.Contains(smallerPair.Max());
+            return (pair1.Lower >= pair2.Lower && pair2.Upper >= pair1.Upper) || (pair2.Lower >= pair1.Lower && pair1.Upper >= pair2.Upper);
         }
 
-        private static bool DoesPairOverlapWithOtherPair(List<int> firstPair, List<int> secondPair)
+        private static bool AnyOverlap(Pair pair1, Pair pair2)
         {
-            return firstPair.Intersect(secondPair).Any();
+            return pair1.Lower <= pair2.Upper && pair2.Lower <= pair1.Upper;
         }
+
+        private record struct Pair(int Lower, int Upper);
     }
 }

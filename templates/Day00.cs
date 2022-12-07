@@ -1,15 +1,17 @@
-﻿namespace AdventOfCode2022.Solvers
+﻿using AdventOfCode2022.Abstractions;
+
+namespace AdventOfCode2022.Solvers
 {
-    public class Day00 : IBaseSolver
+    public class Day00 : SolverWithLines
     {
-        public string SolvePart1(string input)
+        public override object SolvePart1(string[] input)
         {
-            return string.Empty;
+            return null;
         }
 
-        public string SolvePart2(string input)
+        public override object SolvePart2(string[] input)
         {
-            return string.Empty;
+            return null;
         }
     }
 }

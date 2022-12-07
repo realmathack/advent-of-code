@@ -1,109 +1,82 @@
-using System.Runtime.InteropServices;
+using AdventOfCode2022.Abstractions;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode2022.Solvers
 {
-    public class Day05 : IBaseSolver
+    public class Day05 : SolverWithSections
     {
-        public string SolvePart1(string input)
+        public override object SolvePart1(string[] input)
         {
-            var data = ParseInput(input);
-            foreach (var move in data.Moves)
+            var stacks = GetStacks(input[0]);
+            var moves = GetMoves(input[1]);
+            foreach (var move in moves)
             {
                 for (int i = 0; i < move.Count; i++)
                 {
-                    var crate = data.Stacks[move.SourceStack - 1].Pop();
-                    data.Stacks[move.DestinationStack - 1].Push(crate);
+                    var crate = stacks[move.Source - 1].Pop();
+                    stacks[move.Destination - 1].Push(crate);
                 }
             }
-            var result = data.Stacks.Select(s => s.Peek()).ToList();
+            var result = stacks.Select(s => s.Peek()).ToList();
             return string.Join("", result);
         }
 
-        public string SolvePart2(string input)
+        public override object SolvePart2(string[] input)
         {
-            var data = ParseInput(input);
+            var stacks = GetStacks(input[0]);
+            var moves = GetMoves(input[1]);
             var moverStack = new Stack<char>();
-            foreach (var move in data.Moves)
+            foreach (var move in moves)
             {
                 for (int i = 0; i < move.Count; i++)
                 {
-                    var crate = data.Stacks[move.SourceStack - 1].Pop();
+                    var crate = stacks[move.Source - 1].Pop();
                     moverStack.Push(crate);
                 }
                 for (int i = 0; i < move.Count; i++)
                 {
                     var crate = moverStack.Pop();
-                    data.Stacks[move.DestinationStack - 1].Push(crate);
+                    stacks[move.Destination - 1].Push(crate);
                 }
             }
-            var result = data.Stacks.Select(s => s.Peek()).ToList();
+            var result = stacks.Select(s => s.Peek()).ToList();
             return string.Join("", result);
         }
 
-        private static StacksAndMoves ParseInput(string input)
+        private static Stack<char>[] GetStacks(string input)
         {
-            var parts = input.Split(Environment.NewLine + Environment.NewLine);
-            // stacks
-            var stacks = parts[0].Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-            var identifiers = stacks.Last().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var stackCount = identifiers.Length;
-            var result = new StacksAndMoves(stackCount);
+            var stacks = input.SplitIntoLines();
+            var stackCount = (stacks[^1].Length + 1) / 4;
+            var result = new Stack<char>[stackCount];
+            for (int i = 0; i < stackCount; i++)
+            {
+                result[i] = new Stack<char>(stacks.Length);
+            }
             for (int i = stacks.Length - 2; i >= 0; i--)
             {
-                for (int stack = 0; stack < stackCount; stack++)
+                for (int j = 0; j < stackCount; j++)
                 {
-                    var crate = stacks[i].Substring(stack * 4, 3);
-                    if (crate[1] != ' ')
+                    var crate = stacks[i][j * 4 + 1];
+                    if (crate != ' ')
                     {
-                        result.Stacks[stack].Push(crate[1]);
+                        result[j].Push(crate);
                     }
                 }
-            }
-            // moves
-            var moves = parts[1].Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-            var regex = new Regex(@"move (?<Count>\d+) from (?<Source>\d+) to (?<Destination>\d+)");
-            foreach (var line in moves)
-            {
-                var match = regex.Match(line);
-                if (!match.Success)
-                {
-                    throw new InvalidOperationException($"Unknown move: '{line}'");
-                }
-                var move = new Move(int.Parse(match.Groups["Count"].Value), int.Parse(match.Groups["Source"].Value), int.Parse(match.Groups["Destination"].Value));
-                result.Moves.Add(move);
             }
             return result;
         }
 
-        private class StacksAndMoves
+        private static List<Move> GetMoves(string moves)
         {
-            public StacksAndMoves(int stackCount)
+            var result = new List<Move>();
+            foreach (var line in moves.SplitIntoLines())
             {
-                Stacks = new Stack<char>[stackCount];
-                for (int i = 0; i < stackCount; i++)
-                {
-                    Stacks[i] = new Stack<char>();
-                }
-                Moves = new List<Move>();
+                var parts = line.Split(' ');
+                result.Add(new Move(int.Parse(parts[1]), int.Parse(parts[3]), int.Parse(parts[5])));
             }
-
-            public Stack<char>[] Stacks { get; set; }
-            public List<Move> Moves { get; set; }
+            return result;
         }
 
-        private class Move
-        {
-            public Move(int count, int sourceStack, int destinationStack)
-            {
-                Count = count;
-                SourceStack = sourceStack;
-                DestinationStack = destinationStack;
-            }
-
-            public int Count { get; set; }
-            public int SourceStack { get; set; }
-            public int DestinationStack { get; set; }
-        }
+        private record struct Move(int Count, int Source, int Destination);
     }
 }

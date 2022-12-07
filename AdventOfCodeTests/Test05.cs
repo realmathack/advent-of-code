@@ -6,8 +6,9 @@ namespace AdventOfCodeTests
         public void TestPart1()
         {
             var subject = new Day05();
+            subject.SetInput(_input);
 
-            var result = subject.SolvePart1(_input);
+            var result = subject.SolvePart1();
 
             Assert.Equal("CMZ", result);
         }
@@ -16,8 +17,9 @@ namespace AdventOfCodeTests
         public void TestPart2()
         {
             var subject = new Day05();
+            subject.SetInput(_input);
 
-            var result = subject.SolvePart2(_input);
+            var result = subject.SolvePart2();
 
             Assert.Equal("MCD", result);
         }
