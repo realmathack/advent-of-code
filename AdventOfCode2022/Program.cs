@@ -13,6 +13,7 @@ Console.WriteLine($"Part2:\t{solver.SolvePart2(input)}");
 stopwatch.Stop();
 Console.WriteLine();
 Console.WriteLine($"Time:\t{stopwatch.ElapsedMilliseconds}ms");
+Console.WriteLine();
 
 static string GetDayNumber()
 {
