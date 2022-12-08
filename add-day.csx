@@ -1,26 +1,29 @@
-static string GetDayNumber()
+static string Getday()
 {
     string? numberInput;
-    int dayNumber;
+    int day;
     do
     {
         Console.Write("Type day number: ");
         numberInput = Console.ReadLine();
-    } while (!int.TryParse(numberInput, out dayNumber) || dayNumber < 1 || dayNumber > 25);
-    return dayNumber.ToString("00");
+    } while (!int.TryParse(numberInput, out day) || day < 1 || day > 25);
+    return day.ToString("00");
 }
 
-var dayNumber = GetDayNumber();
-File.Copy(@"templates\00.txt", @$"AdventOfCode.Y2022\inputs\{dayNumber}.txt");
+var year = Args[0];
+var day = Getday();
+File.Copy(@"templates\00.txt", @$"AdventOfCode.Y{year}\inputs\{day}.txt");
 
 var testClass = File.ReadAllText(@"templates\Test00.cs");
-testClass = testClass.Replace("00", dayNumber);
-File.WriteAllText(@$"AdventOfCode.Y2022.Tests\Test{dayNumber}.cs", testClass);
+testClass = testClass.Replace("2000", year);
+testClass = testClass.Replace("00", day);
+File.WriteAllText(@$"AdventOfCode.Y{year}.Tests\Test{day}.cs", testClass);
 
 var dayClass = File.ReadAllText(@"templates\Day00.cs");
-dayClass = dayClass.Replace("00", dayNumber);
-File.WriteAllText(@$"AdventOfCode.Y2022\Solvers\Day{dayNumber}.cs", dayClass);
+dayClass = dayClass.Replace("2000", year);
+dayClass = dayClass.Replace("00", day);
+File.WriteAllText(@$"AdventOfCode.Y{year}\Solvers\Day{day}.cs", dayClass);
 
-var projectFile = File.ReadAllText(@"AdventOfCode.Y2022\AdventOfCode.Y2022.csproj");
-projectFile = projectFile.Insert(projectFile.IndexOf("</ItemGroup>"), $"  <None Update=\"inputs\\{dayNumber}.txt\">\r\n      <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n    </None>\r\n  ");
-File.WriteAllText(@"AdventOfCode.Y2022\AdventOfCode.Y2022.csproj", projectFile);
+var projectFile = File.ReadAllText(@$"AdventOfCode.Y{year}\AdventOfCode.Y{year}.csproj");
+projectFile = projectFile.Insert(projectFile.IndexOf("</ItemGroup>"), $"  <None Update=\"inputs\\{day}.txt\">\r\n      <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n    </None>\r\n  ");
+File.WriteAllText(@$"AdventOfCode.Y{year}\AdventOfCode.Y{year}.csproj", projectFile);
