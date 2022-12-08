@@ -10,8 +10,8 @@ namespace AdventOfCode.Y2022.Solvers
             {
                 for (int col = 1; col < grid[row].Length - 1; col++)
                 {
-                    if (IsVisible(FromLeft(grid, row, col)) || IsVisible(FromRight(grid, row, col)) ||
-                        IsVisible(FromTop(grid, row, col)) || IsVisible(FromBottom(grid, row, col)))
+                    if (IsVisibleFromLeft(grid, row, col) || IsVisibleFromRight(grid, row, col) ||
+                        IsVisibleFromTop(grid, row, col) || IsVisibleFromBottom(grid, row, col))
                     {
                         count++;
                     }
@@ -28,8 +28,8 @@ namespace AdventOfCode.Y2022.Solvers
             {
                 for (int col = 1; col < grid[row].Length - 1; col++)
                 {
-                    var currentView = CalculateDistance(FromLeft(grid, row, col)) * CalculateDistance(FromRight(grid, row, col)) *
-                        CalculateDistance(FromTop(grid, row, col)) * CalculateDistance(FromBottom(grid, row, col));
+                    var currentView = CalculateDistanceFromLeft(grid, row, col) * CalculateDistanceFromRight(grid, row, col) *
+                        CalculateDistanceFromTop(grid, row, col) * CalculateDistanceFromBottom(grid, row, col);
                     if (currentView > biggestView)
                     {
                         biggestView = currentView;
@@ -53,57 +53,100 @@ namespace AdventOfCode.Y2022.Solvers
             return result;
         }
 
-        private static bool IsVisible(int[] viewLine)
+        private static bool IsVisibleFromLeft(int[][] grid, int row, int col)
         {
-            return viewLine[^1] == viewLine.Max() && viewLine.Count(x => x == viewLine[^1]) == 1;
-        }
-
-        private static int CalculateDistance(int[] viewLine)
-        {
-            if (viewLine.Length == 1)
+            for (int i = col - 1; i >= 0; i--)
             {
-                return 0;
-            }
-            for (int i = viewLine.Length - 2; i >= 0; i--)
-            {
-                if (viewLine[i] >= viewLine[^1])
+                if (grid[row][i] >= grid[row][col])
                 {
-                    return viewLine.Length - i - 1;
+                    return false;
                 }
             }
-            return viewLine.Length - 1;
+            return true;
         }
 
-        private static int[] FromLeft(int[][] grid, int row, int col)
+        private static bool IsVisibleFromRight(int[][] grid, int row, int col)
         {
-            return grid[row][0..(col + 1)];
-        }
-
-        private static int[] FromRight(int[][] grid, int row, int col)
-        {
-            var result = grid[row][col..^0];
-            Array.Reverse(result);
-            return result;
-        }
-
-        private static int[] FromTop(int[][] grid, int row, int col)
-        {
-            var result = new int[row + 1];
-            for (int i = 0; i < result.Length; i++)
+            for (int i = col + 1; i < grid[row].Length; i++)
             {
-                result[i] = grid[i][col];
+                if (grid[row][i] >= grid[row][col])
+                {
+                    return false;
+                }
             }
-            return result;
+            return true;
         }
 
-        private static int[] FromBottom(int[][] grid, int row, int col)
+        private static bool IsVisibleFromTop(int[][] grid, int row, int col)
         {
-            var result = new int[grid.Length - row];
-            for (int i = 0; i < result.Length; i++)
+            for (int i = row - 1; i >= 0; i--)
             {
-                result[i] = grid[^(i + 1)][col];
+                if (grid[i][col] >= grid[row][col])
+                {
+                    return false;
+                }
             }
-            return result;
+            return true;
+        }
+
+        private static bool IsVisibleFromBottom(int[][] grid, int row, int col)
+        {
+            for (int i = row + 1; i < grid.Length; i++)
+            {
+                if (grid[i][col] >= grid[row][col])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static int CalculateDistanceFromLeft(int[][] grid, int row, int col)
+        {
+            for (int i = col - 1; i >= 0; i--)
+            {
+                if (grid[row][i] >= grid[row][col])
+                {
+                    return col - i;
+                }
+            }
+            return col;
+        }
+
+        private static int CalculateDistanceFromRight(int[][] grid, int row, int col)
+        {
+            for (int i = col + 1; i < grid[row].Length; i++)
+            {
+                if (grid[row][i] >= grid[row][col])
+                {
+                    return i - col;
+                }
+            }
+            return grid[row].Length - 1 - col;
+        }
+
+        private static int CalculateDistanceFromTop(int[][] grid, int row, int col)
+        {
+            for (int i = row - 1; i >= 0; i--)
+            {
+                if (grid[i][col] >= grid[row][col])
+                {
+                    return row - i;
+                }
+            }
+            return row;
+        }
+
+        private static int CalculateDistanceFromBottom(int[][] grid, int row, int col)
+        {
+            for (int i = row + 1; i < grid.Length; i++)
+            {
+                if (grid[i][col] >= grid[row][col])
+                {
+                    return i - row;
+                }
+            }
+            return grid.Length - 1 - row;
         }
     }
 }
