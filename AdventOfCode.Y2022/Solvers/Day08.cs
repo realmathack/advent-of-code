@@ -4,56 +4,53 @@ namespace AdventOfCode.Y2022.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var dimensions = GetDimensions(input);
-            var grid = ToGrid(input, dimensions);
-            var results = new HashSet<int>();
-            for (int i = 0; i < grid.Length; i++)
+            var grid = ToGrid(input);
+            var count = (grid.Length + grid[0].Length - 2) * 2;
+            for (int row = 1; row < grid.Length - 1; row++)
             {
-                if (IsEdge(i, dimensions) ||
-                    IsVisible(FromLeft(i, grid, dimensions)) ||
-                    IsVisible(FromRight(i, grid, dimensions)) ||
-                    IsVisible(FromTop(i, grid, dimensions)) ||
-                    IsVisible(FromBottom(i, grid, dimensions)))
+                for (int col = 1; col < grid[row].Length - 1; col++)
                 {
-                    results.Add(i);
-                    continue;
+                    if (IsVisible(FromLeft(grid, row, col)) || IsVisible(FromRight(grid, row, col)) ||
+                        IsVisible(FromTop(grid, row, col)) || IsVisible(FromBottom(grid, row, col)))
+                    {
+                        count++;
+                    }
                 }
             }
-            return results.Count;
+            return count;
         }
 
         public override object SolvePart2(string[] input)
         {
-            var dimensions = GetDimensions(input);
-            var grid = ToGrid(input, dimensions);
-            var result = 0;
-            for (int i = 0; i < grid.Length; i++)
+            var grid = ToGrid(input);
+            var biggestView = 0;
+            for (int row = 1; row < grid.Length - 1; row++)
             {
-                var currentView = CalculateDistance(FromLeft(i, grid, dimensions)) * CalculateDistance(FromRight(i, grid, dimensions)) *
-                    CalculateDistance(FromTop(i, grid, dimensions)) * CalculateDistance(FromBottom(i, grid, dimensions));
-                if (currentView > result)
+                for (int col = 1; col < grid[row].Length - 1; col++)
                 {
-                    result = currentView;
+                    var currentView = CalculateDistance(FromLeft(grid, row, col)) * CalculateDistance(FromRight(grid, row, col)) *
+                        CalculateDistance(FromTop(grid, row, col)) * CalculateDistance(FromBottom(grid, row, col));
+                    if (currentView > biggestView)
+                    {
+                        biggestView = currentView;
+                    }
+                }
+            }
+            return biggestView;
+        }
+
+        private static int[][] ToGrid(string[] lines)
+        {
+            var result = new int[lines.Length][];
+            for (int row = 0; row < lines.Length; row++)
+            {
+                result[row] = new int[lines[row].Length];
+                for (int col = 0; col < lines[row].Length; col++)
+                {
+                    result[row][col] = lines[row][col] - '0';
                 }
             }
             return result;
-        }
-
-        private static Dimensions GetDimensions(string[] lines) => new(lines.Length, lines[0].Length);
-
-        private static int[] ToGrid(string[] lines, Dimensions dimensions)
-        {
-            var result = new int[dimensions.Height * dimensions.Width];
-            for (int i = 0; i < result.Length; i++)
-            {
-                result[i] = lines[i / dimensions.Width][i % dimensions.Width] - '0';
-            }
-            return result;
-        }
-
-        private static bool IsEdge(int tree, Dimensions dimensions)
-        {
-            return (tree % dimensions.Width == 0 || tree / dimensions.Width == 0 || (tree + 1) % dimensions.Width == 0 || (tree + 1) / dimensions.Width == 0);
         }
 
         private static bool IsVisible(int[] viewLine)
@@ -77,38 +74,36 @@ namespace AdventOfCode.Y2022.Solvers
             return viewLine.Length - 1;
         }
 
-        private static int[] FromLeft(int tree, int[] grid, Dimensions dimensions)
+        private static int[] FromLeft(int[][] grid, int row, int col)
         {
-            var edge = tree - tree % dimensions.Width;
-            return grid[edge..(tree + 1)];
+            return grid[row][0..(col + 1)];
         }
 
-        private static int[] FromRight(int tree, int[] grid, Dimensions dimensions)
+        private static int[] FromRight(int[][] grid, int row, int col)
         {
-            var nextRow = (tree / dimensions.Width + 1) * dimensions.Width;
-            return grid[tree..nextRow].Reverse().ToArray();
+            var result = grid[row][col..^0];
+            Array.Reverse(result);
+            return result;
         }
 
-        private static int[] FromTop(int tree, int[] grid, Dimensions dimensions)
+        private static int[] FromTop(int[][] grid, int row, int col)
         {
-            var result = new int[tree / dimensions.Width + 1];
+            var result = new int[row + 1];
             for (int i = 0; i < result.Length; i++)
             {
-                result[i] = grid[i * dimensions.Width + tree % dimensions.Width];
+                result[i] = grid[i][col];
             }
             return result;
         }
 
-        private static int[] FromBottom(int tree, int[] grid, Dimensions dimensions)
+        private static int[] FromBottom(int[][] grid, int row, int col)
         {
-            var result = new int[dimensions.Height - tree / dimensions.Width];
+            var result = new int[grid.Length - row];
             for (int i = 0; i < result.Length; i++)
             {
-                result[i] = grid[(dimensions.Height - i - 1) * dimensions.Width + tree % dimensions.Width];
+                result[i] = grid[^(i + 1)][col];
             }
             return result;
         }
-
-        private record struct Dimensions(int Height, int Width);
     }
 }
