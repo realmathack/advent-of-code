@@ -1,20 +1,14 @@
 namespace AdventOfCode.Y2015.Tests
 {
-    public class Test01
+    public class Test03
     {
         [Theory]
-        [InlineData("(())", 0)]
-        [InlineData("()()", 0)]
-        [InlineData("(((", 3)]
-        [InlineData("(()(()(", 3)]
-        [InlineData("))(((((", 3)]
-        [InlineData("())", -1)]
-        [InlineData("))(", -1)]
-        [InlineData(")))", -3)]
-        [InlineData(")())())", -3)]
+        [InlineData(">", 2)]
+        [InlineData("^>v<", 4)]
+        [InlineData("^v^v^v^v^v", 2)]
         public void TestPart1(string input, int expected)
         {
-            var subject = new Day01();
+            var subject = new Day03();
             subject.SetInput(input);
 
             var result = subject.SolvePart1();
@@ -23,11 +17,12 @@ namespace AdventOfCode.Y2015.Tests
         }
 
         [Theory]
-        [InlineData(")", 1)]
-        [InlineData("()())", 5)]
+        [InlineData("^v", 3)]
+        [InlineData("^>v<", 3)]
+        [InlineData("^v^v^v^v^v", 11)]
         public void TestPart2(string input, int expected)
         {
-            var subject = new Day01();
+            var subject = new Day03();
             subject.SetInput(input);
 
             var result = subject.SolvePart2();
