@@ -25,9 +25,9 @@ namespace AdventOfCode.Y2015.Solvers
 
         private static bool HasDoubleLetter(string line)
         {
-            for (int i = 1; i < line.Length; i++)
+            for (int i = 0; i < line.Length - 1; i++)
             {
-                if (line[i - 1] == line[i])
+                if (line[i] == line[i + 1])
                 {
                     return true;
                 }
