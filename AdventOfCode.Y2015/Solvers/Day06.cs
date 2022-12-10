@@ -70,7 +70,7 @@ namespace AdventOfCode.Y2015.Solvers
 
         private static List<Move> ToMoves(string[] lines)
         {
-            var result = new List<Move>();
+            var result = new List<Move>(lines.Length);
             var regex = new Regex(@"(.+) (\d+),(\d+) through (\d+),(\d+)");
             foreach (var line in lines)
             {

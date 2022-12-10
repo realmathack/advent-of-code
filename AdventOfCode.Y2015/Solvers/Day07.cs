@@ -17,7 +17,7 @@ namespace AdventOfCode.Y2015.Solvers
 
         private static Dictionary<string, Instruction> ToInstructions(string[] lines)
         {
-            var instructions = new Dictionary<string, Instruction>();
+            var instructions = new Dictionary<string, Instruction>(lines.Length);
             foreach (var line in lines)
             {
                 var parts = line.Split(' ');
