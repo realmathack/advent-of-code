@@ -40,7 +40,5 @@ namespace AdventOfCode.Y2015.Solvers
                 _ => throw new InvalidOperationException($"Unknown direction: {direction}")
             };
         }
-
-        public record struct Coords(int X, int Y);
     }
 }

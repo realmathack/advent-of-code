@@ -141,7 +141,5 @@ namespace AdventOfCode.Y2022.Solvers
             }
             return (grid, start.Value, end.Value);
         }
-
-        private record struct Coords(int X, int Y);
     }
 }

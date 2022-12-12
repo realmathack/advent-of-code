@@ -34,7 +34,7 @@ namespace AdventOfCode.Y2022.Solvers
                     };
                     for (int i = 1; i < segmentCount; i++)
                     {
-                        if (!IsSegmentConnected(segments[i - 1], segments[i]))
+                        if (!segments[i - 1].IsNeighbor(segments[i]))
                         {
                             var offsetX = CalculateOffset(segments[i - 1].X, segments[i].X);
                             var offsetY = CalculateOffset(segments[i - 1].Y, segments[i].Y);
@@ -51,10 +51,8 @@ namespace AdventOfCode.Y2022.Solvers
         }
 
         private static List<Motion> ToMotions(string[] lines) => lines.Select(line => new Motion(line[0], int.Parse(line[2..]))).ToList();
-        private static bool IsSegmentConnected(Coords previous, Coords current) => Math.Abs(previous.X - current.X) <= 1 && Math.Abs(previous.Y - current.Y) <= 1;
         private static int CalculateOffset(int previousAxis, int currentAxis) => (previousAxis - currentAxis == 0) ? 0 : (previousAxis - currentAxis > 0) ? 1 : -1;
 
         private record struct Motion(char Direction, int Steps);
-        private record struct Coords(int X, int Y);
     }
 }
