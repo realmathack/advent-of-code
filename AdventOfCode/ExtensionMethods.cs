@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Metrics;
-
-namespace AdventOfCode
+﻿namespace AdventOfCode
 {
     public static class ExtensionMethods
     {
@@ -29,6 +27,17 @@ namespace AdventOfCode
                 }
                 yield return set;
             }
+        }
+
+        public static void SetOrAdd<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, TValue value)
+            where TKey : notnull
+        {
+            if (dictionary.ContainsKey(key))
+            {
+                dictionary[key] = value;
+                return;
+            }
+            dictionary.Add(key, value);
         }
     }
 }

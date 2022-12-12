@@ -9,6 +9,9 @@
 
   <ItemGroup>
     <None Remove="Solvers\Day11.cs~RF11fc10.TMP" />
+    <None Update="inputs\12.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
