@@ -122,7 +122,7 @@ namespace AdventOfCode.Y2022.Solvers
             int col;
             for (int row = 0; row < lines.Length; row++)
             {
-                grid[row] = lines[row].ToArray();
+                grid[row] = lines[row].ToCharArray();
                 if (start is null && (col = lines[row].IndexOf('S')) != -1)
                 {
                     start = new Coords(col, row);
