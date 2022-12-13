@@ -26,10 +26,10 @@ namespace AdventOfCode.Y2022.Solvers
                 {
                     segments[0] = motion.Direction switch
                     {
-                        'L' => new Coords(segments[0].X - 1, segments[0].Y),
-                        'U' => new Coords(segments[0].X, segments[0].Y - 1),
-                        'R' => new Coords(segments[0].X + 1, segments[0].Y),
-                        'D' => new Coords(segments[0].X, segments[0].Y + 1),
+                        'L' => segments[0].Left,
+                        'U' => segments[0].Up,
+                        'R' => segments[0].Right,
+                        'D' => segments[0].Down,
                         _ => throw new InvalidOperationException($"Unknown direction: {motion.Direction}")
                     };
                     for (int i = 1; i < segmentCount; i++)
@@ -38,7 +38,7 @@ namespace AdventOfCode.Y2022.Solvers
                         {
                             var offsetX = CalculateOffset(segments[i - 1].X, segments[i].X);
                             var offsetY = CalculateOffset(segments[i - 1].Y, segments[i].Y);
-                            segments[i] = new Coords(segments[i].X + offsetX, segments[i].Y + offsetY);
+                            segments[i] += (offsetX, offsetY);
                             if (i == segmentCount - 1)
                             {
                                 tailVisited.Add(segments[i]);

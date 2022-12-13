@@ -52,7 +52,7 @@ namespace AdventOfCode.Y2022.Solvers
             var openSet = new Dictionary<Coords, int> { { start, 0 } };
             var cameFrom = new Dictionary<Coords, Coords>();
             var gScores = new Dictionary<Coords, int>() { { start, 0 } };
-            var fScores = new Dictionary<Coords, int>() { { start, CalculateManhattanDistance(start, goal) } };
+            var fScores = new Dictionary<Coords, int>() { { start, start.DistanceTo(goal) } };
             while (openSet.Count > 0)
             {
                 var current = openSet.First(c => c.Value == openSet.Min(x => x.Value)).Key;
@@ -68,7 +68,7 @@ namespace AdventOfCode.Y2022.Solvers
                     {
                         cameFrom.SetOrAdd(neighbor, current);
                         gScores.SetOrAdd(neighbor, tentativeGScore);
-                        var fScore = tentativeGScore + CalculateManhattanDistance(neighbor, goal);
+                        var fScore = tentativeGScore + neighbor.DistanceTo(goal);
                         fScores.SetOrAdd(neighbor, fScore);
                         if (!openSet.ContainsKey(neighbor))
                         {
@@ -94,10 +94,10 @@ namespace AdventOfCode.Y2022.Solvers
         {
             var neighbors = new List<Coords>();
             var currentHeight = grid[current.Y][current.X];
-            if (current.X > 0                           && (grid[current.Y][current.X - 1] - currentHeight) <= 1)    { neighbors.Add(new(current.X - 1, current.Y)); } // L
-            if (current.Y > 0                           && (grid[current.Y - 1][current.X] - currentHeight) <= 1)    { neighbors.Add(new(current.X, current.Y - 1)); } // T
-            if (current.X < grid[current.Y].Length - 1  && (grid[current.Y][current.X + 1] - currentHeight) <= 1)    { neighbors.Add(new(current.X + 1, current.Y)); } // R
-            if (current.Y < grid.Length - 1             && (grid[current.Y + 1][current.X] - currentHeight) <= 1)    { neighbors.Add(new(current.X, current.Y + 1)); } // B
+            if (current.X > 0                           && (grid[current.Y][current.X - 1] - currentHeight) <= 1) { neighbors.Add(current.Left); }
+            if (current.Y > 0                           && (grid[current.Y - 1][current.X] - currentHeight) <= 1) { neighbors.Add(current.Up); }
+            if (current.X < grid[current.Y].Length - 1  && (grid[current.Y][current.X + 1] - currentHeight) <= 1) { neighbors.Add(current.Right); }
+            if (current.Y < grid.Length - 1             && (grid[current.Y + 1][current.X] - currentHeight) <= 1) { neighbors.Add(current.Down); }
             return neighbors;
         }
 
@@ -105,14 +105,13 @@ namespace AdventOfCode.Y2022.Solvers
         {
             var neighbors = new List<Coords>();
             var currentHeight = grid[current.Y][current.X];
-            if (current.X > 0                           && (grid[current.Y][current.X - 1] - currentHeight) >= -1)    { neighbors.Add(new(current.X - 1, current.Y)); } // L
-            if (current.Y > 0                           && (grid[current.Y - 1][current.X] - currentHeight) >= -1)    { neighbors.Add(new(current.X, current.Y - 1)); } // T
-            if (current.X < grid[current.Y].Length - 1  && (grid[current.Y][current.X + 1] - currentHeight) >= -1)    { neighbors.Add(new(current.X + 1, current.Y)); } // R
-            if (current.Y < grid.Length - 1             && (grid[current.Y + 1][current.X] - currentHeight) >= -1)    { neighbors.Add(new(current.X, current.Y + 1)); } // B
+            if (current.X > 0                           && (grid[current.Y][current.X - 1] - currentHeight) >= -1) { neighbors.Add(current.Left); }
+            if (current.Y > 0                           && (grid[current.Y - 1][current.X] - currentHeight) >= -1) { neighbors.Add(current.Up); }
+            if (current.X < grid[current.Y].Length - 1  && (grid[current.Y][current.X + 1] - currentHeight) >= -1) { neighbors.Add(current.Right); }
+            if (current.Y < grid.Length - 1             && (grid[current.Y + 1][current.X] - currentHeight) >= -1) { neighbors.Add(current.Down); }
             return neighbors;
         }
 
-        private static int CalculateManhattanDistance(Coords source, Coords destination) => Math.Abs(destination.X - source.X) + Math.Abs(destination.Y - source.Y);
         private static int GetScore(Dictionary<Coords, int> scores, Coords current) => scores.TryGetValue(current, out var score) ? score : int.MaxValue;
 
         private static (char[][] grid, Coords start, Coords end) ToGrid(string[] lines)
@@ -120,19 +119,19 @@ namespace AdventOfCode.Y2022.Solvers
             var grid = new char[lines.Length][];
             Coords? start = null;
             Coords? end = null;
-            int pos;
+            int col;
             for (int row = 0; row < lines.Length; row++)
             {
                 grid[row] = lines[row].ToArray();
-                if (start is null && (pos = lines[row].IndexOf('S')) != -1)
+                if (start is null && (col = lines[row].IndexOf('S')) != -1)
                 {
-                    start = new Coords(pos, row);
-                    grid[row][pos] = 'a';
+                    start = new Coords(col, row);
+                    grid[row][col] = 'a';
                 }
-                if (end is null && (pos = lines[row].IndexOf('E')) != -1)
+                if (end is null && (col = lines[row].IndexOf('E')) != -1)
                 {
-                    end = new Coords(pos, row);
-                    grid[row][pos] = 'z';
+                    end = new Coords(col, row);
+                    grid[row][col] = 'z';
                 }
             }
             if (start is null || end is null)

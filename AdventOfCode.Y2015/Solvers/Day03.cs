@@ -33,10 +33,10 @@ namespace AdventOfCode.Y2015.Solvers
         {
             return direction switch
             {
-                '^' => new Coords(current.X, current.Y - 1),
-                '>' => new Coords(current.X + 1, current.Y),
-                'v' => new Coords(current.X, current.Y + 1),
-                '<' => new Coords(current.X - 1, current.Y),
+                '^' => current.Up,
+                '>' => current.Right,
+                'v' => current.Down,
+                '<' => current.Left,
                 _ => throw new InvalidOperationException($"Unknown direction: {direction}")
             };
         }

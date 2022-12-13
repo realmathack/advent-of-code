@@ -14,18 +14,5 @@ namespace AdventOfCode.Y2015.Tests
 
             Assert.Equal(expected, result);
         }
-
-        [Fact]
-        public void TestPart2()
-        {
-            var subject = new Day11();
-            subject.SetInput(_input);
-
-            var result = subject.SolvePart2();
-
-            Assert.Equal(null, result);
-        }
-
-        private const string _input = @"";
     }
 }
