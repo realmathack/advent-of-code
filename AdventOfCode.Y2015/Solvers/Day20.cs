@@ -5,23 +5,20 @@ namespace AdventOfCode.Y2015.Solvers
         public override object SolvePart1(string input)
         {
             var target = int.Parse(input);
-            var house = 1;
-            while (true)
+            for (int house = 1; ; house++)
             {
                 var presents = GetElves(house).Sum() * 10;
                 if (presents >= target)
                 {
                     return house;
                 }
-                house++;
             }
         }
 
         public override object SolvePart2(string input)
         {
             var target = int.Parse(input);
-            var house = 1;
-            while (true)
+            for (int house = 1; ; house++)
             {
                 var elves = GetElves(house).ToArray();
                 for (int i = 0; i < elves.Length; i++)
@@ -36,7 +33,6 @@ namespace AdventOfCode.Y2015.Solvers
                 {
                     return house;
                 }
-                house++;
             }
         }
 
