@@ -12,7 +12,7 @@
             return input.Split(Environment.NewLine + Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        public static IEnumerable<IEnumerable<T>> PowerSet<T>(this List<T> input)
+        public static IEnumerable<IEnumerable<T>> PowerSet<T>(this IList<T> input)
         {
             var powerSetSize = (int)Math.Pow(2, input.Count);
             for (var mask = 0; mask < powerSetSize; mask++)
@@ -29,7 +29,7 @@
             }
         }
 
-        public static void SetOrAdd<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, TValue value)
+        public static void SetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
             where TKey : notnull
         {
             if (dictionary.ContainsKey(key))
