@@ -4,12 +4,12 @@ namespace AdventOfCode.Y2020.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            return null;
+            return null!;
         }
 
         public override object SolvePart2(string[] input)
         {
-            return null;
+            return null!;
         }
     }
 }

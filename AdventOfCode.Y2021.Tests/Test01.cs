@@ -10,7 +10,7 @@ namespace AdventOfCode.Y2021.Tests
 
             var result = subject.SolvePart1();
 
-            Assert.Equal(null, result);
+            Assert.Equal(null!, result);
         }
 
         [Fact]
@@ -21,7 +21,7 @@ namespace AdventOfCode.Y2021.Tests
 
             var result = subject.SolvePart2();
 
-            Assert.Equal(null, result);
+            Assert.Equal(null!, result);
         }
 
         private const string _input = @"";

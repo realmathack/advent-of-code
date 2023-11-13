@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace AdventOfCode.Y2017.Solvers
 {
     public class Day07 : SolverWithLines
