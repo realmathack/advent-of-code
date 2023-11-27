@@ -5,7 +5,7 @@ namespace AdventOfCode.Y2022.Solvers
     public class Day15 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => SolvePart1(input, 2000000);
-        public static int SolvePart1(string[] input, int targetRow)
+        public int SolvePart1(string[] input, int targetRow)
         {
             var blocked = new HashSet<Coords>();
             var beacons = ToBeacons(input);
@@ -32,7 +32,7 @@ namespace AdventOfCode.Y2022.Solvers
         }
 
         public override object SolvePart2(string[] input) => SolvePart2(input, 4000000);
-        public static long SolvePart2(string[] input, int maxXY)
+        public long SolvePart2(string[] input, int maxXY)
         {
             var beacons = ToBeacons(input);
             var remaining = new Dictionary<int, List<(int begin, int end)>>();

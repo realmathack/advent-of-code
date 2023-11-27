@@ -3,7 +3,7 @@ namespace AdventOfCode.Y2015.Solvers
     public class Day18 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => SolvePart1(input, 100);
-        public static int SolvePart1(string[] input, int steps)
+        public int SolvePart1(string[] input, int steps)
         {
             var grid = ToGrid(input);
             for (int step = 0; step < steps; step++)
@@ -14,7 +14,7 @@ namespace AdventOfCode.Y2015.Solvers
         }
 
         public override object SolvePart2(string[] input) => SolvePart2(input, 100);
-        public static int SolvePart2(string[] input, int steps)
+        public int SolvePart2(string[] input, int steps)
         {
             var grid = SetCornersOn(ToGrid(input));
             for (int step = 0; step < steps; step++)
