@@ -30,7 +30,7 @@ namespace AdventOfCode.Y2022.Solvers
             return sum;
         }
 
-        private int FindHighestFlowRate(Valve current, HashSet<Valve> visited, int minutesLeft)
+        private static int FindHighestFlowRate(Valve current, HashSet<Valve> visited, int minutesLeft)
         {
             if (minutesLeft <= 0)
             {

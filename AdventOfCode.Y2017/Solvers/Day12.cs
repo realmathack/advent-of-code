@@ -45,7 +45,7 @@ namespace AdventOfCode.Y2017.Solvers
             return connected.Count;
         }
 
-        private Dictionary<int, List<int>> ToPrograms(string[] input)
+        private static Dictionary<int, List<int>> ToPrograms(string[] input)
         {
             var programs = new Dictionary<int, List<int>>();
             foreach (var line in input)
