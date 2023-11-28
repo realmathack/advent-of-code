@@ -69,7 +69,7 @@ namespace AdventOfCode.Y2016.Solvers
             var inside = new List<string>();
             var outside = new List<string>();
             var current = 0;
-            var pos = 0;
+            int pos;
             while ((pos = line.IndexOf('[', current)) != -1)
             {
                 outside.Add(line[current..pos]);

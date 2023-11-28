@@ -50,7 +50,7 @@ namespace AdventOfCode.Y2015.Solvers
                     scores[reindeer]++;
                 }
             }
-            return scores.Values.ToList();
+            return [.. scores.Values];
         }
 
         private record struct Reindeer(int Speed, int FlySeconds, int RestSeconds);

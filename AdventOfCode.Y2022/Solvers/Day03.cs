@@ -6,11 +6,11 @@ namespace AdventOfCode.Y2022.Solvers
         {
             var rucksacks = GetRucksacks(input);
             var total = 0;
-            foreach (var rucksack in rucksacks)
+            foreach (var (first, second) in rucksacks)
             {
-                foreach (var item in rucksack.first)
+                foreach (var item in first)
                 {
-                    if (rucksack.second.Contains(item))
+                    if (second.Contains(item))
                     {
                         total += GetPriority(item);
                         break;

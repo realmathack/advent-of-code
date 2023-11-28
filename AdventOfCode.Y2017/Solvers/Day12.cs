@@ -11,9 +11,8 @@ namespace AdventOfCode.Y2017.Solvers
             do
             {
                 var program = toProcess.Dequeue();
-                if (!connected.Contains(program))
+                if (connected.Add(program))
                 {
-                    connected.Add(program);
                     programs[program].ForEach(toProcess.Enqueue);
                 }
             } while (toProcess.Count > 0);
@@ -27,16 +26,15 @@ namespace AdventOfCode.Y2017.Solvers
             do
             {
                 var root = programs.First().Key;
-                connected.Add(root, new() { root });
+                connected.Add(root, [root]);
                 var toProcess = new Queue<int>();
                 programs[root].ForEach(toProcess.Enqueue);
                 programs.Remove(root);
                 do
                 {
                     var program = toProcess.Dequeue();
-                    if (!connected[root].Contains(program))
+                    if (connected[root].Add(program))
                     {
-                        connected[root].Add(program);
                         programs[program].ForEach(toProcess.Enqueue);
                         programs.Remove(program);
                     }

@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace AdventOfCode.Y2016.Solvers
 {
     public class Day09 : SolverWithText

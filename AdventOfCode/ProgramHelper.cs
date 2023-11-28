@@ -1,8 +1,6 @@
-﻿using System.Diagnostics;
-
-namespace AdventOfCode
+﻿namespace AdventOfCode
 {
-    public static class MainHelper
+    public static class ProgramHelper
     {
         public static string GetDayFromInput(string year)
         {
@@ -33,7 +31,7 @@ namespace AdventOfCode
         public static void Run(this ISolver solver, string day)
         {
             solver.SetInput(File.ReadAllText(@$"inputs\{day}.txt"));
-            var sw = new Stopwatch();
+            var sw = new System.Diagnostics.Stopwatch();
             sw.Start();
             var part1Answer = solver.SolvePart1();
             var part1Time = sw.Elapsed;

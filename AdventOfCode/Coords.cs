@@ -31,9 +31,6 @@
         public Coords OffsetTo(Coords target) => new((target.X - X == 0) ? 0 : (target.X - X < 0) ? -1 : 1, (target.Y - Y == 0) ? 0 : (target.Y - Y < 0) ? -1 : 1);
         public Coords RotateLeft => new(Y, -X);
         public Coords RotateRight => new(-Y, X);
-        public override string ToString()
-        {
-            return $"{X}, {Y}";
-        }
+        public override string ToString() => $"{X}, {Y}";
     }
 }

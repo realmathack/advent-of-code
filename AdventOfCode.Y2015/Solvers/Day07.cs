@@ -23,12 +23,12 @@ namespace AdventOfCode.Y2015.Solvers
                 var parts = line.Split(' ');
                 if (parts.Length == 3)
                 {
-                    instructions.Add(parts[2], new(Operator.Assignment, new []{ parts[0] }));
+                    instructions.Add(parts[2], new(Operator.Assignment, [parts[0]]));
                     continue;
                 }
                 if (parts.Length == 4)
                 {
-                    instructions.Add(parts[3], new(Operator.Not, new[] { parts[1] }));
+                    instructions.Add(parts[3], new(Operator.Not, [parts[1]]));
                     continue;
                 }
                 var op = parts[1] switch
@@ -39,7 +39,7 @@ namespace AdventOfCode.Y2015.Solvers
                     "RSHIFT" => Operator.RightShift,
                     _ => throw new InvalidOperationException($"Unknown operator: {parts[1]}")
                 };
-                instructions.Add(parts[4], new(op, new[] { parts[0], parts[2] }));
+                instructions.Add(parts[4], new(op, [parts[0], parts[2]]));
             }
             return instructions;
         }

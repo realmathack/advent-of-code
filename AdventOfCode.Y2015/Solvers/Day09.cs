@@ -4,12 +4,12 @@ namespace AdventOfCode.Y2015.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            return ToNodes(input).Select(node => GetDistance(node, new HashSet<Node> { node })).Min();
+            return ToNodes(input).Select(node => GetDistance(node, [node])).Min();
         }
 
         public override object SolvePart2(string[] input)
         {
-            return ToNodes(input).Select(node => GetDistance(node, new HashSet<Node> { node }, true)).Max();
+            return ToNodes(input).Select(node => GetDistance(node, [node], true)).Max();
         }
 
         private static int GetDistance(Node node, HashSet<Node> visited, bool longestRoute = false)
@@ -48,17 +48,13 @@ namespace AdventOfCode.Y2015.Solvers
                 nodeFrom.Routes.Add(nodeTo, distance);
                 nodeTo.Routes.Add(nodeFrom, distance);
             }
-            return nodes.Values.ToList();
+            return [.. nodes.Values];
         }
 
-        private class Node
+        private class Node(string name)
         {
-            public Dictionary<Node, int> Routes { get; } = new();
-            public string Name { get; }
-            public Node(string name)
-            {
-                Name = name;
-            }
+            public string Name { get; } = name;
+            public Dictionary<Node, int> Routes { get; } = [];
         }
     }
 }

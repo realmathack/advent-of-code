@@ -25,7 +25,7 @@ namespace AdventOfCode.Y2016.Solvers
                     continue;
                 }
                 var number = int.Parse(parts[1]);
-                bots.Add(number, new Bot(number, new(), int.Parse(parts[6]), parts[5] == "bot", int.Parse(parts[11]), parts[10] == "bot"));
+                bots.Add(number, new Bot(number, [], int.Parse(parts[6]), parts[5] == "bot", int.Parse(parts[11]), parts[10] == "bot"));
             }
             while (true)
             {
@@ -44,7 +44,7 @@ namespace AdventOfCode.Y2016.Solvers
                 }
                 else
                 {
-                    outputs.SetOrAdd(bot.LowDestinationNumber, bot.Values.Min());
+                    outputs[bot.LowDestinationNumber] =  bot.Values.Min();
                 }
                 if (bot.IsHighDestinationBot)
                 {
@@ -52,7 +52,7 @@ namespace AdventOfCode.Y2016.Solvers
                 }
                 else
                 {
-                    outputs.SetOrAdd(bot.HighDestinationNumber, bot.Values.Max());
+                    outputs[bot.HighDestinationNumber] = bot.Values.Max();
                 }
                 bot.Values.Clear();
             }

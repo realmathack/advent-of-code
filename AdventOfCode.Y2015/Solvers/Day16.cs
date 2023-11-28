@@ -77,13 +77,14 @@ perfumes: 1
             return parameters;
         }
 
+        private static readonly char[] _separator = [':', ',', ' '];
         private static List<Sue> ToSues(string[] lines)
         {
             var sues = new List<Sue>(lines.Length);
             foreach (var line in lines)
             {
-                var parts = line.Split(new[] { ':', ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                var sue = new Sue(int.Parse(parts[1]), new());
+                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
+                var sue = new Sue(int.Parse(parts[1]), []);
                 for (int i = 3; i < parts.Length; i+=2)
                 {
                     sue.Properties.Add(parts[i - 1], int.Parse(parts[i]));

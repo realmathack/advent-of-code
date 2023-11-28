@@ -110,7 +110,7 @@ namespace AdventOfCode.Y2022.Solvers
             {
                 topLeft -= new Coords(bottomRight.Y, 0);
                 bottomRight += new Coords(bottomRight.Y, 2);
-                formations.Add(new[] { new(topLeft.X, bottomRight.Y), bottomRight });
+                formations.Add([new(topLeft.X, bottomRight.Y), bottomRight]);
             }
             for (int i = 0; i < formations.Count; i++)
             {

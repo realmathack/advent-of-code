@@ -14,12 +14,13 @@ namespace AdventOfCode.Y2015.Solvers
             return GetPossibilties(ingredients, 0, 100).Select(CalculateScore).Where(score => score.Calories == 500).Max(score => score.Score);
         }
 
+        private static readonly char[] _separator = [' ', ':', ','];
         private static List<Ingredient> ToIngredients(string[] lines)
         {
             var ingredients = new List<Ingredient>();
             foreach (var line in lines)
             {
-                var parts = line.Split(new[] { ' ', ':', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
                 ingredients.Add(new(parts[0], int.Parse(parts[2]), int.Parse(parts[4]), int.Parse(parts[6]), int.Parse(parts[8]), int.Parse(parts[10])));
             }
             return ingredients;
@@ -29,7 +30,7 @@ namespace AdventOfCode.Y2015.Solvers
         {
             if (currentRecipe == ingredients.Count - 1)
             {
-                return new List<Dictionary<Ingredient, int>> { new Dictionary<Ingredient, int> { { ingredients[currentRecipe], remainder } } };
+                return [new() { { ingredients[currentRecipe], remainder } }];
             }
             var possibilities = new List<Dictionary<Ingredient, int>>();
             var amount = 1;

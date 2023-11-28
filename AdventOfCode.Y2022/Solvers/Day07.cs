@@ -28,10 +28,7 @@ namespace AdventOfCode.Y2022.Solvers
                 if (line.StartsWith("$ cd"))
                 {
                     current = ExecuteDirChange(current, line[5..]);
-                    if (!result.ContainsKey(current))
-                    {
-                        result.Add(current, 0);
-                    }
+                    result.TryAdd(current, 0);
                 }
                 else
                 {
@@ -42,7 +39,7 @@ namespace AdventOfCode.Y2022.Solvers
                     }
                 }
             }
-            return result.Values.ToList();
+            return [.. result.Values];
         }
 
         private static string ExecuteDirChange(string current, string dirChange)

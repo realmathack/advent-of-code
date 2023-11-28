@@ -1,5 +1,3 @@
-using System.Numerics;
-
 namespace AdventOfCode.Y2022.Solvers
 {
     public class Day11 : SolverWithSections
@@ -90,23 +88,14 @@ namespace AdventOfCode.Y2022.Solvers
             return x => x;
         }
 
-        private class Monkey
+        private class Monkey(int number, IEnumerable<long> items, Func<long, long> operation, int testDivision, int testTrueMonkey, int testFalseMonkey)
         {
-            public int Number { get; init; }
-            public Queue<long> Items { get; init; }
-            public Func<long, long> Operation { get; init; }
-            public int TestDivision { get; init; }
-            public int TestTrueMonkey { get; init; }
-            public int TestFalseMonkey { get; init; }
-            public Monkey(int number, IEnumerable<long> items, Func<long, long> operation, int testDivision, int testTrueMonkey, int testFalseMonkey)
-            {
-                Number = number;
-                Items = new Queue<long>(items);
-                Operation = operation;
-                TestDivision = testDivision;
-                TestTrueMonkey = testTrueMonkey;
-                TestFalseMonkey = testFalseMonkey;
-            }
+            public int Number { get; init; } = number;
+            public Queue<long> Items { get; init; } = new Queue<long>(items);
+            public Func<long, long> Operation { get; init; } = operation;
+            public int TestDivision { get; init; } = testDivision;
+            public int TestTrueMonkey { get; init; } = testTrueMonkey;
+            public int TestFalseMonkey { get; init; } = testFalseMonkey;
         }
     }
 }

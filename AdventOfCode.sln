@@ -11,7 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 	ProjectSection(SolutionItems) = preProject
 		templates\00.txt = templates\00.txt
 		templates\Day00.cs = templates\Day00.cs
+		templates\AdventOfCode.Y2000\Solvers\Day01.cs = templates\AdventOfCode.Y2000\Solvers\Day01.cs
+		templates\AdventOfCode.Y2000\Program.cs = templates\AdventOfCode.Y2000\Program.cs
 		templates\Test00.cs = templates\Test00.cs
+		templates\AdventOfCode.Y2000.Tests\Test01.cs = templates\AdventOfCode.Y2000.Tests\Test01.cs
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode", "AdventOfCode\AdventOfCode.csproj", "{86483DA3-47AF-46BD-AEAB-5E57582B220B}"

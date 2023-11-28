@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace AdventOfCode.Y2022.Solvers
 {
     public class Day10 : SolverWithLines
@@ -59,9 +57,6 @@ namespace AdventOfCode.Y2022.Solvers
             return instructions;
         }
 
-        private static bool IsLit(int registerX, int position)
-        {
-            return position >= registerX - 1 && position <= registerX + 1;
-        }
+        private static bool IsLit(int registerX, int position) => position >= registerX - 1 && position <= registerX + 1;
     }
 }

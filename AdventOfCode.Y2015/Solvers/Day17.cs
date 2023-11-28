@@ -3,14 +3,14 @@ namespace AdventOfCode.Y2015.Solvers
     public class Day17 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => SolvePart1(input, 150);
-        public int SolvePart1(string[] input, int target)
+        public static int SolvePart1(string[] input, int target)
         {
             var containers = ToContainers(input);
             return ToPossibilities(containers).Count(possibility => possibility.sum == target);
         }
 
         public override object SolvePart2(string[] input) => SolvePart2(input, 150);
-        public int SolvePart2(string[] input, int target)
+        public static int SolvePart2(string[] input, int target)
         {
             var containers = ToContainers(input);
             var possibilitiesOnTarget = ToPossibilities(containers).Where(possibility => possibility.sum == target).ToList();

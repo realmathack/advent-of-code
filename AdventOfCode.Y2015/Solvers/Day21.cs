@@ -85,33 +85,33 @@ namespace AdventOfCode.Y2015.Solvers
 
         private static Item[] GetWeapons()
         {
-            return new Item[]
-            {
+            return
+            [
                 new(ItemType.Weapon, 8, 4, 0),
                 new(ItemType.Weapon, 10, 5, 0),
                 new(ItemType.Weapon, 25, 6, 0),
                 new(ItemType.Weapon, 40, 7, 0),
                 new(ItemType.Weapon, 74, 8, 0)
-            };
+            ];
         }
 
         private static Item[] GetArmors()
         {
-            return new Item[]
-            {
+            return
+            [
                 new(ItemType.Armor, 0, 0, 0),
                 new(ItemType.Armor, 13, 0, 1),
                 new(ItemType.Armor, 31, 0, 2),
                 new(ItemType.Armor, 53, 0, 3),
                 new(ItemType.Armor, 75, 0, 4),
                 new(ItemType.Armor, 102, 0, 5)
-            };
+            ];
         }
 
         private static Item[] GetRings()
         {
-            return new Item[]
-            {
+            return
+            [
                 new(ItemType.Ring, 0, 0, 0),
                 new(ItemType.Ring, 0, 0, 0),
                 new(ItemType.Ring, 25, 1, 0),
@@ -120,7 +120,7 @@ namespace AdventOfCode.Y2015.Solvers
                 new(ItemType.Ring, 20, 0, 1),
                 new(ItemType.Ring, 40, 0, 2),
                 new(ItemType.Ring, 80, 0, 3)
-            };
+            ];
         }
 
         private record struct Item(ItemType ItemType, int Cost, int Damage, int Armor);

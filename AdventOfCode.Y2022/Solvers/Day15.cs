@@ -1,11 +1,9 @@
-using System;
-
 namespace AdventOfCode.Y2022.Solvers
 {
     public class Day15 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => SolvePart1(input, 2000000);
-        public int SolvePart1(string[] input, int targetRow)
+        public static int SolvePart1(string[] input, int targetRow)
         {
             var blocked = new HashSet<Coords>();
             var beacons = ToBeacons(input);
@@ -38,7 +36,7 @@ namespace AdventOfCode.Y2022.Solvers
             var remaining = new Dictionary<int, List<(int begin, int end)>>();
             for (int i = 0; i <= maxXY; i++)
             {
-                remaining.Add(i, new() { (0, maxXY) });
+                remaining.Add(i, [(0, maxXY)]);
             }
             foreach (var beacon in beacons)
             {
@@ -100,12 +98,13 @@ namespace AdventOfCode.Y2022.Solvers
         private static bool FullOverlap((int begin, int end) old, (int begin, int end) current) => old.begin >= current.begin && current.end >= old.end;
         private static bool AnyOverlap((int begin, int end) old, (int begin, int end) current) => old.begin <= current.end && current.begin <= old.end;
 
+        private static readonly char[] _separator = [' ', ',', ':', '='];
         private static Dictionary<Coords, Coords> ToBeacons(string[] input)
         {
             var beacons = new Dictionary<Coords, Coords>();
             foreach (var line in input)
             {
-                var parts = line.Split(new[] { ' ', ',', ':', '=' }, StringSplitOptions.RemoveEmptyEntries);
+                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
                 beacons.Add(new(int.Parse(parts[3]), int.Parse(parts[5])), new(int.Parse(parts[11]), int.Parse(parts[13])));
             }
             return beacons;

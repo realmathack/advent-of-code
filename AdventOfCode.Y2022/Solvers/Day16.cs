@@ -5,7 +5,7 @@ namespace AdventOfCode.Y2022.Solvers
         public override object SolvePart1(string[] input)
         {
             var root = ToValves(input);
-            return FindHighestFlowRate(root, new() { root }, 30);
+            return FindHighestFlowRate(root, [root], 30);
         }
 
         public override object SolvePart2(string[] input)
@@ -21,11 +21,11 @@ namespace AdventOfCode.Y2022.Solvers
                 var person = (timers[0] == timers[1] && current[0] != current[1]) ?
                     ((FindHighestFlowRate2(visited, timers[0], current[0]).flow > FindHighestFlowRate2(visited, timers[1], current[1]).flow) ? 0 : 1) :
                     timers.OrderByDescending(x => x.Value).ThenBy(x => x.Key).First().Key;
-                var highest = FindHighestFlowRate2(visited, timers[person], current[person]);
-                timers[person] -= highest.distance;
-                sum += highest.flow;
-                visited.Add(highest.valve);
-                current[person] = highest.valve;
+                var (valve, flow, distance) = FindHighestFlowRate2(visited, timers[person], current[person]);
+                timers[person] -= distance;
+                sum += flow;
+                visited.Add(valve);
+                current[person] = valve;
             }
             return sum;
         }
@@ -72,12 +72,13 @@ namespace AdventOfCode.Y2022.Solvers
             return highest;
         }
 
+        private static readonly char[] _separator = [' ', '=', ';', ','];
         private static Valve ToValves(string[] lines)
         {
             var tmpList = new Dictionary<string, (int flowRate, string[] tunnels)>();
             foreach (var line in lines)
             {
-                var parts = line.Split(new[] { ' ', '=', ';', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
                 tmpList.Add(parts[1], (int.Parse(parts[5]), parts[10..]));
             }
             var valves = new Dictionary<string, Valve>();
@@ -135,7 +136,7 @@ namespace AdventOfCode.Y2022.Solvers
         {
             public string Name { get; }
             public int FlowRate { get; set;  } = 0;
-            public Dictionary<Valve, int> Neighbors { get; } = new();
+            public Dictionary<Valve, int> Neighbors { get; } = [];
             public Valve(string name)
             {
                 Name = name;

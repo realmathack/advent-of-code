@@ -4,7 +4,7 @@ namespace AdventOfCode.Y2015.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            return ToNodes(input).Select(node => GetHapiness(node, new List<Node> { node })).Max();
+            return ToNodes(input).Select(node => GetHapiness(node, [node])).Max();
         }
 
         public override object SolvePart2(string[] input)
@@ -16,7 +16,7 @@ namespace AdventOfCode.Y2015.Solvers
                 nodeSelf.Neighbors.Add(node, 0);
                 node.Neighbors.Add(nodeSelf, 0);
             }
-            return nodes.Select(node => GetHapiness(node, new List<Node> { node })).Max();
+            return nodes.Select(node => GetHapiness(node, [node])).Max();
         }
 
         private static int GetHapiness(Node node, List<Node> visited)
@@ -54,17 +54,13 @@ namespace AdventOfCode.Y2015.Solvers
                 }
                 nodePerson.Neighbors.Add(nodeNeighbor, amount);
             }
-            return nodes.Values.ToList();
+            return [.. nodes.Values];
         }
 
-        private class Node
+        private class Node(string name)
         {
-            public string Name { get; }
-            public Dictionary<Node, int> Neighbors { get; } = new();
-            public Node(string name)
-            {
-                Name = name;
-            }
+            public string Name { get; } = name;
+            public Dictionary<Node, int> Neighbors { get; } = [];
         }
     }
 }

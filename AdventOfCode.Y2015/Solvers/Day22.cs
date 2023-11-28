@@ -26,8 +26,8 @@ namespace AdventOfCode.Y2015.Solvers
                 PlayerHitPoints = 50,
                 PlayerArmor = 0,
                 PlayerMana = 500,
-                BossHitPoints = boss.hitPoints,
-                BossDamage = boss.damage,
+                BossHitPoints = boss.HitPoints,
+                BossDamage = boss.Damage,
                 TotalManaCost = 0
             };
             var possibleMoves = new Queue<GameState>();
@@ -118,7 +118,7 @@ namespace AdventOfCode.Y2015.Solvers
             }
         }
 
-        private static (int hitPoints, int damage) ToBoss(string[] input)
+        private static Boss ToBoss(string[] input)
         {
             var hitPoints = int.Parse(input[0].Split(' ')[^1]);
             var damage = int.Parse(input[1].Split(' ')[^1]);
@@ -139,15 +139,10 @@ namespace AdventOfCode.Y2015.Solvers
             };
         }
 
-        private class Effect
+        private class Effect(SpellNames spellName, int duration)
         {
-            public SpellNames SpellName { get; }
-            public int Duration { get; set; }
-            public Effect(SpellNames spellName, int duration)
-            {
-                SpellName = spellName;
-                Duration = duration;
-            }
+            public SpellNames SpellName { get; } = spellName;
+            public int Duration { get; set; } = duration;
             public Effect Duplicate() => new(SpellName, Duration);
         }
 
@@ -160,7 +155,7 @@ namespace AdventOfCode.Y2015.Solvers
             public int BossDamage { get; set; }
             public int TotalManaCost { get; set; }
             public SpellNames NextSpell { get; init; }
-            public List<Effect> ActiveEffects { get; init; } = new();
+            public List<Effect> ActiveEffects { get; init; } = [];
             public GameState NextRound(SpellNames nextSpell)
             {
                 return new GameState
@@ -176,5 +171,7 @@ namespace AdventOfCode.Y2015.Solvers
                 };
             }
         }
+
+        private record struct Boss(int HitPoints, int Damage);
     }
 }

@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace AdventOfCode.Y2015.Solvers
 {
     public class Day10 : SolverWithText
@@ -7,7 +5,7 @@ namespace AdventOfCode.Y2015.Solvers
         public override object SolvePart1(string input) => LookAndSay(input, 40);
         public override object SolvePart2(string input) => LookAndSay(input, 50);
 
-        public object LookAndSay(string input, int times)
+        public static object LookAndSay(string input, int times)
         {
             for (int i = 0; i < times; i++)
             {

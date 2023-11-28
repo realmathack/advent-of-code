@@ -1,6 +1,3 @@
-using System.Runtime.CompilerServices;
-using System.Linq;
-
 namespace AdventOfCode.Y2022.Solvers
 {
     public class Day13 : SolverWithSections
@@ -78,13 +75,10 @@ namespace AdventOfCode.Y2022.Solvers
         {
             public abstract int CompareTo(Signal? other);
         }
-        private class SignalList : Signal
+        private class SignalList(params Signal[] signals) : Signal
         {
-            public List<Signal> Signals { get; }
-            public SignalList(params Signal[] signals)
-            {
-                Signals = new List<Signal>(signals);
-            }
+            public List<Signal> Signals { get; } = new List<Signal>(signals);
+
             public override int CompareTo(Signal? other)
             {
                 if (other is null)
@@ -118,13 +112,10 @@ namespace AdventOfCode.Y2022.Solvers
                 return 0;
             }
         }
-        private class NumberSignal : Signal
+        private class NumberSignal(int number) : Signal
         {
-            public int Number { get; }
-            public NumberSignal(int number)
-            {
-                Number = number;
-            }
+            public int Number { get; } = number;
+
             public override int CompareTo(Signal? other)
             {
                 if (other is null)

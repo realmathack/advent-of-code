@@ -30,7 +30,7 @@ namespace AdventOfCode.Y2016.Solvers
             return GetCode(keypad, new Coords(1, 3), input);
         }
 
-        private string GetCode(string[] keypad, Coords current, string[] lines)
+        private static string GetCode(string[] keypad, Coords current, string[] lines)
         {
             var code = string.Empty;
             foreach (var line in lines)

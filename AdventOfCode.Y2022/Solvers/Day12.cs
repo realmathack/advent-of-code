@@ -39,12 +39,12 @@ namespace AdventOfCode.Y2022.Solvers
                     if (tentativeScore < GetScore(scores, neighbor))
                     {
                         queue.Enqueue(neighbor, tentativeScore);
-                        scores.SetOrAdd(neighbor, tentativeScore);
-                        cameFrom.SetOrAdd(neighbor, current);
+                        scores[neighbor] = tentativeScore;
+                        cameFrom[neighbor] = current;
                     }
                 }
             }
-            return new List<Coords>();
+            return [];
         }
 
         private static List<Coords> AStar(char[][] grid, Coords start, Coords goal)
@@ -66,18 +66,15 @@ namespace AdventOfCode.Y2022.Solvers
                     var tentativeGScore = gScores[current] + 1;
                     if (tentativeGScore < GetScore(gScores, neighbor))
                     {
-                        cameFrom.SetOrAdd(neighbor, current);
-                        gScores.SetOrAdd(neighbor, tentativeGScore);
+                        cameFrom[neighbor] = current;
+                        gScores[neighbor] = tentativeGScore;
                         var fScore = tentativeGScore + neighbor.DistanceTo(goal);
-                        fScores.SetOrAdd(neighbor, fScore);
-                        if (!openSet.ContainsKey(neighbor))
-                        {
-                            openSet.Add(neighbor, fScore);
-                        }
+                        fScores[neighbor] = fScore;
+                        openSet.TryAdd(neighbor, fScore);
                     }
                 }
             }
-            return new List<Coords>();
+            return [];
         }
 
         private static List<Coords> ReconstructPath(Dictionary<Coords, Coords> cameFrom, Coords current)

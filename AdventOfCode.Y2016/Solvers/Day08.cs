@@ -1,6 +1,3 @@
-using Microsoft.Win32;
-using System.Text;
-
 namespace AdventOfCode.Y2016.Solvers
 {
     public class Day08 : SolverWithLines

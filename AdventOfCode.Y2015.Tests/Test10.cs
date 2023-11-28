@@ -10,9 +10,7 @@ namespace AdventOfCode.Y2015.Tests
         [InlineData("1", 5, 6)]
         public void TestLookAndSay(string input, int times, int expected)
         {
-            var subject = new Day10();
-
-            var result = subject.LookAndSay(input, times);
+            var result = Day10.LookAndSay(input, times);
 
             Assert.Equal(expected, result);
         }

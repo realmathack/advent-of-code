@@ -1,15 +1,8 @@
 namespace AdventOfCode.Y2017.Solvers
 {
-    public class Day10 : SolverWithText
+    public class Day10(int _elementCount) : SolverWithText
     {
-        private readonly int _elementCount;
-
         public Day10() : this(256) { }
-
-        public Day10(int elementCount)
-        {
-            _elementCount = elementCount;
-        }
 
         public override object SolvePart1(string input)
         {
@@ -19,7 +12,7 @@ namespace AdventOfCode.Y2017.Solvers
             foreach (var length in input.Split(',').Select(int.Parse))
             {
                 var end = pos + length;
-                var subset = (end < _elementCount) ? elements[pos..end] : elements[pos..].Concat(elements[..(end % _elementCount)]).ToArray();
+                var subset = (end < _elementCount) ? elements[pos..end] : [.. elements[pos..], .. elements[..(end % _elementCount)]];
                 subset = subset.Reverse().ToArray();
                 for (int i = 0; i < subset.Length; i++)
                 {
@@ -37,7 +30,7 @@ namespace AdventOfCode.Y2017.Solvers
             {
                 lengths.Add(input[i]);
             }
-            lengths.AddRange(new[] { 17, 31, 73, 47, 23 });
+            lengths.AddRange([17, 31, 73, 47, 23]);
 
             var pos = 0;
             var skipSize = 0;
@@ -47,7 +40,7 @@ namespace AdventOfCode.Y2017.Solvers
                 foreach (var length in lengths)
                 {
                     var end = pos + length;
-                    var subset = (end < _elementCount) ? elements[pos..end] : elements[pos..].Concat(elements[..(end % _elementCount)]).ToArray();
+                    var subset = (end < _elementCount) ? elements[pos..end] : [.. elements[pos..], .. elements[..(end % _elementCount)]];
                     subset = subset.Reverse().ToArray();
                     for (int i = 0; i < subset.Length; i++)
                     {
