@@ -75,9 +75,10 @@ namespace AdventOfCode.Y2022.Solvers
         {
             public abstract int CompareTo(Signal? other);
         }
+
         private class SignalList(params Signal[] signals) : Signal
         {
-            public List<Signal> Signals { get; } = new List<Signal>(signals);
+            public List<Signal> Signals { get; } = [.. signals];
 
             public override int CompareTo(Signal? other)
             {
@@ -112,6 +113,7 @@ namespace AdventOfCode.Y2022.Solvers
                 return 0;
             }
         }
+
         private class NumberSignal(int number) : Signal
         {
             public int Number { get; } = number;

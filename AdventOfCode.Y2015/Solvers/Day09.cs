@@ -51,9 +51,8 @@ namespace AdventOfCode.Y2015.Solvers
             return [.. nodes.Values];
         }
 
-        private class Node(string name)
+        private record class Node(string Name)
         {
-            public string Name { get; } = name;
             public Dictionary<Node, int> Routes { get; } = [];
         }
     }

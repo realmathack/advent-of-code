@@ -45,7 +45,7 @@ namespace AdventOfCode.Y2022.Solvers
                 {
                     continue;
                 }
-                var flowRateNeighbor = FindHighestFlowRate(neighbor.Key, new(visited) { neighbor.Key }, minutesLeft - neighbor.Value);
+                var flowRateNeighbor = FindHighestFlowRate(neighbor.Key, [.. visited, neighbor.Key], minutesLeft - neighbor.Value);
                 if (flowRateNeighbor > 0)
                 {
                     highest.Add(currentFlowRate + flowRateNeighbor);
@@ -132,15 +132,10 @@ namespace AdventOfCode.Y2022.Solvers
             return length;
         }
 
-        private record class Valve
+        private record class Valve(string Name)
         {
-            public string Name { get; }
-            public int FlowRate { get; set;  } = 0;
+            public int FlowRate { get; set; } = 0;
             public Dictionary<Valve, int> Neighbors { get; } = [];
-            public Valve(string name)
-            {
-                Name = name;
-            }
             public static Valve Empty => new(string.Empty);
         }
     }
