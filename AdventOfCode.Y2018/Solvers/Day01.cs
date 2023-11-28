@@ -4,12 +4,27 @@ namespace AdventOfCode.Y2018.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            return null!;
+            return input.Select(int.Parse).Sum();
         }
 
         public override object SolvePart2(string[] input)
         {
-            return null!;
+            var changes = input.Select(int.Parse).ToList();
+            var frequencies = new HashSet<int>();
+            var i = 0;
+            var current = 0;
+            while (true)
+            {
+                current += changes[i];
+                if (!frequencies.Add(current))
+                {
+                    return current;
+                }
+                if (++i == changes.Count)
+                {
+                    i = 0;
+                }
+            }
         }
     }
 }
