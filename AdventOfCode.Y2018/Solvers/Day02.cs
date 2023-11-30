@@ -41,7 +41,7 @@ namespace AdventOfCode.Y2018.Solvers
                     }
                 }
             }
-            return null!;
+            return string.Empty;
         }
     }
 }

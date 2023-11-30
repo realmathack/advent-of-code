@@ -21,7 +21,7 @@ namespace AdventOfCode.Y2018.Solvers
                     return id;
                 }
             }
-            return null!;
+            return 0;
         }
 
         private Dictionary<Coords, List<int>> ToClaimedSquares(string[] input)

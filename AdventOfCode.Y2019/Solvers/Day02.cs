@@ -21,7 +21,7 @@ namespace AdventOfCode.Y2019.Solvers
                     }
                 }
             }
-            return null!;
+            return 0;
         }
 
         private static int ExecuteProgram(string input, int? noun, int? verb)
