@@ -1,35 +1,40 @@
 namespace AdventOfCode.Y2020.Tests
 {
-    public class Test01
+    public class Test03
     {
         [Fact]
         public void TestPart1()
         {
-            var subject = new Day01();
+            var subject = new Day03();
             subject.SetInput(_input);
 
             var result = subject.SolvePart1();
 
-            Assert.Equal(514579, result);
+            Assert.Equal(7, result);
         }
 
         [Fact]
         public void TestPart2()
         {
-            var subject = new Day01();
+            var subject = new Day03();
             subject.SetInput(_input);
 
             var result = subject.SolvePart2();
 
-            Assert.Equal(241861950L, result);
+            Assert.Equal(336, result);
         }
 
-        private const string _input = @"1721
-979
-366
-299
-675
-1456
+        private const string _input = @"..##.......
+#...#...#..
+.#....#..#.
+..#.#...#.#
+.#...##..#.
+..#.##.....
+.#.#.#....#
+.#........#
+#.##...#...
+#...##....#
+.#..#...#.#
 ";
     }
 }
