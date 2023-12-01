@@ -1,0 +1,44 @@
+namespace AdventOfCode.Y2020.Tests
+{
+    public class Test06
+    {
+        [Fact]
+        public void TestPart1()
+        {
+            var subject = new Day06();
+            subject.SetInput(_input);
+
+            var result = subject.SolvePart1();
+
+            Assert.Equal(11, result);
+        }
+
+        [Fact]
+        public void TestPart2()
+        {
+            var subject = new Day06();
+            subject.SetInput(_input);
+
+            var result = subject.SolvePart2();
+
+            Assert.Equal(6, result);
+        }
+
+        private const string _input = @"abc
+
+a
+b
+c
+
+ab
+ac
+
+a
+a
+a
+a
+
+b
+";
+    }
+}
