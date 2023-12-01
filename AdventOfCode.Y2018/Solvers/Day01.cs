@@ -4,7 +4,7 @@ namespace AdventOfCode.Y2018.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            return input.Select(int.Parse).Sum();
+            return input.Sum(int.Parse);
         }
 
         public override object SolvePart2(string[] input)

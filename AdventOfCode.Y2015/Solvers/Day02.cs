@@ -15,7 +15,7 @@ namespace AdventOfCode.Y2015.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            return ToPresents(input).Select(ToRibbon).Sum();
+            return ToPresents(input).Sum(ToRibbon);
         }
 
         private static List<int[]> ToPresents(string[] lines)

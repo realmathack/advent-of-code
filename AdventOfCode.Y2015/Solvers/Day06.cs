@@ -45,7 +45,7 @@ namespace AdventOfCode.Y2015.Solvers
                     }
                 }
             }
-            return grid.Select(row => row.Sum()).Sum();
+            return grid.Sum(row => row.Sum());
         }
 
         private static bool[][] InitBoolGrid()

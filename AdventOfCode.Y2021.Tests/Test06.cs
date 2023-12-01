@@ -1,39 +1,29 @@
 namespace AdventOfCode.Y2021.Tests
 {
-    public class Test01
+    public class Test06
     {
         [Fact]
         public void TestPart1()
         {
-            var subject = new Day01();
+            var subject = new Day06();
             subject.SetInput(_input);
 
             var result = subject.SolvePart1();
 
-            Assert.Equal(7, result);
+            Assert.Equal(5934L, result);
         }
 
         [Fact]
         public void TestPart2()
         {
-            var subject = new Day01();
+            var subject = new Day06();
             subject.SetInput(_input);
 
             var result = subject.SolvePart2();
 
-            Assert.Equal(5, result);
+            Assert.Equal(26984457539L, result);
         }
 
-        private const string _input = @"199
-200
-208
-210
-200
-207
-240
-269
-260
-263
-";
+        private const string _input = @"3,4,3,1,2";
     }
 }
