@@ -21,7 +21,7 @@ namespace AdventOfCode.Y2020.Tests
 
             var result = subject.SolvePart2();
 
-            Assert.Equal(336, result);
+            Assert.Equal(336L, result);
         }
 
         private const string _input = @"..##.......

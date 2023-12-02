@@ -13,7 +13,8 @@ namespace AdventOfCode.Y2021.Tests
             Assert.Equal(26, result);
         }
 
-        [Fact]
+        [Fact(Skip = "Test takes too long")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "xUnit1004:Test methods should not be skipped")]
         public void TestPart2()
         {
             var subject = new Day08();

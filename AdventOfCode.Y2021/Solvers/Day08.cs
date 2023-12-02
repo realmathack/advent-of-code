@@ -26,6 +26,7 @@ namespace AdventOfCode.Y2021.Solvers
 
                 do
                 {
+                    // TODO: Implement segment signals for:
                     // 5 (2, 3, 5)  -> possible combos: 2 (), 3 (1, 7), 5 (4-1)
                     // 6 (0, 6, 9)  -> possible combos: 0 (1, 7), 6 (4-1), 9 (1, 4, 7)
                 } while (!signals.All(x => x.Length == 1));

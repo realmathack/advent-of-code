@@ -4,11 +4,13 @@ namespace AdventOfCode.Y2016.Solvers
     {
         public override object SolvePart1(string[] input)
         {
+            // TODO: Implement
             return null!;
         }
 
         public override object SolvePart2(string[] input)
         {
+            // TODO: Implement
             return null!;
         }
     }

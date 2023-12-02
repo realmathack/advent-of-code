@@ -8,12 +8,13 @@ namespace AdventOfCode.Y2016.Solvers
             var parts = input[1].Split(',');
             var goal = new Coords(int.Parse(parts[0]), int.Parse(parts[1]));
             var current = new Coords(1, 1);
-            _ = IsWall(current, designerFavNumber) && current != goal; // bogus to remove variables not used warnings
+            _ = IsWall(current, designerFavNumber) && current != goal; // HACK: Discard to remove "variables not used" warnings
             return null!;
         }
 
         public override object SolvePart2(string[] input)
         {
+            // TODO: Implement
             return null!;
         }
 
