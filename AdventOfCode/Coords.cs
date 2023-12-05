@@ -22,7 +22,9 @@
         public Coords UpRight => this + OffsetUpRight;
         public Coords DownLeft => this + OffsetDownLeft;
         public Coords DownRight => this + OffsetDownRight;
+        /// <summary>Horizontal & Vertical</summary>
         public Coords[] Neighbors => new[] { Left, Up, Right, Down };
+        /// <summary>Horizontal, Vertical & Diagonal</summary>
         public Coords[] Adjacents => new[] { Left, UpLeft, Up, UpRight, Right, DownRight, Down, DownLeft };
         public bool IsNeighbor(Coords neighbor) => Math.Abs(neighbor.X - X) <= 1 && Math.Abs(neighbor.Y - Y) <= 1;
         /// <summary>Calculate Manhattan Distance</summary>
