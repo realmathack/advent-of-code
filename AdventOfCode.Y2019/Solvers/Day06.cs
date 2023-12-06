@@ -25,8 +25,16 @@ namespace AdventOfCode.Y2019.Solvers
                 .GroupBy(x => x.Center).Select(g => new { g.Key, Value = g.Select(x => x.Orbits).ToList() }).ToDictionary(x => x.Key, x => x.Value);
             var source = orbits.Single(x => x.Value.Contains("YOU")).Key;
             var target = orbits.Single(x => x.Value.Contains("SAN")).Key;
-            // TODO: Implement (basically pathfinding)
-            return null!;
+            var depth = 0;
+            var current = new List<string>() { source };
+            while (!current.Contains(target))
+            {
+                var nextOrbits = orbits.Where(x => current.Contains(x.Key)).SelectMany(x => x.Value).Where(x => !current.Contains(x)).ToList();
+                var nextCenters = orbits.Where(x => x.Value.Any(y => current.Contains(y))).Select(x => x.Key).Where(x => !current.Contains(x)).ToList();
+                current = [.. nextOrbits, .. nextCenters];
+                depth++;
+            }
+            return depth;
         }
     }
 }
