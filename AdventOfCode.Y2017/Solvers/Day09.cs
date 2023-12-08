@@ -7,7 +7,7 @@ namespace AdventOfCode.Y2017.Solvers
             var depth = 0;
             var total = 0;
             var garbage = false;
-            for (var i = 0; i < input.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
                 switch (input[i])
                 {
@@ -44,7 +44,7 @@ namespace AdventOfCode.Y2017.Solvers
         {
             var total = 0;
             var garbage = false;
-            for (var i = 0; i < input.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
                 switch (input[i])
                 {

@@ -20,10 +20,7 @@ namespace AdventOfCode.Y2018.Solvers
                 {
                     return current;
                 }
-                if (++i == changes.Count)
-                {
-                    i = 0;
-                }
+                i = ++i % changes.Count;
             }
         }
     }

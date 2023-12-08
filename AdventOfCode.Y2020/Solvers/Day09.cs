@@ -32,7 +32,7 @@ namespace AdventOfCode.Y2020.Solvers
             var numbers = input.Select(long.Parse).ToArray();
             for (int i = 0; i < numbers.Length; i++)
             {
-                long sum = 0;
+                var sum = 0L;
                 long[] range = [];
                 var span = 2;
                 do

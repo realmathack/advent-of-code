@@ -10,7 +10,7 @@ namespace AdventOfCode.Y2018.Solvers
         public override object SolvePart2(string input)
         {
             var shortest = input.Length;
-            for (var c = 'a'; c <= 'z'; c++)
+            for (char c = 'a'; c <= 'z'; c++)
             {
                 var improved = Improve(input, c);
                 var length = ReduceReturnLength(improved);

@@ -38,7 +38,7 @@ namespace AdventOfCode.Y2018.Solvers
         {
             var sleeps = new List<Sleep>();
             var id = 0;
-            int start = 0;
+            var start = 0;
             foreach (var line in input)
             {
                 var minute = int.Parse(line[15..17]);

@@ -15,7 +15,7 @@
         public static IEnumerable<IEnumerable<T>> PowerSet<T>(this IList<T> input)
         {
             var powerSetSize = (int)Math.Pow(2, input.Count);
-            for (var mask = 0; mask < powerSetSize; mask++)
+            for (int mask = 0; mask < powerSetSize; mask++)
             {
                 var set = new List<T>();
                 for (int i = 0; i < input.Count; i++)
