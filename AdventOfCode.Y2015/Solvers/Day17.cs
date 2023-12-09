@@ -1,24 +1,24 @@
 namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day17 : SolverWithLines
+    public class Day17(int target) : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => SolvePart1(input, 150);
-        public static int SolvePart1(string[] input, int target)
+        public Day17() : this(150) { }
+
+        public override object SolvePart1(string[] input)
         {
             var containers = ToContainers(input);
-            return ToPossibilities(containers).Count(possibility => possibility.sum == target);
+            return ToPossibilities(containers).Count(possibility => possibility.Sum == target);
         }
 
-        public override object SolvePart2(string[] input) => SolvePart2(input, 150);
-        public static int SolvePart2(string[] input, int target)
+        public override object SolvePart2(string[] input)
         {
             var containers = ToContainers(input);
-            var possibilitiesOnTarget = ToPossibilities(containers).Where(possibility => possibility.sum == target).ToList();
-            var lowestCountContainers = possibilitiesOnTarget.Min(possibility => possibility.count);
-            return possibilitiesOnTarget.Count(possibility => possibility.count == lowestCountContainers);
+            var possibilitiesOnTarget = ToPossibilities(containers).Where(possibility => possibility.Sum == target).ToList();
+            var lowestCountContainers = possibilitiesOnTarget.Min(possibility => possibility.Count);
+            return possibilitiesOnTarget.Count(possibility => possibility.Count == lowestCountContainers);
         }
 
         private static List<int> ToContainers(string[] lines) => lines.Select(int.Parse).ToList();
-        private static List<(int sum, int count)> ToPossibilities(List<int> containers) => containers.PowerSet().Select(set => (set.Sum(), set.Count())).ToList();
+        private static List<(int Sum, int Count)> ToPossibilities(List<int> containers) => containers.PowerSet().Select(set => (set.Sum(), set.Count())).ToList();
     }
 }

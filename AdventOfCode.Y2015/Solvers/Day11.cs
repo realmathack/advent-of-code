@@ -2,15 +2,9 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day11 : SolverWithText
     {
-        public override object SolvePart1(string input)
-        {
-            return GetNewPassword(input);
-        }
+        public override object SolvePart1(string input) => GetNewPassword(input);
 
-        public override object SolvePart2(string input)
-        {
-            return GetNewPassword(GetNewPassword(input));
-        }
+        public override object SolvePart2(string input) => GetNewPassword(GetNewPassword(input));
 
         private static string GetNewPassword(string password)
         {

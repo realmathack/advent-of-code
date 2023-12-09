@@ -8,7 +8,7 @@ namespace AdventOfCode.Y2019.Solvers
             var centralPort = new Coords(0, 0);
             var firstWire = GetWire(input[0], centralPort);
             var secondWire = GetWire(input[1], centralPort);
-            var distances = firstWire.Intersect(secondWire).Select(x => x.DistanceTo(centralPort)).OrderBy(x => x);
+            var distances = firstWire.Intersect(secondWire).Select(coord => coord.DistanceTo(centralPort)).OrderBy(distance => distance);
             return distances.First();
         }
 
@@ -17,7 +17,7 @@ namespace AdventOfCode.Y2019.Solvers
             var centralPort = new Coords(0, 0);
             var firstWire = GetWire(input[0], centralPort);
             var secondWire = GetWire(input[1], centralPort);
-            var distances = firstWire.Intersect(secondWire).Select(x => 2 + firstWire.IndexOf(x) + secondWire.IndexOf(x)).OrderBy(x => x);
+            var distances = firstWire.Intersect(secondWire).Select(coord => 2 + firstWire.IndexOf(coord) + secondWire.IndexOf(coord)).OrderBy(distance => distance);
             return distances.First();
         }
 

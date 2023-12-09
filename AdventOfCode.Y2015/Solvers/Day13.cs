@@ -2,10 +2,7 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day13 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return ToNodes(input).Select(node => GetHapiness(node, [node])).Max();
-        }
+        public override object SolvePart1(string[] input) => ToNodes(input).Max(node => GetHapiness(node, [node]));
 
         public override object SolvePart2(string[] input)
         {
@@ -16,7 +13,7 @@ namespace AdventOfCode.Y2015.Solvers
                 nodeSelf.Neighbors.Add(node, 0);
                 node.Neighbors.Add(nodeSelf, 0);
             }
-            return nodes.Select(node => GetHapiness(node, [node])).Max();
+            return nodes.Max(node => GetHapiness(node, [node]));
         }
 
         private static int GetHapiness(Node node, List<Node> visited)

@@ -2,15 +2,9 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day24 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return GetIdealConfiguration(input, 3);
-        }
+        public override object SolvePart1(string[] input) => GetIdealConfiguration(input, 3);
 
-        public override object SolvePart2(string[] input)
-        {
-            return GetIdealConfiguration(input, 4);
-        }
+        public override object SolvePart2(string[] input) => GetIdealConfiguration(input, 4);
 
         private static long GetIdealConfiguration(string[] lines, int compartments)
         {
@@ -21,7 +15,7 @@ namespace AdventOfCode.Y2015.Solvers
                 var sets = GetPackageSets(packages, 0, depth, targetWeight);
                 if (sets.Any())
                 {
-                    return sets.Select(CalculateQuantumEntanglement).Min();
+                    return sets.Min(CalculateQuantumEntanglement);
                 }
             }
             return 0;

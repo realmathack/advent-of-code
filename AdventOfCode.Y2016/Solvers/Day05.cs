@@ -1,5 +1,3 @@
-using System.Security.Cryptography;
-
 namespace AdventOfCode.Y2016.Solvers
 {
     public class Day05 : SolverWithText
@@ -10,17 +8,15 @@ namespace AdventOfCode.Y2016.Solvers
             var i = 0;
             for (int count = 0; count < 8; count++)
             {
-                do
+                while (i < int.MaxValue)
                 {
-                    var bytes = Encoding.ASCII.GetBytes(input + i++);
-                    var hash = MD5.HashData(bytes);
-                    var hex = Convert.ToHexString(hash);
+                    var hex = (input + i++).ToMD5Hex();
                     if (hex.StartsWith("00000"))
                     {
                         password += hex[5];
                         break;
                     }
-                } while (i < int.MaxValue);
+                }
             }
             return password.ToLower();
         }
@@ -31,11 +27,9 @@ namespace AdventOfCode.Y2016.Solvers
             var i = 0;
             for (int count = 0; count < 8; count++)
             {
-                do
+                while (i < int.MaxValue)
                 {
-                    var bytes = Encoding.ASCII.GetBytes(input + i++);
-                    var hash = MD5.HashData(bytes);
-                    var hex = Convert.ToHexString(hash);
+                    var hex = (input + i++).ToMD5Hex();
                     if (hex.StartsWith("00000"))
                     {
                         int pos;
@@ -46,9 +40,9 @@ namespace AdventOfCode.Y2016.Solvers
                         password[pos] = hex[6];
                         break;
                     }
-                } while (i < int.MaxValue);
+                }
             }
-            return string.Join("", password).ToLower();
+            return string.Concat(password).ToLower();
         }
     }
 }

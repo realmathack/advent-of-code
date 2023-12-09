@@ -2,18 +2,14 @@ namespace AdventOfCode.Y2020.Solvers
 {
     public class Day08 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            var (_, accumulator) = RunProgram(input);
-            return accumulator;
-        }
+        public override object SolvePart1(string[] input) => RunProgram(input).Accumulator;
 
         public override object SolvePart2(string[] input)
         {
             var indexes = input
-                .Select((instruction, index) => new { instruction, index })
-                .Where(x => x.instruction.StartsWith("nop") || x.instruction.StartsWith("jmp"))
-                .Select(x => x.index)
+                .Select((line, i) => (Instruction: line, Index: i))
+                .Where(line => line.Instruction.StartsWith("nop") || line.Instruction.StartsWith("jmp"))
+                .Select(line => line.Index)
                 .ToList();
             foreach (var index in indexes)
             {
@@ -28,7 +24,7 @@ namespace AdventOfCode.Y2020.Solvers
             return 0;
         }
 
-        private static (bool, int) RunProgram(string[] input)
+        private static (bool Succes, int Accumulator) RunProgram(string[] input)
         {
             var visited = new HashSet<int>();
             var accumulator = 0;

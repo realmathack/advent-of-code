@@ -1,11 +1,10 @@
+using System.Text;
+
 namespace AdventOfCode.Y2016.Solvers
 {
     public class Day08 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return Solve(input).SelectMany(x => x).Count(x => x);
-        }
+        public override object SolvePart1(string[] input) => Solve(input).SelectMany(row => row).Count(pixel => pixel);
 
         public override object SolvePart2(string[] input)
         {

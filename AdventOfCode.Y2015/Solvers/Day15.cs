@@ -2,16 +2,14 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day15 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            var ingredients = ToIngredients(input);
-            return GetPossibilties(ingredients, 0, 100).Select(CalculateScore).Max(score => score.Score);
-        }
+        public override object SolvePart1(string[] input) => Solve(input).Select(CalculateScore).Max(score => score.Score);
 
-        public override object SolvePart2(string[] input)
+        public override object SolvePart2(string[] input) => Solve(input).Select(CalculateScore).Where(score => score.Calories == 500).Max(score => score.Score);
+
+        private static List<Dictionary<Ingredient, int>> Solve(string[] input)
         {
             var ingredients = ToIngredients(input);
-            return GetPossibilties(ingredients, 0, 100).Select(CalculateScore).Where(score => score.Calories == 500).Max(score => score.Score);
+            return GetPossibilties(ingredients, 0, 100);
         }
 
         private static readonly char[] _separator = [' ', ':', ','];

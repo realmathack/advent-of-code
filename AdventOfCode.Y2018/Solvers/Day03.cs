@@ -2,18 +2,15 @@ namespace AdventOfCode.Y2018.Solvers
 {
     public class Day03 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return ToClaimedSquares(input).Count(x => x.Value.Count >= 2);
-        }
+        public override object SolvePart1(string[] input) => ToClaimedSquares(input).Count(square => square.Value.Count >= 2);
 
         public override object SolvePart2(string[] input)
         {
             var claimedSquares = ToClaimedSquares(input);
-            var singles = claimedSquares.Where(x => x.Value.Count == 1).ToList();
-            var singleIds = singles.Select(x => x.Value.Single()).Distinct().ToList();
+            var singles = claimedSquares.Where(square => square.Value.Count == 1).ToList();
+            var singleIds = singles.Select(single => single.Value.Single()).Distinct().ToList();
             var others = claimedSquares.Except(singles).ToList();
-            var otherIds = others.SelectMany(x => x.Value).Distinct().ToList();
+            var otherIds = others.SelectMany(other => other.Value).Distinct().ToList();
             foreach (var id in singleIds)
             {
                 if (!otherIds.Contains(id))

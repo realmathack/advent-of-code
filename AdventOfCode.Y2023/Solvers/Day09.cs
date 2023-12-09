@@ -4,20 +4,20 @@ namespace AdventOfCode.Y2023.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var history = input.Select(x => x.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToList();
-            return history.Sum(x => GetNextValue(x));
+            var history = input.Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToList();
+            return history.Sum(values => GetNextValue(values));
         }
 
         public override object SolvePart2(string[] input)
         {
-            var history = input.Select(x => x.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToList();
-            return history.Sum(x => GetNextValue(x, true));
+            var history = input.Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToList();
+            return history.Sum(values => GetNextValue(values, true));
         }
 
         private static int GetNextValue(List<int> last, bool backwards = false)
         {
             var sequences = new List<List<int>>() { last };
-            while (last.Any(x => x != 0))
+            while (last.Any(value => value != 0))
             {
                 var current = new List<int>();
                 for (int i = 1; i < last.Count; i++)

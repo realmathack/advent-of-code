@@ -2,23 +2,18 @@ namespace AdventOfCode.Y2023.Solvers
 {
     public class Day02 : SolverWithLines
     {
-        private const int _redIndex = 0;
-        private const int _greenIndex = 1;
-        private const int _blueIndex = 2;
+        private const int _red = 0;
+        private const int _green = 1;
+        private const int _blue = 2;
 
         public override object SolvePart1(string[] input)
         {
             return ToGames(input)
-                .Where(x => x.Sets.All(s => s[_redIndex] <= 12 && x.Sets.All(s => s[_greenIndex] <= 13) && x.Sets.All(s => s[_blueIndex] <= 14)))
-                .Sum(x => x.Id);
+                .Where(line => line.Sets.All(set => set[_red] <= 12 && line.Sets.All(set => set[_green] <= 13) && line.Sets.All(set => set[_blue] <= 14)))
+                .Sum(game => game.Id);
         }
 
-        public override object SolvePart2(string[] input)
-        {
-            return ToGames(input).Sum(CalculateScore);
-        }
-
-        private static int CalculateScore(Game game) => game.Sets.Max(x => x[_redIndex]) * game.Sets.Max(x => x[_greenIndex]) * game.Sets.Max(x => x[_blueIndex]);
+        public override object SolvePart2(string[] input) => ToGames(input).Sum(CalculateScore);
 
         private static List<Game> ToGames(string[] input)
         {
@@ -37,9 +32,9 @@ namespace AdventOfCode.Y2023.Solvers
                         var pos = part.IndexOf(' ');
                         var cube = part[(pos + 1)..] switch
                         {
-                            "red" => _redIndex,
-                            "green" => _greenIndex,
-                            "blue" => _blueIndex,
+                            "red" => _red,
+                            "green" => _green,
+                            "blue" => _blue,
                             _ => throw new InvalidOperationException("Unknown color")
                         };
                         cubes[cube] = int.Parse(part[..pos]);
@@ -50,6 +45,8 @@ namespace AdventOfCode.Y2023.Solvers
             }
             return games;
         }
+
+        private static int CalculateScore(Game game) => game.Sets.Max(set => set[_red]) * game.Sets.Max(set => set[_green]) * game.Sets.Max(set => set[_blue]);
 
         private record class Game(int Id)
         {

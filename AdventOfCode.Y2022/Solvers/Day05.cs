@@ -14,8 +14,8 @@ namespace AdventOfCode.Y2022.Solvers
                     stacks[move.Destination - 1].Push(crate);
                 }
             }
-            var result = stacks.Select(s => s.Peek()).ToList();
-            return string.Join("", result);
+            var result = stacks.Select(stack => stack.Peek()).ToList();
+            return string.Concat(result);
         }
 
         public override object SolvePart2(string[] input)
@@ -36,8 +36,8 @@ namespace AdventOfCode.Y2022.Solvers
                     stacks[move.Destination - 1].Push(crate);
                 }
             }
-            var result = stacks.Select(s => s.Peek()).ToList();
-            return string.Join("", result);
+            var result = stacks.Select(stack => stack.Peek()).ToList();
+            return string.Concat(result);
         }
 
         private static Stack<char>[] GetStacks(string input)

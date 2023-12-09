@@ -4,8 +4,10 @@ namespace AdventOfCode.Y2023.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var records = input.Select(x => x[(x.IndexOf(':') + 1)..]).Select(x => x.Split(' ', StringSplitOptions.RemoveEmptyEntries))
-                .Select(x => x.Select(long.Parse).ToArray()).ToArray();
+            var records = input
+                .Select(line => line[(line.IndexOf(':') + 1)..].Split(' ', StringSplitOptions.RemoveEmptyEntries))
+                .Select(parts => parts.Select(long.Parse).ToArray())
+                .ToArray();
             var total = 1L;
             for (int i = 0; i < records[0].Length; i++)
             {
@@ -16,7 +18,10 @@ namespace AdventOfCode.Y2023.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var record = input.Select(x => x[(x.IndexOf(':') + 1)..]).Select(x => x.Replace(" ", string.Empty)).Select(long.Parse).ToArray();
+            var record = input
+                .Select(line => line[(line.IndexOf(':') + 1)..].Replace(" ", string.Empty))
+                .Select(long.Parse)
+                .ToArray();
             return CountWaysToBeatRecord(record[0], record[1]);
         }
 

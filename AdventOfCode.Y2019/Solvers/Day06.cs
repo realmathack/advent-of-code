@@ -4,15 +4,14 @@ namespace AdventOfCode.Y2019.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var orbits = input.Select(x => x.Split(')')).Select(x => new { Center = x[0], Orbits = x[1] })
-                .GroupBy(x => x.Center).Select(g => new { g.Key, Value = g.Select(x => x.Orbits).ToList() }).ToDictionary(x => x.Key, x => x.Value);
+            var orbits = ToOrbits(input);
             var total = 0;
             var depth = 0;
             var sortedByDepth = new Dictionary<int, List<string>>() { { 0, ["COM"] } };
             while (orbits.Count > 0)
             {
-                var tmp = sortedByDepth[depth].Where(orbits.ContainsKey).SelectMany(x => orbits[x]).ToList();
-                sortedByDepth[depth].ForEach(x => orbits.Remove(x));
+                var tmp = sortedByDepth[depth].Where(orbits.ContainsKey).SelectMany(obj => orbits[obj]).ToList();
+                sortedByDepth[depth].ForEach(obj => orbits.Remove(obj));
                 sortedByDepth[++depth] = tmp;
                 total += tmp.Count * depth;
             }
@@ -21,20 +20,37 @@ namespace AdventOfCode.Y2019.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var orbits = input.Select(x => x.Split(')')).Select(x => new { Center = x[0], Orbits = x[1] })
-                .GroupBy(x => x.Center).Select(g => new { g.Key, Value = g.Select(x => x.Orbits).ToList() }).ToDictionary(x => x.Key, x => x.Value);
-            var source = orbits.Single(x => x.Value.Contains("YOU")).Key;
-            var target = orbits.Single(x => x.Value.Contains("SAN")).Key;
+            var orbits = ToOrbits(input);
+            var source = orbits.Single(orbit => orbit.Value.Contains("YOU")).Key;
+            var destination = orbits.Single(orbit => orbit.Value.Contains("SAN")).Key;
             var depth = 0;
             var current = new List<string>() { source };
-            while (!current.Contains(target))
+            while (!current.Contains(destination))
             {
-                var nextOrbits = orbits.Where(x => current.Contains(x.Key)).SelectMany(x => x.Value).Where(x => !current.Contains(x)).ToList();
-                var nextCenters = orbits.Where(x => x.Value.Any(y => current.Contains(y))).Select(x => x.Key).Where(x => !current.Contains(x)).ToList();
-                current = [.. nextOrbits, .. nextCenters];
+                var nextObjects = orbits
+                    .Where(orbit => current.Contains(orbit.Key))
+                    .SelectMany(orbit => orbit.Value)
+                    .Where(obj => !current.Contains(obj))
+                    .ToList();
+                var nextCenters = orbits
+                    .Where(orbit => orbit.Value.Any(obj => current.Contains(obj)))
+                    .Select(orbit => orbit.Key)
+                    .Where(center => !current.Contains(center))
+                    .ToList();
+                current = [.. nextObjects, .. nextCenters];
                 depth++;
             }
             return depth;
+        }
+
+        private static Dictionary<string, List<string>> ToOrbits(string[] input)
+        {
+            return input
+                .Select(line => line.Split(')'))
+                .Select(parts => (Center: parts[0], Object: parts[1]))
+                .GroupBy(orbit => orbit.Center)
+                .Select(g => (g.Key, Value: g.Select(orbit => orbit.Object).ToList()))
+                .ToDictionary(g => g.Key, g => g.Value);
         }
     }
 }

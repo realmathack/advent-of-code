@@ -2,30 +2,24 @@ namespace AdventOfCode.Y2021.Solvers
 {
     public class Day06 : SolverWithText
     {
-        public override object SolvePart1(string input)
-        {
-            return GrowFish(input, 80).Values.Sum();
-        }
+        public override object SolvePart1(string input) => GrowFish(input, 80).Values.Sum();
 
-        public override object SolvePart2(string input)
-        {
-            return GrowFish(input, 256).Values.Sum();
-        }
+        public override object SolvePart2(string input) => GrowFish(input, 256).Values.Sum();
 
         private static Dictionary<int, long> GrowFish(string input, int days)
         {
             var fish = input.Split(',').Select(int.Parse).ToList();
             var fishCounts = new Dictionary<int, long>()
             {
-                { 0, fish.Count(x => x == 0) },
-                { 1, fish.Count(x => x == 1) },
-                { 2, fish.Count(x => x == 2) },
-                { 3, fish.Count(x => x == 3) },
-                { 4, fish.Count(x => x == 4) },
-                { 5, fish.Count(x => x == 5) },
-                { 6, fish.Count(x => x == 6) },
-                { 7, fish.Count(x => x == 7) },
-                { 8, fish.Count(x => x == 8) }
+                { 0, fish.Count(timer => timer == 0) },
+                { 1, fish.Count(timer => timer == 1) },
+                { 2, fish.Count(timer => timer == 2) },
+                { 3, fish.Count(timer => timer == 3) },
+                { 4, fish.Count(timer => timer == 4) },
+                { 5, fish.Count(timer => timer == 5) },
+                { 6, fish.Count(timer => timer == 6) },
+                { 7, fish.Count(timer => timer == 7) },
+                { 8, fish.Count(timer => timer == 8) }
             };
             for (int day = 0; day < days; day++)
             {

@@ -21,22 +21,22 @@ namespace AdventOfCode.Y2022.Solvers
             var lines = input.SelectMany(section => section.SplitIntoLines()).ToList();
             lines.Add("[[2]]");
             lines.Add("[[6]]");
-            var signals = lines.Select(line => ParseSignals(line).list).ToList();
+            var signals = lines.Select(line => ParseSignals(line).List).ToList();
             signals.Sort();
             var decoderKey = FindDividerPacketIndex(signals, 2);
             decoderKey *= FindDividerPacketIndex(signals, 6, decoderKey);
             return decoderKey;
         }
 
-        private static (SignalList left, SignalList right) ToPair(string section)
+        private static (SignalList Left, SignalList Right) ToPair(string section)
         {
             var lines = section.SplitIntoLines();
-            var left = ParseSignals(lines[0]).list;
-            var right = ParseSignals(lines[1]).list;
+            var left = ParseSignals(lines[0]).List;
+            var right = ParseSignals(lines[1]).List;
             return (left, right);
         }
 
-        private static (SignalList list, int newPos) ParseSignals(string signals, int pos = 0)
+        private static (SignalList List, int NewPos) ParseSignals(string signals, int pos = 0)
         {
             var result = new SignalList();
             while (signals[++pos] != ']')

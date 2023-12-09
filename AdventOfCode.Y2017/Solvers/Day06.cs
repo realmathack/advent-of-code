@@ -2,17 +2,11 @@ namespace AdventOfCode.Y2017.Solvers
 {
     public class Day06 : SolverWithText
     {
-        public override object SolvePart1(string input)
-        {
-            return Solve(input);
-        }
+        public override object SolvePart1(string input) => Solve(input);
 
-        public override object SolvePart2(string input)
-        {
-            return Solve(input, true);
-        }
+        public override object SolvePart2(string input) => Solve(input, true);
 
-        private static int Solve(string input, bool p2 = false)
+        private static int Solve(string input, bool returnLoopSize = false)
         {
             var memory = input.Split('\t').Select(int.Parse).ToArray();
             var seen = new Dictionary<string, int>();
@@ -41,7 +35,7 @@ namespace AdventOfCode.Y2017.Solvers
                     memory[(current + 1 + i) % memory.Length]++;
                 }
             }
-            return !p2 ? seen.Count : cycle - seen[string.Join(',', memory)];
+            return returnLoopSize ? cycle - seen[string.Join(',', memory)] : seen.Count;
         }
     }
 }

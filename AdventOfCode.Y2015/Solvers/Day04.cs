@@ -1,33 +1,20 @@
-using System.Security.Cryptography;
-
 namespace AdventOfCode.Y2015.Solvers
 {
     public class Day04 : SolverWithText
     {
-        public override object SolvePart1(string input)
-        {
-            return FindFirstHashStartingWith(input, "00000");
-        }
+        public override object SolvePart1(string input) => FindFirstHashStartingWith(input, "00000");
 
-        public override object SolvePart2(string input)
-        {
-            return FindFirstHashStartingWith(input, "000000");
-        }
+        public override object SolvePart2(string input) => FindFirstHashStartingWith(input, "000000");
 
-        private static object FindFirstHashStartingWith(string input, string start)
+        private static int FindFirstHashStartingWith(string input, string start)
         {
-            int i = 0;
-            do
+            for (int i = 1; i < int.MaxValue; i++)
             {
-                i++;
-                var bytes = Encoding.ASCII.GetBytes(input + i);
-                var hash = MD5.HashData(bytes);
-                var hex = Convert.ToHexString(hash);
-                if (hex.StartsWith(start))
+                if ((input + i).ToMD5Hex().StartsWith(start))
                 {
                     return i;
                 }
-            } while (i < int.MaxValue);
+            }
             return 0;
         }
     }

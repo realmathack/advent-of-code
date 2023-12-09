@@ -1,10 +1,10 @@
 namespace AdventOfCode.Y2019.Solvers
 {
-    public class Day02 : SolverWithText
+    public class Day02(bool restore1202State) : SolverWithText
     {
-        public override object SolvePart1(string input) => SolvePart1(input, true);
+        public Day02() : this(true) { }
 
-        public static int SolvePart1(string input, bool restore1202State)
+        public override object SolvePart1(string input)
         {
             return restore1202State ? ExecuteProgram(input, 12, 2) : ExecuteProgram(input, null, null);
         }

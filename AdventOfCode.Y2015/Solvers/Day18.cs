@@ -1,9 +1,10 @@
 namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day18 : SolverWithLines
+    public class Day18(int steps) : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => SolvePart1(input, 100);
-        public static int SolvePart1(string[] input, int steps)
+        public Day18() : this(100) { }
+
+        public override object SolvePart1(string[] input)
         {
             var grid = ToGrid(input);
             for (int step = 0; step < steps; step++)
@@ -13,8 +14,7 @@ namespace AdventOfCode.Y2015.Solvers
             return grid.Select(row => row.Count(light => light)).Sum();
         }
 
-        public override object SolvePart2(string[] input) => SolvePart2(input, 100);
-        public static int SolvePart2(string[] input, int steps)
+        public override object SolvePart2(string[] input)
         {
             var grid = SetCornersOn(ToGrid(input));
             for (int step = 0; step < steps; step++)

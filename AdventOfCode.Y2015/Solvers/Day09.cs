@@ -2,15 +2,9 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day09 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return ToNodes(input).Select(node => GetDistance(node, [node])).Min();
-        }
+        public override object SolvePart1(string[] input) => ToNodes(input).Min(node => GetDistance(node, [node]));
 
-        public override object SolvePart2(string[] input)
-        {
-            return ToNodes(input).Select(node => GetDistance(node, [node], true)).Max();
-        }
+        public override object SolvePart2(string[] input) => ToNodes(input).Max(node => GetDistance(node, [node], true));
 
         private static int GetDistance(Node node, HashSet<Node> visited, bool longestRoute = false)
         {

@@ -4,39 +4,39 @@ namespace AdventOfCode.Y2018.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            input = [.. input.OrderBy(x => x)];
-            var mostAsleep = ToSleeps(input)
-                .GroupBy(s => s.Id)
-                .Select(g => new { Id = g.Key, Minutes = g.SelectMany(s => s.Minutes) })
-                .OrderByDescending(x => x.Minutes.Count())
+            input = [.. input.OrderBy(line => line)];
+            var (mostAsleepId, mostAsleepMinutes) = ToSleeps(input)
+                .GroupBy(sleep => sleep.Id)
+                .Select(g => (Id: g.Key, Minutes: g.SelectMany(sleep => sleep.Minutes)))
+                .OrderByDescending(g => g.Minutes.Count())
                 .First();
-            var mostFrequentMinute = mostAsleep.Minutes
-                .GroupBy(m => m)
-                .Select(g => new { g.Key, Count = g.Count() })
-                .OrderByDescending(x => x.Count)
+            var mostFrequentMinute = mostAsleepMinutes
+                .GroupBy(minute => minute)
+                .Select(g => (g.Key, Count: g.Count()))
+                .OrderByDescending(g => g.Count)
                 .First().Key;
-            return mostAsleep.Id * mostFrequentMinute;
+            return mostAsleepId * mostFrequentMinute;
         }
 
         public override object SolvePart2(string[] input)
         {
-            input = [.. input.OrderBy(x => x)];
-            var mostFrequentAsleep = ToSleeps(input)
-                .GroupBy(s => s.Id)
-                .Select(g => new { Id = g.Key, MostFrequentMinute = g.SelectMany(s => s.Minutes)
-                    .GroupBy(s => s)
-                    .Select(g => new { Minute = g.Key, Count = g.Count() })
-                    .OrderByDescending(x => x.Count)
-                    .First()
-                })
-                .OrderByDescending(x => x.MostFrequentMinute.Count)
+            input = [.. input.OrderBy(line => line)];
+            var (mostFrequentAsleepId, mostFrequentMinute) = ToSleeps(input)
+                .GroupBy(sleep => sleep.Id)
+                .Select(g => (Id: g.Key, MostFrequentMinute: g
+                    .SelectMany(sleep => sleep.Minutes)
+                    .GroupBy(minute => minute)
+                    .Select(g => (Minute: g.Key, Count: g.Count()))
+                    .OrderByDescending(g => g.Count)
+                    .First()))
+                .OrderByDescending(g => g.MostFrequentMinute.Count)
                 .First();
-            return mostFrequentAsleep.Id * mostFrequentAsleep.MostFrequentMinute.Minute;
+            return mostFrequentAsleepId * mostFrequentMinute.Minute;
         }
 
-        private static List<Sleep> ToSleeps(string[] input)
+        private static List<(int Id, int[] Minutes)> ToSleeps(string[] input)
         {
-            var sleeps = new List<Sleep>();
+            var sleeps = new List<(int Id, int[] Minutes)>();
             var id = 0;
             var start = 0;
             foreach (var line in input)
@@ -58,7 +58,5 @@ namespace AdventOfCode.Y2018.Solvers
             }
             return sleeps;
         }
-
-        private record class Sleep(int Id, int[] Minutes);
     }
 }

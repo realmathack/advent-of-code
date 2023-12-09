@@ -5,7 +5,10 @@ namespace AdventOfCode.Y2015.Tests
         [Fact]
         public void TestPart1()
         {
-            var result = Day17.SolvePart1(_input.SplitIntoLines(), 25);
+            var subject = new Day17(25);
+            subject.SetInput(_input);
+
+            var result = subject.SolvePart1();
 
             Assert.Equal(4, result);
         }
@@ -13,7 +16,10 @@ namespace AdventOfCode.Y2015.Tests
         [Fact]
         public void TestPart2()
         {
-            var result = Day17.SolvePart2(_input.SplitIntoLines(), 25);
+            var subject = new Day17(25);
+            subject.SetInput(_input);
+
+            var result = subject.SolvePart2();
 
             Assert.Equal(3, result);
         }

@@ -6,10 +6,7 @@ namespace AdventOfCode.Y2015.Solvers
     {
         private readonly Regex _numberRegex = new(@"-?\d+");
 
-        public override object SolvePart1(string input)
-        {
-            return SumNumbers(input);
-        }
+        public override object SolvePart1(string input) => SumNumbers(input);
 
         public override object SolvePart2(string input)
         {
@@ -39,7 +36,7 @@ namespace AdventOfCode.Y2015.Solvers
         private int SumNumbers(string input)
         {
             var sum = 0;
-            foreach (Match match in _numberRegex.Matches(input))
+            foreach (var match in (IEnumerable<Match>)_numberRegex.Matches(input))
             {
                 sum += int.Parse(match.Groups[0].Value);
             }

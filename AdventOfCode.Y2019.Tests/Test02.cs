@@ -10,7 +10,10 @@ namespace AdventOfCode.Y2019.Tests
         [InlineData("1,1,1,4,99,5,6,0,99", 30)]
         public void TestPart1(string input, int expected)
         {
-            var result = Day02.SolvePart1(input, false);
+            var subject = new Day02(false);
+            subject.SetInput(input);
+
+            var result = subject.SolvePart1();
 
             Assert.Equal(expected, result);
         }

@@ -23,7 +23,7 @@ namespace AdventOfCode.Y2016.Solvers
             var value = coords.X * coords.X + 3 * coords.X + 2 * coords.X * coords.Y + coords.Y + coords.Y * coords.Y;
             value += designerFavNumber;
             var binary = Convert.ToString(value, 2);
-            return binary.Count(c => c == '1') % 2 == 1;
+            return binary.Count(bit => bit == '1') % 2 == 1;
         }
     }
 }

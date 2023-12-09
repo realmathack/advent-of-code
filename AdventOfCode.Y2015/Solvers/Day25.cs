@@ -18,7 +18,7 @@ namespace AdventOfCode.Y2015.Solvers
         public override object SolvePart2(string input) => "Day 25";
 
         private static readonly char[] _separator = [' ', ',', '.'];
-        private static (long row, long col) ToTarget(string input)
+        private static (long Row, long Col) ToTarget(string input)
         {
             var parts = input.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
             return (long.Parse(parts[15]), long.Parse(parts[17]));

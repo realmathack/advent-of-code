@@ -2,21 +2,15 @@ namespace AdventOfCode.Y2016.Solvers
 {
     public class Day10 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return Solve(input);
-        }
+        public override object SolvePart1(string[] input) => Solve(input);
 
-        public override object SolvePart2(string[] input)
-        {
-            return Solve(input, true);
-        }
+        public override object SolvePart2(string[] input) => Solve(input, true);
 
-        private static int Solve(string[] input, bool p2 = false)
+        private static int Solve(string[] input, bool returnOutputs = false)
         {
             var outputs = new Dictionary<int, int>();
             var bots = new Dictionary<int, Bot>();
-            foreach (var line in input.OrderBy(x => x))
+            foreach (var line in input.OrderBy(line => line))
             {
                 var parts = line.Split(' ');
                 if (parts[0] == "value")
@@ -29,12 +23,12 @@ namespace AdventOfCode.Y2016.Solvers
             }
             while (true)
             {
-                var bot = bots.FirstOrDefault(x => x.Value.Values.Count == 2).Value;
-                if (p2 && bot is null)
+                var bot = bots.FirstOrDefault(bot => bot.Value.Values.Count == 2).Value;
+                if (returnOutputs && bot is null)
                 {
                     return outputs[0] * outputs[1] * outputs[2];
                 }
-                if (!p2 && bot.Values.Contains(61) && bot.Values.Contains(17))
+                if (!returnOutputs && bot.Values.Contains(61) && bot.Values.Contains(17))
                 {
                     return bot.Number;
                 }

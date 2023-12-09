@@ -32,9 +32,9 @@ namespace AdventOfCode.Y2015.Solvers
             return costs.Max();
         }
 
-        private static List<(int cost, int damage, int armor)> GetCombinations()
+        private static List<(int Cost, int Damage, int Armor)> GetCombinations()
         {
-            var combinations = new List<(int, int, int)>();
+            var combinations = new List<(int Cost, int Damage, int Armor)>();
             var weapons = GetWeapons();
             var armors = GetArmors();
             var rings = GetRings();
@@ -65,7 +65,7 @@ namespace AdventOfCode.Y2015.Solvers
         {
             var creatures = new[] { player, boss };
             var current = 0;
-            while (creatures.All(c => c.HitPoints > 0))
+            while (creatures.All(creature => creature.HitPoints > 0))
             {
                 Attack(creatures[current], creatures[++current % 2]);
                 current %= 2;

@@ -4,14 +4,11 @@ namespace AdventOfCode.Y2021.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var lines = ToLines(input).Where(l => l.From.X == l.To.X || l.From.Y == l.To.Y).ToList();
+            var lines = ToLines(input).Where(line => line.From.X == line.To.X || line.From.Y == line.To.Y).ToList();
             return FindOverlaps(lines);
         }
 
-        public override object SolvePart2(string[] input)
-        {
-            return FindOverlaps(ToLines(input));
-        }
+        public override object SolvePart2(string[] input) => FindOverlaps(ToLines(input));
 
         private static int FindOverlaps(List<Line> lines)
         {

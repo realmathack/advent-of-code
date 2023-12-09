@@ -52,7 +52,7 @@ namespace AdventOfCode.Y2019.Solvers
                     adjacents[text[i]].Add(i);
                 }
             }
-            return adjacents.Any(x => x.Value.Count == 2);
+            return adjacents.Any(adjacent => adjacent.Value.Count == 2);
         }
     }
 }

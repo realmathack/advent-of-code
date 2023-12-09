@@ -5,17 +5,11 @@ namespace AdventOfCode.Y2015.Solvers
         private readonly Dictionary<SpellNames, Spell> _spells = GetSpells();
         private int _lowestManaCost;
 
-        public override object SolvePart1(string[] input)
-        {
-            return Solve(input);
-        }
+        public override object SolvePart1(string[] input) => Solve(input);
 
-        public override object SolvePart2(string[] input)
-        {
-            // HACK: Can't seem to get my code to work for part 2,
-            // cheated by using https://github.com/fluttert/AdventOfCode/blob/master/AdventOfCode/Year2015/Day22.cs
-            return Solve(input, true);
-        }
+        // HACK: Can't seem to get my code to work for part 2,
+        // cheated by using https://github.com/fluttert/AdventOfCode/blob/master/AdventOfCode/Year2015/Day22.cs
+        public override object SolvePart2(string[] input) => Solve(input, true);
 
         private int Solve(string[] input, bool isHardDifficulty = false)
         {
@@ -67,7 +61,7 @@ namespace AdventOfCode.Y2015.Solvers
                 // queue next round
                 foreach (var spell in _spells)
                 {
-                    if (spell.Value.Cost > current.PlayerMana || current.ActiveEffects.Any(s => s.SpellName == spell.Key))
+                    if (spell.Value.Cost > current.PlayerMana || current.ActiveEffects.Any(effect => effect.SpellName == spell.Key))
                     {
                         continue;
                     }
@@ -167,7 +161,7 @@ namespace AdventOfCode.Y2015.Solvers
                     BossDamage = BossDamage,
                     TotalManaCost = TotalManaCost,
                     NextSpell = nextSpell,
-                    ActiveEffects = ActiveEffects.Select(x => x.Duplicate()).ToList()
+                    ActiveEffects = ActiveEffects.Select(effect => effect.Duplicate()).ToList()
                 };
             }
         }

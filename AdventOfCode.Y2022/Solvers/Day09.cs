@@ -2,15 +2,9 @@ namespace AdventOfCode.Y2022.Solvers
 {
     public class Day09 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return GetTailVisitedCount(input, 2);
-        }
+        public override object SolvePart1(string[] input) => GetTailVisitedCount(input, 2);
 
-        public override object SolvePart2(string[] input)
-        {
-            return GetTailVisitedCount(input, 10);
-        }
+        public override object SolvePart2(string[] input) => GetTailVisitedCount(input, 10);
 
         private static int GetTailVisitedCount(string[] lines, int segmentCount)
         {

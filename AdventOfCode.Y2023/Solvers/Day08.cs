@@ -9,11 +9,11 @@ namespace AdventOfCode.Y2023.Solvers
         private static long[] GetSteps(string[] input, string start, string end)
         {
             var instructions = input[0];
-            var nodes = input[1].SplitIntoLines().Select(x => new Node(x[0..3], x[7..10], x[12..15])).ToDictionary(x => x.Name);
-            var current = nodes.Where(x => x.Key.EndsWith(start)).Select(x => x.Value).ToArray();
+            var nodes = input[1].SplitIntoLines().Select(line => new Node(line[0..3], line[7..10], line[12..15])).ToDictionary(node => node.Name);
+            var current = nodes.Where(node => node.Key.EndsWith(start)).Select(node => node.Value).ToArray();
             var steps = new long[current.Length];
             var index = 0;
-            while (steps.Any(x => x == default))
+            while (steps.Any(step => step == default))
             {
                 for (int i = 0; i < current.Length; i++)
                 {

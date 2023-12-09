@@ -2,15 +2,9 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day14 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return ToReindeers(input).Select(reindeer => Fly(reindeer, 2503)).Max();
-        }
+        public override object SolvePart1(string[] input) => ToReindeers(input).Max(reindeer => Fly(reindeer, 2503));
 
-        public override object SolvePart2(string[] input)
-        {
-            return GetSecondScores(ToReindeers(input), 2503).Max();
-        }
+        public override object SolvePart2(string[] input) => GetHighestScoreAtSeconds(ToReindeers(input), 2503);
 
         private static List<Reindeer> ToReindeers(string[] lines)
         {
@@ -31,7 +25,7 @@ namespace AdventOfCode.Y2015.Solvers
             return flightSeconds * reindeer.Speed;
         }
 
-        private static List<int> GetSecondScores(List<Reindeer> reindeers, int seconds)
+        private static int GetHighestScoreAtSeconds(List<Reindeer> reindeers, int seconds)
         {
             var scores = reindeers.ToDictionary(reindeer => reindeer, score => 0);
             var distances = reindeers.ToDictionary(reindeer => reindeer, distance => 0);
@@ -50,7 +44,7 @@ namespace AdventOfCode.Y2015.Solvers
                     scores[reindeer]++;
                 }
             }
-            return [.. scores.Values];
+            return scores.Values.Max();
         }
 
         private record struct Reindeer(int Speed, int FlySeconds, int RestSeconds);

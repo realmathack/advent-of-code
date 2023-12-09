@@ -8,7 +8,7 @@ namespace AdventOfCode.Y2023.Solvers
             var (numbers, parts) = ToNumbersAndParts(input);
             foreach (var number in numbers)
             {
-                if (number.Key.SelectMany(x => x.Adjacents).Distinct().Any(parts.ContainsKey))
+                if (number.Key.SelectMany(coord => coord.Adjacents).Distinct().Any(parts.ContainsKey))
                 {
                     sum += number.Value;
                 }
@@ -20,9 +20,9 @@ namespace AdventOfCode.Y2023.Solvers
         {
             var sum = 0;
             var (numbers, parts) = ToNumbersAndParts(input);
-            foreach (var part in parts.Where(x => x.Value == '*'))
+            foreach (var part in parts.Where(part => part.Value == '*'))
             {
-                var partNumbers = numbers.Where(x => x.Key.Any(part.Key.Adjacents.Contains)).Select(x => x.Value).ToArray();
+                var partNumbers = numbers.Where(number => number.Key.Any(part.Key.Adjacents.Contains)).Select(number => number.Value).ToArray();
                 if (partNumbers.Length == 2)
                 {
                     sum += partNumbers[0] * partNumbers[1];
@@ -31,7 +31,7 @@ namespace AdventOfCode.Y2023.Solvers
             return sum;
         }
 
-        private static (Dictionary<List<Coords>, int> numbers, Dictionary<Coords, char> parts) ToNumbersAndParts(string[] input)
+        private static (Dictionary<List<Coords>, int> Numbers, Dictionary<Coords, char> Parts) ToNumbersAndParts(string[] input)
         {
             var numbers = new Dictionary<List<Coords>, int>();
             var parts = new Dictionary<Coords, char>();

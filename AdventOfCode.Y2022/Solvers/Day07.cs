@@ -2,17 +2,13 @@ namespace AdventOfCode.Y2022.Solvers
 {
     public class Day07 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            var sizes = GetFolderSizes(input);
-            return sizes.Where(x => x <= 100000).Sum();
-        }
+        public override object SolvePart1(string[] input) => GetFolderSizes(input).Where(size => size <= 100000).Sum();
 
         public override object SolvePart2(string[] input)
         {
             var sizes = GetFolderSizes(input);
             var toDelete = 30000000 - (70000000 - sizes.Max());
-            return sizes.Where(x => x > toDelete).Min();
+            return sizes.Where(size => size > toDelete).Min();
         }
 
         private static List<int> GetFolderSizes(string[] lines)

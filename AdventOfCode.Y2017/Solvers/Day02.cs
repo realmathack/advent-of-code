@@ -20,9 +20,9 @@ namespace AdventOfCode.Y2017.Solvers
             {
                 var found = false;
                 var numbers = line.Split('\t').Select(int.Parse);
-                foreach (var high in numbers.OrderByDescending(x => x))
+                foreach (var high in numbers.OrderByDescending(number => number))
                 {
-                    foreach (var low in numbers.OrderBy(x => x))
+                    foreach (var low in numbers.OrderBy(number => number))
                     {
                         if (low >= high)
                         {

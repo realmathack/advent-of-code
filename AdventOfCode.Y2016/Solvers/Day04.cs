@@ -10,18 +10,9 @@ namespace AdventOfCode.Y2016.Solvers
             foreach (var line in input)
             {
                 var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-                var name = string.Join("", parts[..^2]);
-                var top5 = name.Distinct().Select(letter => (letter, count: name.Count(c => c == letter)))
-                    .OrderByDescending(x => x.count).ThenBy(x => x.letter).Take(5).Select(x => x.letter).ToList();
-                var isValid = true;
-                foreach (var letter in parts[^1])
-                {
-                    if (!top5.Contains(letter))
-                    {
-                        isValid = false;
-                    }
-                }
-                if (isValid)
+                var name = string.Concat(parts[..^2]);
+                var top5 = name.GroupBy(c => c).Select(g => (g.Key, Count: g.Count())).OrderByDescending(g => g.Count).ThenBy(g => g.Key).Take(5).Select(g => g.Key).ToHashSet();
+                if (parts[^1].All(top5.Contains))
                 {
                     realRoomSectorIds.Add(int.Parse(parts[^2]));
                 }
@@ -38,19 +29,19 @@ namespace AdventOfCode.Y2016.Solvers
                 var name = string.Join(' ', parts[..^2]);
                 var sectorId = int.Parse(parts[^2]);
                 var shift = sectorId % 26;
-                var sb = new StringBuilder();
+                var room = string.Empty;
                 foreach (var letter in name)
                 {
                     if (letter == ' ')
                     {
-                        sb.Append(letter);
+                        room += letter;
                         continue;
                     }
-                    sb.Append((char)((letter - 'a' + shift) % 26 + 'a'));
+                    room += (char)((letter - 'a' + shift) % 26 + 'a');
                 }
-                rooms.Add(sb.ToString(), sectorId);
+                rooms.Add(room, sectorId);
             }
-            return string.Join(Environment.NewLine, rooms.Where(x => x.Key.Contains("north")).Select(x => $"{x.Value}\t{x.Key}"));
+            return rooms.First(room => room.Key.Contains("north")).Value;
         }
     }
 }

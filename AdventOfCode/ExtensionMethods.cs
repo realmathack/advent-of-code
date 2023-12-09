@@ -1,4 +1,7 @@
-﻿namespace AdventOfCode
+﻿using System.Security.Cryptography;
+using System.Text;
+
+namespace AdventOfCode
 {
     public static class ExtensionMethods
     {
@@ -27,6 +30,11 @@
                 }
                 yield return set;
             }
+        }
+
+        public static string ToMD5Hex(this string input)
+        {
+            return Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes(input))).ToLower();
         }
     }
 }

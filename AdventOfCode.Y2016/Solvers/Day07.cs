@@ -2,15 +2,9 @@ namespace AdventOfCode.Y2016.Solvers
 {
     public class Day07 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return input.Count(SupportsTls);
-        }
+        public override object SolvePart1(string[] input) => input.Count(SupportsTls);
 
-        public override object SolvePart2(string[] input)
-        {
-            return input.Count(SupportsSsl);
-        }
+        public override object SolvePart2(string[] input) => input.Count(SupportsSsl);
 
         private static bool SupportsTls(string line)
         {
@@ -40,7 +34,7 @@ namespace AdventOfCode.Y2016.Solvers
             var possibleBabs = GetPossibleBabs(outside);
             foreach (var bab in possibleBabs)
             {
-                if (inside.Any(x => x.Contains(bab)))
+                if (inside.Any(text => text.Contains(bab)))
                 {
                     return true;
                 }
@@ -57,14 +51,14 @@ namespace AdventOfCode.Y2016.Solvers
                 {
                     if (part[i] == part[i + 2] && part[i] != part[i + 1])
                     {
-                        babs.Add(string.Join("", part[i + 1], part[i], part[i + 1]));
+                        babs.Add(string.Concat(part[i + 1], part[i], part[i + 1]));
                     }
                 }
             }
             return babs;
         }
 
-        private static (List<string> inside, List<string> outside) GetBracketParts(string line)
+        private static (List<string> Inside, List<string> Outside) GetBracketParts(string line)
         {
             var inside = new List<string>();
             var outside = new List<string>();

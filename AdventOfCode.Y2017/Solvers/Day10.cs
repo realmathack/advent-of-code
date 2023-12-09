@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2017.Solvers
 {
-    public class Day10(int _elementCount) : SolverWithText
+    public class Day10(int elementCount) : SolverWithText
     {
         public Day10() : this(256) { }
 
@@ -8,17 +8,17 @@ namespace AdventOfCode.Y2017.Solvers
         {
             var pos = 0;
             var skipSize = 0;
-            var elements = Enumerable.Range(0, _elementCount).ToArray();
+            var elements = Enumerable.Range(0, elementCount).ToArray();
             foreach (var length in input.Split(',').Select(int.Parse))
             {
                 var end = pos + length;
-                var subset = (end < _elementCount) ? elements[pos..end] : [.. elements[pos..], .. elements[..(end % _elementCount)]];
+                var subset = (end < elementCount) ? elements[pos..end] : [.. elements[pos..], .. elements[..(end % elementCount)]];
                 subset = subset.Reverse().ToArray();
                 for (int i = 0; i < subset.Length; i++)
                 {
-                    elements[(pos + i) % _elementCount] = subset[i];
+                    elements[(pos + i) % elementCount] = subset[i];
                 }
-                pos = (end + skipSize++) % _elementCount;
+                pos = (end + skipSize++) % elementCount;
             }
             return elements[0] * elements[1];
         }
@@ -34,19 +34,19 @@ namespace AdventOfCode.Y2017.Solvers
 
             var pos = 0;
             var skipSize = 0;
-            var elements = Enumerable.Range(0, _elementCount).ToArray();
+            var elements = Enumerable.Range(0, elementCount).ToArray();
             for (int j = 0; j < 64; j++)
             {
                 foreach (var length in lengths)
                 {
                     var end = pos + length;
-                    var subset = (end < _elementCount) ? elements[pos..end] : [.. elements[pos..], .. elements[..(end % _elementCount)]];
+                    var subset = (end < elementCount) ? elements[pos..end] : [.. elements[pos..], .. elements[..(end % elementCount)]];
                     subset = subset.Reverse().ToArray();
                     for (int i = 0; i < subset.Length; i++)
                     {
-                        elements[(pos + i) % _elementCount] = subset[i];
+                        elements[(pos + i) % elementCount] = subset[i];
                     }
-                    pos = (end + skipSize++) % _elementCount;
+                    pos = (end + skipSize++) % elementCount;
                 }
             }
 
@@ -61,7 +61,7 @@ namespace AdventOfCode.Y2017.Solvers
                 dense[j] = hash;
             }
 
-            return string.Join("", dense.Select(i => i.ToString("X2"))).ToLower();
+            return string.Concat(dense.Select(number => number.ToString("X2"))).ToLower();
         }
     }
 }

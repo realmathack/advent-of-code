@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace AdventOfCode.Y2022.Solvers
 {
     public class Day10 : SolverWithLines

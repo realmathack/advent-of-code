@@ -23,7 +23,7 @@ namespace AdventOfCode.Y2017.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var programs = new Dictionary<string, (int weight, List<string> children)>();
+            var programs = new Dictionary<string, (int Weight, List<string> Children)>();
             var alllChilderen = new List<string>();
             foreach (var line in input)
             {
@@ -42,7 +42,7 @@ namespace AdventOfCode.Y2017.Solvers
             return correctedWeight;
         }
 
-        private static (bool found, int correctedWeight, int summedWeight) CheckWeights(Dictionary<string, (int weight, List<string> children)> programs, string current)
+        private static (bool Found, int CorrectedWeight, int SummedWeight) CheckWeights(Dictionary<string, (int Weight, List<string> Children)> programs, string current)
         {
             var (weight, children) = programs[current];
             if (children.Count == 0)
@@ -53,27 +53,27 @@ namespace AdventOfCode.Y2017.Solvers
             foreach (var child in children)
             {
                 var result = CheckWeights(programs, child);
-                if (result.found)
+                if (result.Found)
                 {
                     return result;
                 }
-                childWeights.Add(child, result.summedWeight);
+                childWeights.Add(child, result.SummedWeight);
             }
             if (childWeights.Values.Distinct().Count() > 1)
             {
                 string child;
                 int difference;
-                if (childWeights.Values.Count(x => x == childWeights.Values.Max()) > 1)
+                if (childWeights.Values.Count(weight => weight == childWeights.Values.Max()) > 1)
                 {
-                    child = childWeights.Where(x => x.Value == childWeights.Values.Min()).Single().Key;
+                    child = childWeights.Where(childWeight => childWeight.Value == childWeights.Values.Min()).Single().Key;
                     difference = childWeights.Values.Max() - childWeights.Values.Min();
                 }
                 else
                 {
-                    child = childWeights.Where(x => x.Value == childWeights.Values.Max()).Single().Key;
+                    child = childWeights.Where(childWeight => childWeight.Value == childWeights.Values.Max()).Single().Key;
                     difference = childWeights.Values.Min() - childWeights.Values.Max();
                 }
-                return (true, programs[child].weight + difference, 0);
+                return (true, programs[child].Weight + difference, 0);
             }
             return (false, 0, weight + childWeights.Values.Sum());
         }

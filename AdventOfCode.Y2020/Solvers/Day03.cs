@@ -2,10 +2,7 @@ namespace AdventOfCode.Y2020.Solvers
 {
     public class Day03 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return TreesOnSlope(input, 3, 1);
-        }
+        public override object SolvePart1(string[] input) => TreesOnSlope(input, 3, 1);
 
         public override object SolvePart2(string[] input)
         {

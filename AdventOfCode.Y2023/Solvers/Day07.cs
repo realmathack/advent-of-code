@@ -6,14 +6,14 @@ namespace AdventOfCode.Y2023.Solvers
         {
             var hands = ToHands(input);
             var rank = 1L;
-            return hands.Sum(x => x.Bet * rank++);
+            return hands.Sum(hand => hand.Bet * rank++);
         }
 
         public override object SolvePart2(string[] input)
         {
             var hands = ToHands2(input);
             var rank = 1L;
-            return hands.Sum(x => x.Bet * rank++);
+            return hands.Sum(hand => hand.Bet * rank++);
         }
 
         private static readonly Dictionary<char, char> _mapping1 = new() { { 'A', 'Z' }, { 'K', 'Y' }, { 'Q', 'X' }, { 'J', 'W' }, { 'T', 'V' } };
@@ -36,9 +36,9 @@ namespace AdventOfCode.Y2023.Solvers
             foreach (var line in input)
             {
                 var parts = line.Split(' ');
-                var groups = parts[0].GroupBy(x => x).Select(g => new { g.Key, Count = g.Count() }).ToDictionary(x => x.Key, x => x.Count);
-                var jokers = groups.Remove('J', out var tmp) ? tmp : 0;
-                var newCard = (jokers == 5 || jokers == 0) ? 'J' : (groups.Any(x => x.Value >= 2) ? groups.First(x => x.Value >= 2) : groups.First()).Key;
+                var cards = parts[0].GroupBy(card => card).Select(g => (g.Key, Count: g.Count())).ToDictionary(g => g.Key, g => g.Count);
+                var jokers = cards.Remove('J', out var tmp) ? tmp : 0;
+                var newCard = (jokers == 5 || jokers == 0) ? 'J' : (cards.Any(card => card.Value >= 2) ? cards.First(card => card.Value >= 2) : cards.First()).Key;
                 var rankingHand = parts[0].Replace('J', newCard);
                 hands.Add(new(parts[0], ToRank(rankingHand), ToSortableHand(parts[0], _mapping2), int.Parse(parts[1])));
             }
@@ -48,12 +48,12 @@ namespace AdventOfCode.Y2023.Solvers
 
         private static string ToSortableHand(string hand, Dictionary<char, char> mapping)
         {
-            return new string(hand.Select(x => mapping.TryGetValue(x, out var r) ? r : x).ToArray());
+            return string.Concat(hand.Select(card => mapping.TryGetValue(card, out var mapped) ? mapped : card));
         }
 
         private static int ToRank(string hand)
         {
-            var groups = hand.GroupBy(x => x).Select(g => g.Count()).OrderByDescending(x => x).ToList();
+            var groups = hand.GroupBy(card => card).Select(g => g.Count()).OrderByDescending(count => count).ToList();
             return groups[0] switch
             {
                 5 => 7,

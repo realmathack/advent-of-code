@@ -20,7 +20,7 @@ namespace AdventOfCode.Y2022.Solvers
                     }
                 }
             }
-            var top2 = inspections.OrderByDescending(x => x).Take(2).ToArray();
+            var top2 = inspections.OrderByDescending(inspection => inspection).Take(2).ToArray();
             return top2[0] * top2[1];
         }
 
@@ -47,7 +47,7 @@ namespace AdventOfCode.Y2022.Solvers
                     }
                 }
             }
-            var top2 = inspections.OrderByDescending(x => x).Take(2).ToArray();
+            var top2 = inspections.OrderByDescending(inspection => inspection).Take(2).ToArray();
             return top2[0] * top2[1];
         }
 
@@ -56,7 +56,7 @@ namespace AdventOfCode.Y2022.Solvers
             var monkeys = new List<Monkey>();
             foreach (var section in sections)
             {
-                var lines = section.SplitIntoLines().Select(x => x.Trim()).ToArray();
+                var lines = section.SplitIntoLines().Select(line => line.Trim()).ToArray();
                 var number = int.Parse(lines[0].TrimEnd(':').Split(' ')[1]);
                 var items = lines[1].Split(": ")[1].Split(", ").Select(long.Parse).ToArray();
                 var operation = GenerateOperation(lines[2].Split(": ")[1]);

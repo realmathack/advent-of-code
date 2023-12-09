@@ -1,11 +1,10 @@
+using System.Text;
+
 namespace AdventOfCode.Y2018.Solvers
 {
     public class Day05 : SolverWithText
     {
-        public override object SolvePart1(string input)
-        {
-            return ReduceReturnLength(input);
-        }
+        public override object SolvePart1(string input) => ReduceReturnLength(input);
 
         public override object SolvePart2(string input)
         {
@@ -44,7 +43,7 @@ namespace AdventOfCode.Y2018.Solvers
 
         private static string Improve(string input, char c)
         {
-            var improved = new StringBuilder();
+            var improved = new StringBuilder(input.Length);
             for (int i = 0; i < input.Length; i++)
             {
                 if (char.ToLower(input[i]) != c)

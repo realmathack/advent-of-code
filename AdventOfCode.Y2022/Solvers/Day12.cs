@@ -55,7 +55,7 @@ namespace AdventOfCode.Y2022.Solvers
             var fScores = new Dictionary<Coords, int>() { { start, start.DistanceTo(goal) } };
             while (openSet.Count > 0)
             {
-                var current = openSet.First(c => c.Value == openSet.Min(x => x.Value)).Key;
+                var current = openSet.First(coord => coord.Value == openSet.Min(coord => coord.Value)).Key;
                 if (current == goal)
                 {
                     return ReconstructPath(cameFrom, current);
@@ -111,7 +111,7 @@ namespace AdventOfCode.Y2022.Solvers
 
         private static int GetScore(Dictionary<Coords, int> scores, Coords current) => scores.TryGetValue(current, out var score) ? score : int.MaxValue;
 
-        private static (char[][] grid, Coords start, Coords end) ToGrid(string[] lines)
+        private static (char[][] Grid, Coords Start, Coords End) ToGrid(string[] lines)
         {
             var grid = new char[lines.Length][];
             Coords? start = null;

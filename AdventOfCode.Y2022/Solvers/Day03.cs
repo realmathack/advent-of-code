@@ -38,9 +38,9 @@ namespace AdventOfCode.Y2022.Solvers
             return total;
         }
 
-        private static List<(string first, string second)> GetRucksacks(string[] lines)
+        private static List<(string First, string Second)> GetRucksacks(string[] lines)
         {
-            var result = new List<(string, string)>(lines.Length);
+            var result = new List<(string First, string Second)>(lines.Length);
             foreach (var line in lines)
             {
                 var length = line.Length / 2;

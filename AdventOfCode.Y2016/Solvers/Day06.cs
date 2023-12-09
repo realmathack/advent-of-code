@@ -4,7 +4,7 @@ namespace AdventOfCode.Y2016.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var message = "";
+            var message = string.Empty;
             var grid = ToGrid(input);
             for (int col = 0; col < grid[0].Length; col++)
             {
@@ -15,7 +15,7 @@ namespace AdventOfCode.Y2016.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var message = "";
+            var message = string.Empty;
             var grid = ToGrid(input);
             for (int col = 0; col < grid[0].Length; col++)
             {

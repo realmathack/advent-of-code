@@ -10,7 +10,7 @@ namespace AdventOfCode.Y2020.Solvers
             queue.Enqueue(bags["shiny gold"]);
             while (queue.TryDequeue(out var current))
             {
-                foreach (var container in bags.Values.Where(b => b.Bags.ContainsKey(current.Name)))
+                foreach (var container in bags.Values.Where(bag => bag.Bags.ContainsKey(current.Name)))
                 {
                     if (containing.Add(container.Name))
                     {

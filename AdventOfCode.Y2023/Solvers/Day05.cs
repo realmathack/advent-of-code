@@ -35,7 +35,7 @@ namespace AdventOfCode.Y2023.Solvers
                 ranges = destination;
                 current = target.Destination;
             }
-            return ranges.Select(x => x.First).Min();
+            return ranges.Min(range => range.First);
         }
 
         private static long GetDestination(Target target, long source)

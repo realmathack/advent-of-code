@@ -61,7 +61,7 @@ namespace AdventOfCode.Y2021.Solvers
             return input
                 .Select(board => board
                     .SplitIntoLines()
-                    .Select(x => x.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+                    .Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries))
                     .ToArray())
                 .ToList();
         }
@@ -84,14 +84,14 @@ namespace AdventOfCode.Y2021.Solvers
 
         private static bool IsBingo(string[][] board)
         {
-            var rows = board.Count(row => row.All(x => x == "X"));
+            var rows = board.Count(row => row.All(cell => cell == "X"));
             var columns = Enumerable.Range(0, 5).Count(column => board.All(row => row[column] == "X"));
             return rows > 0 || columns > 0;
         }
 
         private static int SumUnmarkedNumbers(string[][] board)
         {
-            return board.SelectMany(x => x).Where(x => x != "X").Sum(int.Parse);
+            return board.SelectMany(row => row).Where(cell => cell != "X").Sum(int.Parse);
         }
     }
 }

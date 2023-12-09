@@ -17,11 +17,11 @@ namespace AdventOfCode.Y2022.Solvers
             var visited = new HashSet<Valve> { root };
             var timers = new Dictionary<int, int> { { 0, 26 }, { 1, 26 } };
             var current = new Dictionary<int, Valve> { { 0, root }, { 1, root } };
-            while (timers.All(x => x.Value > 0) && visited.Count < totalValves)
+            while (timers.All(timer => timer.Value > 0) && visited.Count < totalValves)
             {
                 var person = (timers[0] == timers[1] && current[0] != current[1]) ?
-                    ((FindHighestFlowRate2(visited, timers[0], current[0]).flow > FindHighestFlowRate2(visited, timers[1], current[1]).flow) ? 0 : 1) :
-                    timers.OrderByDescending(x => x.Value).ThenBy(x => x.Key).First().Key;
+                    ((FindHighestFlowRate2(visited, timers[0], current[0]).Flow > FindHighestFlowRate2(visited, timers[1], current[1]).Flow) ? 0 : 1) :
+                    timers.OrderByDescending(timer => timer.Value).ThenBy(timer => timer.Key).First().Key;
                 var (valve, flow, distance) = FindHighestFlowRate2(visited, timers[person], current[person]);
                 timers[person] -= distance;
                 sum += flow;
@@ -55,9 +55,9 @@ namespace AdventOfCode.Y2022.Solvers
             return highest.Max();
         }
 
-        private static (Valve valve, int flow, int distance) FindHighestFlowRate2(HashSet<Valve> visited, int timeLeft, Valve current)
+        private static (Valve Valve, int Flow, int Distance) FindHighestFlowRate2(HashSet<Valve> visited, int timeLeft, Valve current)
         {
-            var highest = (valve: Valve.Empty, flow: 0, distance: 0);
+            var highest = (Valve: Valve.Empty, Flow: 0, Distance: 0);
             foreach (var neighbor in current.Neighbors)
             {
                 if (visited.Contains(neighbor.Key))
@@ -65,7 +65,7 @@ namespace AdventOfCode.Y2022.Solvers
                     continue;
                 }
                 var flow = neighbor.Key.FlowRate * (timeLeft - (1 + neighbor.Value));
-                if (flow > highest.flow)
+                if (flow > highest.Flow)
                 {
                     highest = (neighbor.Key, flow, 1 + neighbor.Value);
                 }
@@ -76,23 +76,23 @@ namespace AdventOfCode.Y2022.Solvers
         private static readonly char[] _separator = [' ', '=', ';', ','];
         private static Valve ToValves(string[] lines)
         {
-            var tmpList = new Dictionary<string, (int flowRate, string[] tunnels)>();
+            var tmpList = new Dictionary<string, (int FlowRate, string[] Tunnels)>();
             foreach (var line in lines)
             {
                 var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
                 tmpList.Add(parts[1], (int.Parse(parts[5]), parts[10..]));
             }
             var valves = new Dictionary<string, Valve>();
-            var valvesWithFlowRate = tmpList.Where(x => x.Value.flowRate > 0).Select(x => x.Key).ToArray();
-            foreach (var tmp in tmpList.Where(x => x.Key == "AA" || valvesWithFlowRate.Contains(x.Key)))
+            var valvesWithFlowRate = tmpList.Where(tmp => tmp.Value.FlowRate > 0).Select(tmp => tmp.Key).ToArray();
+            foreach (var tmp in tmpList.Where(tmp => tmp.Key == "AA" || valvesWithFlowRate.Contains(tmp.Key)))
             {
                 if (!valves.TryGetValue(tmp.Key, out var valve))
                 {
                     valve = new(tmp.Key);
                     valves.Add(tmp.Key, valve);
                 }
-                valve.FlowRate = tmp.Value.flowRate;
-                foreach (var target in valvesWithFlowRate.Where(x => x != tmp.Key))
+                valve.FlowRate = tmp.Value.FlowRate;
+                foreach (var target in valvesWithFlowRate.Where(valve => valve != tmp.Key))
                 {
                     var distance = FindShortestPath(tmpList, tmp.Key, target);
                     if (!valves.TryGetValue(target, out var neighbor))
@@ -106,7 +106,7 @@ namespace AdventOfCode.Y2022.Solvers
             return valves["AA"];
         }
 
-        private static int FindShortestPath(Dictionary<string, (int flowRate, string[] tunnels)> list, string start, string target)
+        private static int FindShortestPath(Dictionary<string, (int FlowRate, string[] Tunnels)> list, string start, string target)
         {
             var parents = new Dictionary<string, string>();
             var queue = new Queue<string>();
@@ -114,7 +114,7 @@ namespace AdventOfCode.Y2022.Solvers
             while (queue.Count > 0)
             {
                 var current = queue.Dequeue();
-                foreach (var tunnel in list[current].tunnels)
+                foreach (var tunnel in list[current].Tunnels)
                 {
                     if (parents.ContainsKey(tunnel))
                     {

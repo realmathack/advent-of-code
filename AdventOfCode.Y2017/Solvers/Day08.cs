@@ -28,7 +28,7 @@ namespace AdventOfCode.Y2017.Solvers
                     registers[parts[0]] = value;
                 }
             }
-            return registers.Max(x => x.Value);
+            return registers.Max(register => register.Value);
         }
 
         public override object SolvePart2(string[] input)

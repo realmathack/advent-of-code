@@ -30,7 +30,7 @@ namespace AdventOfCode.Y2023.Solvers
                     cards[i + j].Count += cards[i].Count;
                 }
             }
-            return cards.Sum(x => x.Count);
+            return cards.Sum(card => card.Count);
         }
 
         private static List<ScratchCard> ToScratchCards(string[] input)

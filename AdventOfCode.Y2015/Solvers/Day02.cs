@@ -2,21 +2,9 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day02 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            var paper = 0;
-            foreach (var present in ToPresents(input))
-            {
-                var areas = ToAreas(present);
-                paper += areas.Sum() * 2 + areas.Min();
-            }
-            return paper;
-        }
+        public override object SolvePart1(string[] input) => ToPresents(input).Select(ToAreas).Sum(areas => areas.Sum() * 2 + areas.Min());
 
-        public override object SolvePart2(string[] input)
-        {
-            return ToPresents(input).Sum(ToRibbon);
-        }
+        public override object SolvePart2(string[] input) => ToPresents(input).Sum(ToRibbon);
 
         private static List<int[]> ToPresents(string[] lines)
         {

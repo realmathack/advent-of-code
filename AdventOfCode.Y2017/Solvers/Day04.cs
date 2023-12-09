@@ -4,12 +4,12 @@ namespace AdventOfCode.Y2017.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            return input.Where(line => line.Split(' ').GroupBy(x => x).All(g => g.Count() == 1)).Count();
+            return input.Where(line => line.Split(' ').GroupBy(pass => pass).All(g => g.Count() == 1)).Count();
         }
 
         public override object SolvePart2(string[] input)
         {
-            return input.Where(line => line.Split(' ').Select(word => string.Join("", word.OrderBy(c => c))).ToList().GroupBy(x => x).All(g => g.Count() == 1)).Count();
+            return input.Where(line => line.Split(' ').Select(word => string.Concat(word.Order())).ToList().GroupBy(word => word).All(g => g.Count() == 1)).Count();
         }
     }
 }

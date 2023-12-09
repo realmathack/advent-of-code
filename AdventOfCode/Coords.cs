@@ -11,9 +11,9 @@
         public static Coords OffsetDownLeft => new(-1, 1);
         public static Coords OffsetDownRight => new(1, 1);
         public static Coords operator +(Coords a, Coords b) => new(a.X + b.X, a.Y + b.Y);
-        public static Coords operator +(Coords a, (int x, int y) b) => new(a.X + b.x, a.Y + b.y);
+        public static Coords operator +(Coords a, (int X, int Y) b) => new(a.X + b.X, a.Y + b.Y);
         public static Coords operator -(Coords a, Coords b) => new(a.X - b.X, a.Y - b.Y);
-        public static Coords operator -(Coords a, (int x, int y) b) => new(a.X - b.x, a.Y - b.y);
+        public static Coords operator -(Coords a, (int X, int Y) b) => new(a.X - b.X, a.Y - b.Y);
         public Coords Left => this + OffsetLeft;
         public Coords Up => this + OffsetUp;
         public Coords Right => this + OffsetRight;

@@ -2,10 +2,7 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day01 : SolverWithText
     {
-        public override object SolvePart1(string input)
-        {
-            return input.Count(x => x == '(') - input.Count(x => x == ')');
-        }
+        public override object SolvePart1(string input) => input.Count(c => c == '(') - input.Count(c => c == ')');
 
         public override object SolvePart2(string input)
         {

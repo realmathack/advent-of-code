@@ -2,10 +2,7 @@ namespace AdventOfCode.Y2020.Solvers
 {
     public class Day05 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return input.Select(GetSeat).Max();
-        }
+        public override object SolvePart1(string[] input) => input.Max(GetSeat);
 
         public override object SolvePart2(string[] input)
         {

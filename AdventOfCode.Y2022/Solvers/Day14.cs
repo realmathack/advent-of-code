@@ -80,7 +80,7 @@ namespace AdventOfCode.Y2022.Solvers
             }
         }
 
-        private static (List<Coords[]> formations, Coords bottomRight, Coords sandStart) ToFormations(string[] lines, bool p2 = false)
+        private static (List<Coords[]> Formations, Coords BottomRight, Coords SandStart) ToFormations(string[] lines, bool hasFloor = false)
         {
             var sandStart = new Coords(500, 0);
             var topLeft = sandStart;
@@ -106,7 +106,7 @@ namespace AdventOfCode.Y2022.Solvers
                 }
                 formations.Add(formation);
             }
-            if (p2)
+            if (hasFloor)
             {
                 topLeft -= new Coords(bottomRight.Y, 0);
                 bottomRight += new Coords(bottomRight.Y, 2);

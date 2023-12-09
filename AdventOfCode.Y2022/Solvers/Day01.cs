@@ -2,15 +2,9 @@
 {
     public class Day01 : SolverWithSections
     {
-        public override object SolvePart1(string[] input)
-        {
-            return CalculateGroupTotals(input).Max();
-        }
+        public override object SolvePart1(string[] input) => CalculateGroupTotals(input).Max();
 
-        public override object SolvePart2(string[] input)
-        {
-            return CalculateGroupTotals(input).OrderByDescending(x => x).Take(3).Sum();
-        }
+        public override object SolvePart2(string[] input) => CalculateGroupTotals(input).OrderByDescending(total => total).Take(3).Sum();
 
         private static List<int> CalculateGroupTotals(string[] sections)
         {

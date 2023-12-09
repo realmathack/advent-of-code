@@ -1,5 +1,3 @@
-using System.Security.Cryptography;
-
 namespace AdventOfCode.Y2016.Solvers
 {
     public class Day14 : SolverWithText
@@ -58,8 +56,7 @@ namespace AdventOfCode.Y2016.Solvers
             var target = _lastHashIndex + 1000;
             for (;  _lastHashIndex < target; _lastHashIndex++)
             {
-                var bytes = Encoding.ASCII.GetBytes(input + _lastHashIndex);
-                _hashes[_lastHashIndex] = Convert.ToHexString(MD5.HashData(bytes)).ToLower();
+                _hashes[_lastHashIndex] = (input + _lastHashIndex).ToMD5Hex();
             }
         }
 
@@ -71,8 +68,7 @@ namespace AdventOfCode.Y2016.Solvers
                 var tmp = input + _lastHashIndex;
                 for (int i = 0; i < 2017; i++)
                 {
-                    var bytes = Encoding.ASCII.GetBytes(tmp);
-                    tmp = Convert.ToHexString(MD5.HashData(bytes)).ToLower();
+                    tmp = tmp.ToMD5Hex();
                 }
                 _hashes[_lastHashIndex] = tmp;
             }

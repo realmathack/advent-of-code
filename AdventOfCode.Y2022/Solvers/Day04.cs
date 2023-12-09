@@ -2,19 +2,13 @@ namespace AdventOfCode.Y2022.Solvers
 {
     public class Day04 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            return GetPairs(input).Count(pair => FullOverlap(pair.pair1, pair.pair2));
-        }
+        public override object SolvePart1(string[] input) => GetPairs(input).Count(pair => FullOverlap(pair.Pair1, pair.Pair2));
 
-        public override object SolvePart2(string[] input)
-        {
-            return GetPairs(input).Count(pair => AnyOverlap(pair.pair1, pair.pair2));
-        }
+        public override object SolvePart2(string[] input) => GetPairs(input).Count(pair => AnyOverlap(pair.Pair1, pair.Pair2));
 
-        private static List<(Pair pair1, Pair pair2)> GetPairs(string[] lines)
+        private static List<(Pair Pair1, Pair Pair2)> GetPairs(string[] lines)
         {
-            var result = new List<(Pair, Pair)>();
+            var result = new List<(Pair Pair1, Pair Pair2)>();
             foreach (var line in lines)
             {
                 var assignments = line.Split(',');

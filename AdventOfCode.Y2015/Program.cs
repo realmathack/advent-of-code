@@ -1,5 +1,4 @@
 ﻿global using AdventOfCode;
-global using System.Text;
 
 var year = "2015";
 var day = ProgramHelper.GetDayFromInput(year);
