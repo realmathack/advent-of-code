@@ -4,11 +4,11 @@ namespace AdventOfCode.Y2016.Solvers
 {
     public class Day08 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => Solve(input).SelectMany(row => row).Count(pixel => pixel);
+        public override object SolvePart1(string[] input) => ExecuteInstructions(input).SelectMany(row => row).Count(pixel => pixel);
 
         public override object SolvePart2(string[] input)
         {
-            var grid = Solve(input);
+            var grid = ExecuteInstructions(input);
             var screen = new StringBuilder();
             for (int row = 0; row < grid.Length; row++)
             {
@@ -21,7 +21,7 @@ namespace AdventOfCode.Y2016.Solvers
             return screen.ToString();
         }
 
-        private static bool[][] Solve(string[] lines)
+        private static bool[][] ExecuteInstructions(string[] lines)
         {
             var grid = InitGrid();
             foreach (var instruction in ToInstructions(lines))
@@ -89,6 +89,6 @@ namespace AdventOfCode.Y2016.Solvers
         }
 
         private enum Operation { Rect, RotateRow, RotateColumn }
-        private record struct Instruction(Operation Operation, int A, int B);
+        private readonly record struct Instruction(Operation Operation, int A, int B);
     }
 }

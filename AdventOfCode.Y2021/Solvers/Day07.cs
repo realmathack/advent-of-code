@@ -3,11 +3,11 @@ namespace AdventOfCode.Y2021.Solvers
 {
     public class Day07 : SolverWithText
     {
-        public override object SolvePart1(string input) => CalculateLowestFuel(input, CalculateFuel1);
+        public override object SolvePart1(string input) => FindLowestFuel(input, CalculateFuel1);
 
-        public override object SolvePart2(string input) => CalculateLowestFuel(input, CalculateFuel2);
+        public override object SolvePart2(string input) => FindLowestFuel(input, CalculateFuel2);
 
-        private static int CalculateLowestFuel(string input, Func<List<int>, int, int> calculateFuel)
+        private static int FindLowestFuel(string input, Func<List<int>, int, int> calculateFuel)
         {
             var positions = input.Split(',').Select(int.Parse).ToList();
             var lowest = int.MaxValue;
@@ -22,14 +22,8 @@ namespace AdventOfCode.Y2021.Solvers
             return lowest;
         }
 
-        private static int CalculateFuel1(List<int> positions, int target)
-        {
-            return positions.Sum(pos => Math.Abs(pos - target));
-        }
+        private static int CalculateFuel1(List<int> positions, int target) => positions.Sum(pos => Math.Abs(pos - target));
 
-        private static int CalculateFuel2(List<int> positions, int target)
-        {
-            return positions.Sum(pos => (Math.Abs(pos - target) * (Math.Abs(pos - target) + 1)) / 2);
-        }
+        private static int CalculateFuel2(List<int> positions, int target) => positions.Sum(pos => (Math.Abs(pos - target) * (Math.Abs(pos - target) + 1)) / 2);
     }
 }

@@ -2,11 +2,11 @@ namespace AdventOfCode.Y2016.Solvers
 {
     public class Day10 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => Solve(input);
+        public override object SolvePart1(string[] input) => ExecuteInstructions(input);
 
-        public override object SolvePart2(string[] input) => Solve(input, true);
+        public override object SolvePart2(string[] input) => ExecuteInstructions(input, true);
 
-        private static int Solve(string[] input, bool returnOutputs = false)
+        private static int ExecuteInstructions(string[] input, bool returnOutputs = false)
         {
             var outputs = new Dictionary<int, int>();
             var bots = new Dictionary<int, Bot>();

@@ -7,7 +7,7 @@ namespace AdventOfCode.Y2015.Solvers
             var target = int.Parse(input);
             for (int house = 1; ; house++)
             {
-                var presents = GetElves(house).Sum() * 10;
+                var presents = FindElves(house).Sum() * 10;
                 if (presents >= target)
                 {
                     return house;
@@ -20,7 +20,7 @@ namespace AdventOfCode.Y2015.Solvers
             var target = int.Parse(input);
             for (int house = 1; ; house++)
             {
-                var elves = GetElves(house).ToArray();
+                var elves = FindElves(house).ToArray();
                 for (int i = 0; i < elves.Length; i++)
                 {
                     if (elves[i] * 50 < house)
@@ -36,7 +36,7 @@ namespace AdventOfCode.Y2015.Solvers
             }
         }
 
-        private static HashSet<int> GetElves(int house)
+        private static HashSet<int> FindElves(int house)
         {
             // https://rosettacode.org/wiki/Factors_of_an_integer#C++
             var result = new HashSet<int>() { 1, house };

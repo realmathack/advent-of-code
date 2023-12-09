@@ -5,25 +5,17 @@ namespace AdventOfCode.Y2015.Solvers
         private readonly Dictionary<SpellNames, Spell> _spells = GetSpells();
         private int _lowestManaCost;
 
-        public override object SolvePart1(string[] input) => Solve(input);
+        public override object SolvePart1(string[] input) => FindLeastAmountOfMana(input);
 
         // HACK: Can't seem to get my code to work for part 2,
         // cheated by using https://github.com/fluttert/AdventOfCode/blob/master/AdventOfCode/Year2015/Day22.cs
-        public override object SolvePart2(string[] input) => Solve(input, true);
+        public override object SolvePart2(string[] input) => FindLeastAmountOfMana(input, true);
 
-        private int Solve(string[] input, bool isHardDifficulty = false)
+        private int FindLeastAmountOfMana(string[] input, bool isHardDifficulty = false)
         {
             var boss = ToBoss(input);
             _lowestManaCost = int.MaxValue;
-            var startingState = new GameState()
-            {
-                PlayerHitPoints = 50,
-                PlayerArmor = 0,
-                PlayerMana = 500,
-                BossHitPoints = boss.HitPoints,
-                BossDamage = boss.Damage,
-                TotalManaCost = 0
-            };
+            var startingState = new GameState(50, 0, 500, boss.HitPoints, boss.Damage, 0);
             var possibleMoves = new Queue<GameState>();
             foreach (var spell in _spells)
             {
@@ -50,7 +42,7 @@ namespace AdventOfCode.Y2015.Solvers
                 }
                 else
                 {
-                    current.ActiveEffects.Add(new Effect(spellToCast.Name, spellToCast.Duration));
+                    current.ActiveEffects.Add(new Effect(spellToCast.Name) { Duration = spellToCast.Duration });
                 }
                 // boss
                 if (IsGameOver(current)) { continue; }
@@ -70,6 +62,8 @@ namespace AdventOfCode.Y2015.Solvers
             }
             return _lowestManaCost;
         }
+
+        private static Boss ToBoss(string[] input) => new(int.Parse(input[0].Split(' ')[^1]), int.Parse(input[1].Split(' ')[^1]));
 
         private bool IsGameOver(GameState current)
         {
@@ -112,15 +106,6 @@ namespace AdventOfCode.Y2015.Solvers
             }
         }
 
-        private static Boss ToBoss(string[] input)
-        {
-            var hitPoints = int.Parse(input[0].Split(' ')[^1]);
-            var damage = int.Parse(input[1].Split(' ')[^1]);
-            return new(hitPoints, damage);
-        }
-
-        private enum SpellNames { None, MagicMissile, Drain, Shield, Poison, Recharge }
-        private record struct Spell(SpellNames Name, int Cost, int Damage, int Armor, int Heal, int Mana, int Duration);
         private static Dictionary<SpellNames, Spell> GetSpells()
         {
             return new()
@@ -133,39 +118,34 @@ namespace AdventOfCode.Y2015.Solvers
             };
         }
 
-        private class Effect(SpellNames spellName, int duration)
+        private enum SpellNames { None, MagicMissile, Drain, Shield, Poison, Recharge }
+        private readonly record struct Spell(SpellNames Name, int Cost, int Damage, int Armor, int Heal, int Mana, int Duration);
+        private readonly record struct Boss(int HitPoints, int Damage);
+
+        private record struct Effect(SpellNames SpellName)
         {
-            public SpellNames SpellName { get; } = spellName;
-            public int Duration { get; set; } = duration;
-            public Effect Duplicate() => new(SpellName, Duration);
+            public int Duration { get; set; }
+            public Effect Duplicate() => new(SpellName) { Duration = Duration };
         }
 
-        private class GameState
+        private class GameState(int playerHitPoints, int playerArmor, int playerMana, int bossHitPoints, int bossDamage, int totalManaCost)
         {
-            public int PlayerHitPoints { get; set; }
-            public int PlayerArmor { get; set; }
-            public int PlayerMana { get; set; }
-            public int BossHitPoints { get; set; }
-            public int BossDamage { get; set; }
-            public int TotalManaCost { get; set; }
+            public int PlayerHitPoints { get; set; } = playerHitPoints;
+            public int PlayerArmor { get; set; } = playerArmor;
+            public int PlayerMana { get; set; } = playerMana;
+            public int BossHitPoints { get; set; } = bossHitPoints;
+            public int BossDamage { get; set; } = bossDamage;
+            public int TotalManaCost { get; set; } = totalManaCost;
             public SpellNames NextSpell { get; init; }
             public List<Effect> ActiveEffects { get; init; } = [];
             public GameState NextRound(SpellNames nextSpell)
             {
-                return new GameState
+                return new GameState(PlayerHitPoints, PlayerArmor, PlayerMana, BossHitPoints, BossDamage, TotalManaCost)
                 {
-                    PlayerHitPoints = PlayerHitPoints,
-                    PlayerArmor = PlayerArmor,
-                    PlayerMana = PlayerMana,
-                    BossHitPoints = BossHitPoints,
-                    BossDamage = BossDamage,
-                    TotalManaCost = TotalManaCost,
                     NextSpell = nextSpell,
                     ActiveEffects = ActiveEffects.Select(effect => effect.Duplicate()).ToList()
                 };
             }
         }
-
-        private record struct Boss(int HitPoints, int Damage);
     }
 }

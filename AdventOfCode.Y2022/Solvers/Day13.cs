@@ -21,7 +21,7 @@ namespace AdventOfCode.Y2022.Solvers
             var lines = input.SelectMany(section => section.SplitIntoLines()).ToList();
             lines.Add("[[2]]");
             lines.Add("[[6]]");
-            var signals = lines.Select(line => ParseSignals(line).List).ToList();
+            var signals = lines.Select(line => ToSignals(line).List).ToList();
             signals.Sort();
             var decoderKey = FindDividerPacketIndex(signals, 2);
             decoderKey *= FindDividerPacketIndex(signals, 6, decoderKey);
@@ -31,14 +31,14 @@ namespace AdventOfCode.Y2022.Solvers
         private static (SignalList Left, SignalList Right) ToPair(string section)
         {
             var lines = section.SplitIntoLines();
-            var left = ParseSignals(lines[0]).List;
-            var right = ParseSignals(lines[1]).List;
+            var left = ToSignals(lines[0]).List;
+            var right = ToSignals(lines[1]).List;
             return (left, right);
         }
 
-        private static (SignalList List, int NewPos) ParseSignals(string signals, int pos = 0)
+        private static (SignalList List, int NewPos) ToSignals(string signals, int pos = 0)
         {
-            var result = new SignalList();
+            var result = new SignalList([]);
             while (signals[++pos] != ']')
             {
                 if (signals[pos] == ',')
@@ -47,7 +47,7 @@ namespace AdventOfCode.Y2022.Solvers
                 }
                 if (signals[pos] == '[')
                 {
-                    var (list, newPos) = ParseSignals(signals, pos);
+                    var (list, newPos) = ToSignals(signals, pos);
                     result.Signals.Add(list);
                     pos = newPos;
                     continue;
@@ -71,15 +71,13 @@ namespace AdventOfCode.Y2022.Solvers
             return 0;
         }
 
-        private abstract class Signal : IComparable<Signal>
+        private abstract record class Signal : IComparable<Signal>
         {
             public abstract int CompareTo(Signal? other);
         }
 
-        private class SignalList(params Signal[] signals) : Signal
+        private record class SignalList(List<Signal> Signals) : Signal
         {
-            public List<Signal> Signals { get; } = [.. signals];
-
             public override int CompareTo(Signal? other)
             {
                 if (other is null)
@@ -88,7 +86,7 @@ namespace AdventOfCode.Y2022.Solvers
                 }
                 if (other is NumberSignal numberSignal)
                 {
-                    return CompareTo(new SignalList(numberSignal));
+                    return CompareTo(new SignalList([numberSignal]));
                 }
                 if (other is SignalList otherList)
                 {
@@ -114,10 +112,8 @@ namespace AdventOfCode.Y2022.Solvers
             }
         }
 
-        private class NumberSignal(int number) : Signal
+        private record class NumberSignal(int Number) : Signal
         {
-            public int Number { get; } = number;
-
             public override int CompareTo(Signal? other)
             {
                 if (other is null)
@@ -130,7 +126,7 @@ namespace AdventOfCode.Y2022.Solvers
                 }
                 if (other is SignalList signalList)
                 {
-                    return new SignalList(this).CompareTo(signalList);
+                    return new SignalList([this]).CompareTo(signalList);
                 }
                 return -1;
             }

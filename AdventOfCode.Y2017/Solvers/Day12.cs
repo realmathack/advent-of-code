@@ -8,14 +8,14 @@ namespace AdventOfCode.Y2017.Solvers
             var connected = new HashSet<int>() { 0 };
             var toProcess = new Queue<int>();
             programs[0].ForEach(toProcess.Enqueue);
-            do
+            while (toProcess.Count > 0)
             {
                 var program = toProcess.Dequeue();
                 if (connected.Add(program))
                 {
                     programs[program].ForEach(toProcess.Enqueue);
                 }
-            } while (toProcess.Count > 0);
+            }
             return connected.Count;
         }
 
@@ -23,14 +23,14 @@ namespace AdventOfCode.Y2017.Solvers
         {
             var programs = ToPrograms(input);
             var connected = new Dictionary<int, HashSet<int>>();
-            do
+            while (programs.Count > 0)
             {
                 var root = programs.First().Key;
                 connected.Add(root, [root]);
                 var toProcess = new Queue<int>();
                 programs[root].ForEach(toProcess.Enqueue);
                 programs.Remove(root);
-                do
+                while (toProcess.Count > 0)
                 {
                     var program = toProcess.Dequeue();
                     if (connected[root].Add(program))
@@ -38,8 +38,8 @@ namespace AdventOfCode.Y2017.Solvers
                         programs[program].ForEach(toProcess.Enqueue);
                         programs.Remove(program);
                     }
-                } while (toProcess.Count > 0);
-            } while (programs.Count > 0);
+                }
+            }
             return connected.Count;
         }
 

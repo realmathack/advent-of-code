@@ -11,11 +11,11 @@ namespace AdventOfCode.Y2019.Solvers
             {
                 var fuel = 0;
                 var tmp = mass;
-                do
+                while (tmp != 0)
                 {
                     tmp = CalculateFuel(tmp);
                     fuel += tmp;
-                } while (tmp != 0);
+                }
                 sum += fuel;
             }
             return sum;

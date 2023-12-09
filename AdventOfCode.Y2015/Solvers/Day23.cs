@@ -2,11 +2,11 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day23 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => Solve(input, new() { { 'a', 0 }, { 'b', 0 } });
+        public override object SolvePart1(string[] input) => ExecuteInstructions(input, new() { { 'a', 0 }, { 'b', 0 } });
 
-        public override object SolvePart2(string[] input) => Solve(input, new() { { 'a', 1 }, { 'b', 0 } });
+        public override object SolvePart2(string[] input) => ExecuteInstructions(input, new() { { 'a', 1 }, { 'b', 0 } });
 
-        private static int Solve(string[] input, Dictionary<char, int> registers)
+        private static int ExecuteInstructions(string[] input, Dictionary<char, int> registers)
         {
             var pc = 0;
             while (pc >= 0 && pc < input.Length)

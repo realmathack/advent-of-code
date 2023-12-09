@@ -9,7 +9,7 @@ namespace AdventOfCode.Y2015.Solvers
             var grid = ToGrid(input);
             for (int step = 0; step < steps; step++)
             {
-                grid = DoStep(grid);
+                grid = ExecuteStep(grid);
             }
             return grid.Select(row => row.Count(light => light)).Sum();
         }
@@ -19,12 +19,22 @@ namespace AdventOfCode.Y2015.Solvers
             var grid = SetCornersOn(ToGrid(input));
             for (int step = 0; step < steps; step++)
             {
-                grid = SetCornersOn(DoStep(grid));
+                grid = SetCornersOn(ExecuteStep(grid));
             }
             return grid.Select(row => row.Count(light => light)).Sum();
         }
 
-        private static bool[][] DoStep(bool[][] grid)
+        private static bool[][] ToGrid(string[] lines)
+        {
+            var grid = new bool[lines.Length][];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                grid[i] = lines[i].Select(light => light == '#').ToArray();
+            }
+            return grid;
+        }
+
+        private static bool[][] ExecuteStep(bool[][] grid)
         {
             var newGrid = new bool[grid.Length][];
             for (int row = 0; row < grid.Length; row++)
@@ -36,16 +46,6 @@ namespace AdventOfCode.Y2015.Solvers
                 }
             }
             return newGrid;
-        }
-
-        private static bool[][] ToGrid(string[] lines)
-        {
-            var grid = new bool[lines.Length][];
-            for (int i = 0; i < lines.Length; i++)
-            {
-                grid[i] = lines[i].Select(light => light == '#').ToArray();
-            }
-            return grid;
         }
 
         private static bool CalculateNewState(bool[][] grid, int row, int col)

@@ -6,8 +6,8 @@ namespace AdventOfCode.Y2019.Solvers
         public override object SolvePart1(string[] input)
         {
             var centralPort = new Coords(0, 0);
-            var firstWire = GetWire(input[0], centralPort);
-            var secondWire = GetWire(input[1], centralPort);
+            var firstWire = ToWire(input[0], centralPort);
+            var secondWire = ToWire(input[1], centralPort);
             var distances = firstWire.Intersect(secondWire).Select(coord => coord.DistanceTo(centralPort)).OrderBy(distance => distance);
             return distances.First();
         }
@@ -15,13 +15,13 @@ namespace AdventOfCode.Y2019.Solvers
         public override object SolvePart2(string[] input)
         {
             var centralPort = new Coords(0, 0);
-            var firstWire = GetWire(input[0], centralPort);
-            var secondWire = GetWire(input[1], centralPort);
+            var firstWire = ToWire(input[0], centralPort);
+            var secondWire = ToWire(input[1], centralPort);
             var distances = firstWire.Intersect(secondWire).Select(coord => 2 + firstWire.IndexOf(coord) + secondWire.IndexOf(coord)).OrderBy(distance => distance);
             return distances.First();
         }
 
-        private static List<Coords> GetWire(string input, Coords current)
+        private static List<Coords> ToWire(string input, Coords current)
         {
             var wire = new List<Coords>();
             foreach (var direction in input.Split(','))

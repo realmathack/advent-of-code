@@ -2,15 +2,11 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day15 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => Solve(input).Select(CalculateScore).Max(score => score.Score);
+        public override object SolvePart1(string[] input) => ToScores(input).Max(score => score.Score);
 
-        public override object SolvePart2(string[] input) => Solve(input).Select(CalculateScore).Where(score => score.Calories == 500).Max(score => score.Score);
+        public override object SolvePart2(string[] input) => ToScores(input).Where(score => score.Calories == 500).Max(score => score.Score);
 
-        private static List<Dictionary<Ingredient, int>> Solve(string[] input)
-        {
-            var ingredients = ToIngredients(input);
-            return GetPossibilties(ingredients, 0, 100);
-        }
+        private static List<RecipeScore> ToScores(string[] input) => FindPossibilties(ToIngredients(input), 0, 100).Select(CalculateScore).ToList();
 
         private static readonly char[] _separator = [' ', ':', ','];
         private static List<Ingredient> ToIngredients(string[] lines)
@@ -24,7 +20,7 @@ namespace AdventOfCode.Y2015.Solvers
             return ingredients;
         }
 
-        private static List<Dictionary<Ingredient, int>> GetPossibilties(List<Ingredient> ingredients, int currentRecipe, int remainder)
+        private static List<Dictionary<Ingredient, int>> FindPossibilties(List<Ingredient> ingredients, int currentRecipe, int remainder)
         {
             if (currentRecipe == ingredients.Count - 1)
             {
@@ -34,7 +30,7 @@ namespace AdventOfCode.Y2015.Solvers
             var amount = 1;
             do
             {
-                foreach (var recipe in GetPossibilties(ingredients, currentRecipe + 1, remainder - amount))
+                foreach (var recipe in FindPossibilties(ingredients, currentRecipe + 1, remainder - amount))
                 {
                     recipe.Add(ingredients[currentRecipe], amount);
                     possibilities.Add(recipe);
@@ -61,7 +57,7 @@ namespace AdventOfCode.Y2015.Solvers
             return new(Math.Max(0, capacity) * Math.Max(0, durability) * Math.Max(0, flavor) * Math.Max(0, texture), calories);
         }
 
-        private record struct Ingredient(string Name, int Capacity, int Durability, int Flavor, int Texture, int Calories);
-        private record struct RecipeScore(int Score, int Calories);
+        private record class Ingredient(string Name, int Capacity, int Durability, int Flavor, int Texture, int Calories);
+        private record class RecipeScore(int Score, int Calories);
     }
 }

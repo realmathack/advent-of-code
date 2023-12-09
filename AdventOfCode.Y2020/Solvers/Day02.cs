@@ -5,10 +5,10 @@ namespace AdventOfCode.Y2020.Solvers
         public override object SolvePart1(string[] input)
         {
             var validPasswords = 0;
-            foreach (var line in ToLines(input))
+            foreach (var record in ToRecords(input))
             {
-                var count = line.Password.Count(c => c == line.Character);
-                if (count >= line.Lower && count <= line.Upper)
+                var count = record.Password.Count(c => c == record.Character);
+                if (count >= record.Lower && count <= record.Upper)
                 {
                     validPasswords++;
                 }
@@ -19,11 +19,11 @@ namespace AdventOfCode.Y2020.Solvers
         public override object SolvePart2(string[] input)
         {
             var validPasswords = 0;
-            foreach (var line in ToLines(input))
+            foreach (var record in ToRecords(input))
             {
-                var first = line.Password[line.Lower - 1];
-                var second = line.Password[line.Upper - 1];
-                if ((first == line.Character && second != line.Character) || (first != line.Character && second == line.Character))
+                var first = record.Password[record.Lower - 1];
+                var second = record.Password[record.Upper - 1];
+                if ((first == record.Character && second != record.Character) || (first != record.Character && second == record.Character))
                 {
                     validPasswords++;
                 }
@@ -32,17 +32,17 @@ namespace AdventOfCode.Y2020.Solvers
         }
 
         private static readonly char[] _separator = [' ', '-', ':'];
-        private static List<Line> ToLines(string[] input)
+        private static List<Record> ToRecords(string[] input)
         {
-            var lines = new List<Line>();
+            var records = new List<Record>();
             foreach (var line in input)
             {
                 var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-                lines.Add(new(int.Parse(parts[0]), int.Parse(parts[1]), parts[2][0], parts[3]));
+                records.Add(new(int.Parse(parts[0]), int.Parse(parts[1]), parts[2][0], parts[3]));
             }
-            return lines;
+            return records;
         }
 
-        private record class Line(int Lower, int Upper, char Character, string Password);
+        private record class Record(int Lower, int Upper, char Character, string Password);
     }
 }

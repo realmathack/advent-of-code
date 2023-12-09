@@ -2,11 +2,11 @@ namespace AdventOfCode.Y2017.Solvers
 {
     public class Day06 : SolverWithText
     {
-        public override object SolvePart1(string input) => Solve(input);
+        public override object SolvePart1(string input) => CalculateCycles(input);
 
-        public override object SolvePart2(string input) => Solve(input, true);
+        public override object SolvePart2(string input) => CalculateCycles(input, true);
 
-        private static int Solve(string input, bool returnLoopSize = false)
+        private static int CalculateCycles(string input, bool returnLoopSize = false)
         {
             var memory = input.Split('\t').Select(int.Parse).ToArray();
             var seen = new Dictionary<string, int>();

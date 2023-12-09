@@ -2,25 +2,9 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day09 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => ToNodes(input).Min(node => GetDistance(node, [node]));
+        public override object SolvePart1(string[] input) => ToNodes(input).Min(node => CalculateDistance(node, [node]));
 
-        public override object SolvePart2(string[] input) => ToNodes(input).Max(node => GetDistance(node, [node], true));
-
-        private static int GetDistance(Node node, HashSet<Node> visited, bool longestRoute = false)
-        {
-            var distances = new List<int>();
-            foreach (var route in node.Routes)
-            {
-                if (visited.Contains(route.Key))
-                {
-                    continue;
-                }
-                visited.Add(route.Key);
-                distances.Add(route.Value + GetDistance(route.Key, visited, longestRoute));
-                visited.Remove(route.Key);
-            }
-            return (distances.Count == 0) ? 0 : (longestRoute) ? distances.Max() : distances.Min();
-        }
+        public override object SolvePart2(string[] input) => ToNodes(input).Max(node => CalculateDistance(node, [node], true));
 
         private static List<Node> ToNodes(string[] lines)
         {
@@ -43,6 +27,22 @@ namespace AdventOfCode.Y2015.Solvers
                 nodeTo.Routes.Add(nodeFrom, distance);
             }
             return [.. nodes.Values];
+        }
+
+        private static int CalculateDistance(Node node, HashSet<Node> visited, bool longestRoute = false)
+        {
+            var distances = new List<int>();
+            foreach (var route in node.Routes)
+            {
+                if (visited.Contains(route.Key))
+                {
+                    continue;
+                }
+                visited.Add(route.Key);
+                distances.Add(route.Value + CalculateDistance(route.Key, visited, longestRoute));
+                visited.Remove(route.Key);
+            }
+            return (distances.Count == 0) ? 0 : (longestRoute) ? distances.Max() : distances.Min();
         }
 
         private record class Node(string Name)

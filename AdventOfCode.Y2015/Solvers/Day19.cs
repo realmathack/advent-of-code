@@ -6,7 +6,7 @@ namespace AdventOfCode.Y2015.Solvers
         {
             var molecule = input[1].Trim();
             var replacements = ToReplacements(input[0]);
-            return GetAllPossibleVariants(replacements, molecule).Distinct().Count();
+            return FindAllPossibleVariants(replacements, molecule).Distinct().Count();
         }
 
         public override object SolvePart2(string[] input)
@@ -17,7 +17,7 @@ namespace AdventOfCode.Y2015.Solvers
             var steps = 0;
             while (molecule != "e")
             {
-                var variants = GetAllPossibleVariants(replacements, molecule).ToList();
+                var variants = FindAllPossibleVariants(replacements, molecule).ToList();
                 if (variants.Count == 0)
                 {
                     molecule = start;
@@ -28,18 +28,6 @@ namespace AdventOfCode.Y2015.Solvers
                 steps++;
             }
             return steps;
-        }
-
-        private static IEnumerable<string> GetAllPossibleVariants(List<Replacement> replacements, string input)
-        {
-            foreach (var replacement in replacements)
-            {
-                int pos = 0;
-                while ((pos = input.IndexOf(replacement.Find, pos)) != -1)
-                {
-                    yield return input[..pos] + replacement.Replace + input[(pos++ + replacement.Find.Length)..];
-                }
-            }
         }
 
         private static List<Replacement> ToReplacements(string input, bool reduce = false)
@@ -57,6 +45,18 @@ namespace AdventOfCode.Y2015.Solvers
             return replacements;
         }
 
-        private record struct Replacement(string Find, string Replace);
+        private static IEnumerable<string> FindAllPossibleVariants(List<Replacement> replacements, string input)
+        {
+            foreach (var replacement in replacements)
+            {
+                int pos = 0;
+                while ((pos = input.IndexOf(replacement.Find, pos)) != -1)
+                {
+                    yield return input[..pos] + replacement.Replace + input[(pos++ + replacement.Find.Length)..];
+                }
+            }
+        }
+
+        private record class Replacement(string Find, string Replace);
     }
 }

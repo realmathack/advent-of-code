@@ -29,7 +29,7 @@ namespace AdventOfCode.Y2022.Solvers
                     return ReconstructPath(cameFrom, current);
                 }
                 visited.Add(current);
-                foreach (var neighbor in GetPossibleNeighborsReverse(grid, current))
+                foreach (var neighbor in FindPossibleNeighborsReverse(grid, current))
                 {
                     if (visited.Contains(neighbor))
                     {
@@ -61,7 +61,7 @@ namespace AdventOfCode.Y2022.Solvers
                     return ReconstructPath(cameFrom, current);
                 }
                 openSet.Remove(current);
-                foreach (var neighbor in GetPossibleNeighbors(grid, current))
+                foreach (var neighbor in FindPossibleNeighbors(grid, current))
                 {
                     var tentativeGScore = gScores[current] + 1;
                     if (tentativeGScore < GetScore(gScores, neighbor))
@@ -87,7 +87,7 @@ namespace AdventOfCode.Y2022.Solvers
             return path;
         }
 
-        private static List<Coords> GetPossibleNeighbors(char[][] grid, Coords current)
+        private static List<Coords> FindPossibleNeighbors(char[][] grid, Coords current)
         {
             var neighbors = new List<Coords>();
             var currentHeight = grid[current.Y][current.X];
@@ -98,7 +98,7 @@ namespace AdventOfCode.Y2022.Solvers
             return neighbors;
         }
 
-        private static List<Coords> GetPossibleNeighborsReverse(char[][] grid, Coords current)
+        private static List<Coords> FindPossibleNeighborsReverse(char[][] grid, Coords current)
         {
             var neighbors = new List<Coords>();
             var currentHeight = grid[current.Y][current.X];

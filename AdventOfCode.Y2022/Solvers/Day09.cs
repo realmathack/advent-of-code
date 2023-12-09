@@ -2,11 +2,11 @@ namespace AdventOfCode.Y2022.Solvers
 {
     public class Day09 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => GetTailVisitedCount(input, 2);
+        public override object SolvePart1(string[] input) => FindTailVisitedCount(input, 2);
 
-        public override object SolvePart2(string[] input) => GetTailVisitedCount(input, 10);
+        public override object SolvePart2(string[] input) => FindTailVisitedCount(input, 10);
 
-        private static int GetTailVisitedCount(string[] lines, int segmentCount)
+        private static int FindTailVisitedCount(string[] lines, int segmentCount)
         {
             var segments = new Coords[segmentCount];
             for (int i = 0; i < segmentCount; i++)
@@ -47,6 +47,6 @@ namespace AdventOfCode.Y2022.Solvers
         private static List<Motion> ToMotions(string[] lines) => lines.Select(line => new Motion(line[0], int.Parse(line[2..]))).ToList();
         private static int CalculateOffset(int previousAxis, int currentAxis) => (previousAxis - currentAxis == 0) ? 0 : (previousAxis - currentAxis > 0) ? 1 : -1;
 
-        private record struct Motion(char Direction, int Steps);
+        private readonly record struct Motion(char Direction, int Steps);
     }
 }

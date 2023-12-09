@@ -4,8 +4,8 @@ namespace AdventOfCode.Y2022.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var stacks = GetStacks(input[0]);
-            var moves = GetMoves(input[1]);
+            var stacks = ToStacks(input[0]);
+            var moves = ToMoves(input[1]);
             foreach (var move in moves)
             {
                 for (int i = 0; i < move.Count; i++)
@@ -20,8 +20,8 @@ namespace AdventOfCode.Y2022.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var stacks = GetStacks(input[0]);
-            var moves = GetMoves(input[1]);
+            var stacks = ToStacks(input[0]);
+            var moves = ToMoves(input[1]);
             var moverStack = new Stack<char>();
             foreach (var move in moves)
             {
@@ -40,7 +40,7 @@ namespace AdventOfCode.Y2022.Solvers
             return string.Concat(result);
         }
 
-        private static Stack<char>[] GetStacks(string input)
+        private static Stack<char>[] ToStacks(string input)
         {
             var stacks = input.SplitIntoLines();
             var stackCount = (stacks[^1].Length + 1) / 4;
@@ -63,7 +63,7 @@ namespace AdventOfCode.Y2022.Solvers
             return result;
         }
 
-        private static List<Move> GetMoves(string moves)
+        private static List<Move> ToMoves(string moves)
         {
             var result = new List<Move>();
             foreach (var line in moves.SplitIntoLines())
@@ -74,6 +74,6 @@ namespace AdventOfCode.Y2022.Solvers
             return result;
         }
 
-        private record struct Move(int Count, int Source, int Destination);
+        private readonly record struct Move(int Count, int Source, int Destination);
     }
 }

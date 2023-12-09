@@ -4,7 +4,7 @@ namespace AdventOfCode.Y2022.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var rucksacks = GetRucksacks(input);
+            var rucksacks = ToRucksacks(input);
             var total = 0;
             foreach (var (first, second) in rucksacks)
             {
@@ -12,7 +12,7 @@ namespace AdventOfCode.Y2022.Solvers
                 {
                     if (second.Contains(item))
                     {
-                        total += GetPriority(item);
+                        total += CalculatePriority(item);
                         break;
                     }
                 }
@@ -22,7 +22,7 @@ namespace AdventOfCode.Y2022.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var groups = GetGroups(input);
+            var groups = ToGroups(input);
             var total = 0;
             foreach (var group in groups)
             {
@@ -30,7 +30,7 @@ namespace AdventOfCode.Y2022.Solvers
                 {
                     if (group[1].Contains(item) && group[2].Contains(item))
                     {
-                        total += GetPriority(item);
+                        total += CalculatePriority(item);
                         break;
                     }
                 }
@@ -38,7 +38,7 @@ namespace AdventOfCode.Y2022.Solvers
             return total;
         }
 
-        private static List<(string First, string Second)> GetRucksacks(string[] lines)
+        private static List<(string First, string Second)> ToRucksacks(string[] lines)
         {
             var result = new List<(string First, string Second)>(lines.Length);
             foreach (var line in lines)
@@ -49,7 +49,7 @@ namespace AdventOfCode.Y2022.Solvers
             return result;
         }
 
-        private static List<string[]> GetGroups(string[] lines)
+        private static List<string[]> ToGroups(string[] lines)
         {
             var groupCount = lines.Length / 3;
             var result = new List<string[]>(groupCount);
@@ -60,7 +60,7 @@ namespace AdventOfCode.Y2022.Solvers
             return result;
         }
 
-        private static int GetPriority(char item)
+        private static int CalculatePriority(char item)
         {
             return (item > 'Z') ? item - 'a' + 1 : item - 'A' + 27;
         }

@@ -35,7 +35,7 @@ namespace AdventOfCode.Y2022.Solvers
         {
             int maxXY = givenNumber * 2;
             var beacons = ToBeacons(input);
-            var remaining = new Dictionary<int, List<(int Begin, int End)>>();
+            var remaining = new Dictionary<int, List<(int Start, int End)>>();
             for (int i = 0; i <= maxXY; i++)
             {
                 remaining.Add(i, [(0, maxXY)]);
@@ -50,21 +50,21 @@ namespace AdventOfCode.Y2022.Solvers
                     ProcessRow(beacon.Key.Y + i, remaining, beacon.Key, distance - i, maxXY);
                 }
             }
-            if (remaining.Count != 1 || remaining.First().Value.Count != 1 || remaining.First().Value.First().Begin != remaining.First().Value.First().End)
+            if (remaining.Count != 1 || remaining.First().Value.Count != 1 || remaining.First().Value.First().Start != remaining.First().Value.First().End)
             {
                 throw new InvalidOperationException("Remaining bigger than 1");
             }
-            return remaining.First().Value.First().Begin * 4000000L + remaining.First().Key;
+            return remaining.First().Value.First().Start * 4000000L + remaining.First().Key;
         }
 
-        private static void ProcessRow(int row, Dictionary<int, List<(int Begin, int End)>> remaining, Coords beacon, int distanceX, int maxXY)
+        private static void ProcessRow(int row, Dictionary<int, List<(int Start, int End)>> remaining, Coords beacon, int distanceX, int maxXY)
         {
             if (!remaining.TryGetValue(row, out var ranges))
             {
                 return;
             }
-            var currentRange = (Begin: beacon.X - distanceX, End: beacon.X + distanceX);
-            var affectedRanges = new List<(int Begin, int End)>();
+            var currentRange = (Start: beacon.X - distanceX, End: beacon.X + distanceX);
+            var affectedRanges = new List<(int Start, int End)>();
             for (int i = ranges.Count - 1; i >= 0; i--)
             {
                 if (FullOverlap(ranges[i], currentRange))
@@ -77,16 +77,16 @@ namespace AdventOfCode.Y2022.Solvers
                     ranges.RemoveAt(i);
                 }
             }
-            if (currentRange.Begin >= 0)
+            if (currentRange.Start >= 0)
             {
-                foreach (var (begin, end) in affectedRanges.Where(range => range.Begin < currentRange.Begin))
+                foreach (var (start, end) in affectedRanges.Where(range => range.Start < currentRange.Start))
                 {
-                    ranges.Add(new(begin, currentRange.Begin - 1));
+                    ranges.Add(new(start, currentRange.Start - 1));
                 }
             }
             if (currentRange.End <= maxXY)
             {
-                foreach (var (begin, end) in affectedRanges.Where(range => range.End > currentRange.End))
+                foreach (var (start, end) in affectedRanges.Where(range => range.End > currentRange.End))
                 {
                     ranges.Add(new(currentRange.End + 1, end));
                 }
@@ -97,8 +97,8 @@ namespace AdventOfCode.Y2022.Solvers
             }
         }
 
-        private static bool FullOverlap((int Begin, int End) old, (int Begin, int End) current) => old.Begin >= current.Begin && current.End >= old.End;
-        private static bool AnyOverlap((int Begin, int End) old, (int Begin, int End) current) => old.Begin <= current.End && current.Begin <= old.End;
+        private static bool FullOverlap((int Start, int End) old, (int Start, int End) current) => old.Start >= current.Start && current.End >= old.End;
+        private static bool AnyOverlap((int Start, int End) old, (int Start, int End) current) => old.Start <= current.End && current.Start <= old.End;
 
         private static readonly char[] _separator = [' ', ',', ':', '='];
         private static Dictionary<Coords, Coords> ToBeacons(string[] input)

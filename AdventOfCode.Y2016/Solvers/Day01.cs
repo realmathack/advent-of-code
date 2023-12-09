@@ -9,7 +9,7 @@ namespace AdventOfCode.Y2016.Solvers
             foreach (var instruction in input.Split(", "))
             {
                 direction = (instruction[0] == 'R') ? (Direction)(((int)direction + 1) % 4) : (Direction)((4 + (int)direction - 1) % 4);
-                var offset = FromDirection(direction);
+                var offset = ToOffset(direction);
                 for (int i = 0; i < int.Parse(instruction[1..]); i++)
                 {
                     current += offset;
@@ -26,7 +26,7 @@ namespace AdventOfCode.Y2016.Solvers
             foreach (var instruction in input.Split(", "))
             {
                 direction = (instruction[0] == 'R') ? (Direction)(((int)direction + 1) % 4) : (Direction)((4 + (int)direction - 1) % 4);
-                var offset = FromDirection(direction);
+                var offset = ToOffset(direction);
                 for (int i = 0; i < int.Parse(instruction[1..]); i++)
                 {
                     current += offset;
@@ -40,7 +40,7 @@ namespace AdventOfCode.Y2016.Solvers
             return 0;
         }
 
-        private static Coords FromDirection(Direction direction)
+        private static Coords ToOffset(Direction direction)
         {
             return direction switch
             {

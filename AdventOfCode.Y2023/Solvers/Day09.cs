@@ -5,16 +5,16 @@ namespace AdventOfCode.Y2023.Solvers
         public override object SolvePart1(string[] input)
         {
             var history = input.Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToList();
-            return history.Sum(values => GetNextValue(values));
+            return history.Sum(values => CalculateNextValue(values));
         }
 
         public override object SolvePart2(string[] input)
         {
             var history = input.Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToList();
-            return history.Sum(values => GetNextValue(values, true));
+            return history.Sum(values => CalculateNextValue(values, true));
         }
 
-        private static int GetNextValue(List<int> last, bool backwards = false)
+        private static int CalculateNextValue(List<int> last, bool backwards = false)
         {
             var sequences = new List<List<int>>() { last };
             while (last.Any(value => value != 0))

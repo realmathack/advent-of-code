@@ -21,11 +21,11 @@ namespace AdventOfCode.Y2019.Solvers
         public override object SolvePart2(string[] input)
         {
             var orbits = ToOrbits(input);
-            var source = orbits.Single(orbit => orbit.Value.Contains("YOU")).Key;
-            var destination = orbits.Single(orbit => orbit.Value.Contains("SAN")).Key;
+            var start = orbits.Single(orbit => orbit.Value.Contains("YOU")).Key;
+            var goal = orbits.Single(orbit => orbit.Value.Contains("SAN")).Key;
             var depth = 0;
-            var current = new List<string>() { source };
-            while (!current.Contains(destination))
+            var current = new List<string>() { start };
+            while (!current.Contains(goal))
             {
                 var nextObjects = orbits
                     .Where(orbit => current.Contains(orbit.Key))

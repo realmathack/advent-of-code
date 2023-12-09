@@ -18,7 +18,7 @@ namespace AdventOfCode.Y2023.Solvers
             var total = 0;
             foreach (var line in input)
             {
-                var numbers = GetDigits(line);
+                var numbers = ToDigits(line);
                 total += int.Parse($"{numbers.First()}{numbers.Last()}");
             }
             return total;
@@ -36,7 +36,7 @@ namespace AdventOfCode.Y2023.Solvers
             { "eight", '8' },
             { "nine", '9' }
         };
-        private static List<char> GetDigits(string input)
+        private static List<char> ToDigits(string input)
         {
             var result = new List<char>();
             for (int i = 0; i < input.Length; i++)

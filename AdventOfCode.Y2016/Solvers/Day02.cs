@@ -12,7 +12,7 @@ namespace AdventOfCode.Y2016.Solvers
                 ".789.",
                 "....."
             };
-            return GetCode(keypad, new Coords(2, 2), input);
+            return ExecuteInstructions(keypad, new Coords(2, 2), input);
         }
 
         public override object SolvePart2(string[] input)
@@ -27,10 +27,10 @@ namespace AdventOfCode.Y2016.Solvers
                 "...D...",
                 "......."
             };
-            return GetCode(keypad, new Coords(1, 3), input);
+            return ExecuteInstructions(keypad, new Coords(1, 3), input);
         }
 
-        private static string GetCode(string[] keypad, Coords current, string[] lines)
+        private static string ExecuteInstructions(string[] keypad, Coords current, string[] lines)
         {
             var code = string.Empty;
             foreach (var line in lines)

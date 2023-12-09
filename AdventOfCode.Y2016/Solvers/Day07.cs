@@ -8,7 +8,7 @@ namespace AdventOfCode.Y2016.Solvers
 
         private static bool SupportsTls(string line)
         {
-            var (inside, outside) = GetBracketParts(line);
+            var (inside, outside) = ToBracketParts(line);
             if (inside.Any(ContainsAbba))
             {
                 return false;
@@ -30,8 +30,8 @@ namespace AdventOfCode.Y2016.Solvers
 
         private static bool SupportsSsl(string line)
         {
-            var (inside, outside) = GetBracketParts(line);
-            var possibleBabs = GetPossibleBabs(outside);
+            var (inside, outside) = ToBracketParts(line);
+            var possibleBabs = FindPossibleBabs(outside);
             foreach (var bab in possibleBabs)
             {
                 if (inside.Any(text => text.Contains(bab)))
@@ -42,7 +42,7 @@ namespace AdventOfCode.Y2016.Solvers
             return false;
         }
 
-        private static List<string> GetPossibleBabs(List<string> outside)
+        private static List<string> FindPossibleBabs(List<string> outside)
         {
             var babs = new List<string>();
             foreach (var part in outside)
@@ -58,7 +58,7 @@ namespace AdventOfCode.Y2016.Solvers
             return babs;
         }
 
-        private static (List<string> Inside, List<string> Outside) GetBracketParts(string line)
+        private static (List<string> Inside, List<string> Outside) ToBracketParts(string line)
         {
             var inside = new List<string>();
             var outside = new List<string>();

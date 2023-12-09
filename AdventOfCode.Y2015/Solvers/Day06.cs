@@ -48,6 +48,25 @@ namespace AdventOfCode.Y2015.Solvers
             return grid.Sum(row => row.Sum());
         }
 
+        private static List<Move> ToMoves(string[] lines)
+        {
+            var result = new List<Move>(lines.Length);
+            var regex = new Regex(@"(.+) (\d+),(\d+) through (\d+),(\d+)");
+            foreach (var line in lines)
+            {
+                var match = regex.Match(line);
+                var change = match.Groups[1].Value switch
+                {
+                    "turn off" => Change.Off,
+                    "turn on" => Change.On,
+                    "toggle" => Change.Toggle,
+                    _ => throw new InvalidOperationException($"Unknown change: {match.Groups[1].Value}")
+                };
+                result.Add(new(change, int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value), int.Parse(match.Groups[5].Value)));
+            }
+            return result;
+        }
+
         private static bool[][] InitBoolGrid()
         {
             var grid = new bool[1000][];
@@ -68,26 +87,7 @@ namespace AdventOfCode.Y2015.Solvers
             return grid;
         }
 
-        private static List<Move> ToMoves(string[] lines)
-        {
-            var result = new List<Move>(lines.Length);
-            var regex = new Regex(@"(.+) (\d+),(\d+) through (\d+),(\d+)");
-            foreach (var line in lines)
-            {
-                var match = regex.Match(line);
-                var change = match.Groups[1].Value switch
-                {
-                    "turn off" => Change.Off,
-                    "turn on" => Change.On,
-                    "toggle" => Change.Toggle,
-                    _ => throw new InvalidOperationException($"Unknown change: {match.Groups[1].Value}")
-                };
-                result.Add(new(change, int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value), int.Parse(match.Groups[5].Value)));
-            }
-            return result;
-        }
-
         private enum Change { Off, On, Toggle }
-        private record struct Move(Change Change, int TopX, int TopY, int BottomX, int BottomY);
+        private readonly record struct Move(Change Change, int TopX, int TopY, int BottomX, int BottomY);
     }
 }

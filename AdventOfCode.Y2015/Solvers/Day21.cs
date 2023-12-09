@@ -123,8 +123,8 @@ namespace AdventOfCode.Y2015.Solvers
             ];
         }
 
-        private record struct Item(ItemType ItemType, int Cost, int Damage, int Armor);
         private enum ItemType { Weapon, Armor, Ring }
+        private readonly record struct Item(ItemType ItemType, int Cost, int Damage, int Armor);
 
         private record class Creature()
         {
