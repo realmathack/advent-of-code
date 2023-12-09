@@ -5,37 +5,18 @@ namespace AdventOfCode.Y2023.Solvers
         public override object SolvePart1(string[] input)
         {
             var hands = ToHands(input);
-            hands.Sort();
-            var total = 0L;
             var rank = 1L;
-            foreach (var hand in hands)
-            {
-                total += hand.Bet * rank++;
-            }
-            return total;
+            return hands.Sum(x => x.Bet * rank++);
         }
 
         public override object SolvePart2(string[] input)
         {
             var hands = ToHands2(input);
-            hands.Sort();
-            var total = 0L;
             var rank = 1L;
-            foreach (var hand in hands)
-            {
-                total += hand.Bet * rank++;
-            }
-            return total;
+            return hands.Sum(x => x.Bet * rank++);
         }
 
-        private static readonly Dictionary<char, char> _mapping1 = new()
-        {
-            { 'A', 'Z' },
-            { 'K', 'Y' },
-            { 'Q', 'X' },
-            { 'J', 'W' },
-            { 'T', 'V' }
-        };
+        private static readonly Dictionary<char, char> _mapping1 = new() { { 'A', 'Z' }, { 'K', 'Y' }, { 'Q', 'X' }, { 'J', 'W' }, { 'T', 'V' } };
         private static List<Hand> ToHands(string[] input)
         {
             var hands = new List<Hand>();
@@ -44,17 +25,11 @@ namespace AdventOfCode.Y2023.Solvers
                 var parts = line.Split(' ');
                 hands.Add(new(parts[0], ToRank(parts[0]), ToSortableHand(parts[0], _mapping1), int.Parse(parts[1])));
             }
+            hands.Sort();
             return hands;
         }
 
-        private static readonly Dictionary<char, char> _mapping2 = new()
-        {
-            { 'A', 'Z' },
-            { 'K', 'Y' },
-            { 'Q', 'X' },
-            { 'J', '1' },
-            { 'T', 'V' }
-        };
+        private static readonly Dictionary<char, char> _mapping2 = new() { { 'A', 'Z' }, { 'K', 'Y' }, { 'Q', 'X' }, { 'J', '1' }, { 'T', 'V' } };
         private static List<Hand> ToHands2(string[] input)
         {
             var hands = new List<Hand>();
@@ -67,6 +42,7 @@ namespace AdventOfCode.Y2023.Solvers
                 var rankingHand = parts[0].Replace('J', newCard);
                 hands.Add(new(parts[0], ToRank(rankingHand), ToSortableHand(parts[0], _mapping2), int.Parse(parts[1])));
             }
+            hands.Sort();
             return hands;
         }
 

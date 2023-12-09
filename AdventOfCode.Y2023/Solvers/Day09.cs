@@ -5,29 +5,18 @@ namespace AdventOfCode.Y2023.Solvers
         public override object SolvePart1(string[] input)
         {
             var history = input.Select(x => x.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToList();
-            var sum = 0;
-            foreach (var line in history)
-            {
-                sum += GetNextValue(line);
-            }
-            return sum;
+            return history.Sum(x => GetNextValue(x));
         }
 
         public override object SolvePart2(string[] input)
         {
             var history = input.Select(x => x.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToList();
-            var sum = 0;
-            foreach (var line in history)
-            {
-                sum += GetNextValue(line, true);
-            }
-            return sum;
+            return history.Sum(x => GetNextValue(x, true));
         }
 
-        private static int GetNextValue(List<int> line, bool part2 = false)
+        private static int GetNextValue(List<int> last, bool backwards = false)
         {
-            var sequences = new List<List<int>>() { line };
-            var last = line;
+            var sequences = new List<List<int>>() { last };
             while (last.Any(x => x != 0))
             {
                 var current = new List<int>();
@@ -38,7 +27,7 @@ namespace AdventOfCode.Y2023.Solvers
                 sequences.Add(current);
                 last = current;
             }
-            if (part2)
+            if (backwards)
             {
                 for (int i = sequences.Count - 2; i >= 0; i--)
                 {

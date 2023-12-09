@@ -22,15 +22,14 @@ namespace AdventOfCode.Y2023.Solvers
 
         private static long CountWaysToBeatRecord(long time, long distance)
         {
-            var count = 0L;
             for (long i = 1L; i < time; i++)
             {
                 if (i * (time - i) > distance)
                 {
-                    count++;
+                    return time - 2 * i + 1;
                 }
             }
-            return count;
+            return 0L;
         }
     }
 }

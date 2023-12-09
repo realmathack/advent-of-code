@@ -3,9 +3,9 @@ namespace AdventOfCode.Y2023.Tests
     public class Test08
     {
         [Theory]
-        [InlineData(_input1, 2)]
-        [InlineData(_input2, 6)]
-        public void TestPart1(string input, int expected)
+        [InlineData(_input1, 2L)]
+        [InlineData(_input2, 6L)]
+        public void TestPart1(string input, long expected)
         {
             var subject = new Day08();
             subject.SetInput(input);
