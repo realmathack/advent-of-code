@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2017.Solvers
     public class Day06 : SolverWithText
     {
         public override object SolvePart1(string input) => CalculateCycles(input);
-
         public override object SolvePart2(string input) => CalculateCycles(input, true);
 
         private static int CalculateCycles(string input, bool returnLoopSize = false)

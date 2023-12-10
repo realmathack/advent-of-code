@@ -17,16 +17,15 @@ namespace AdventOfCode.Y2022.Solvers
         private static List<Coords> Dijkstra(char[][] grid, Coords start, char goal)
         {
             var visited = new HashSet<Coords>();
-            var cameFrom = new Dictionary<Coords, Coords>();
+            var parents = new Dictionary<Coords, Coords>();
             var scores = new Dictionary<Coords, int>();
             var queue = new PriorityQueue<Coords, int>();
             queue.Enqueue(start, 0);
-            while (queue.Count > 0)
+            while (queue.TryDequeue(out var current, out _))
             {
-                var current = queue.Dequeue();
                 if (grid[current.Y][current.X] == goal)
                 {
-                    return ReconstructPath(cameFrom, current);
+                    return ReconstructPath(parents, current);
                 }
                 visited.Add(current);
                 foreach (var neighbor in FindPossibleNeighborsReverse(grid, current))
@@ -40,7 +39,7 @@ namespace AdventOfCode.Y2022.Solvers
                     {
                         queue.Enqueue(neighbor, tentativeScore);
                         scores[neighbor] = tentativeScore;
-                        cameFrom[neighbor] = current;
+                        parents[neighbor] = current;
                     }
                 }
             }
@@ -50,7 +49,7 @@ namespace AdventOfCode.Y2022.Solvers
         private static List<Coords> AStar(char[][] grid, Coords start, Coords goal)
         {
             var openSet = new Dictionary<Coords, int> { { start, 0 } };
-            var cameFrom = new Dictionary<Coords, Coords>();
+            var parents = new Dictionary<Coords, Coords>();
             var gScores = new Dictionary<Coords, int>() { { start, 0 } };
             var fScores = new Dictionary<Coords, int>() { { start, start.DistanceTo(goal) } };
             while (openSet.Count > 0)
@@ -58,7 +57,7 @@ namespace AdventOfCode.Y2022.Solvers
                 var current = openSet.First(coord => coord.Value == openSet.Min(coord => coord.Value)).Key;
                 if (current == goal)
                 {
-                    return ReconstructPath(cameFrom, current);
+                    return ReconstructPath(parents, current);
                 }
                 openSet.Remove(current);
                 foreach (var neighbor in FindPossibleNeighbors(grid, current))
@@ -66,7 +65,7 @@ namespace AdventOfCode.Y2022.Solvers
                     var tentativeGScore = gScores[current] + 1;
                     if (tentativeGScore < GetScore(gScores, neighbor))
                     {
-                        cameFrom[neighbor] = current;
+                        parents[neighbor] = current;
                         gScores[neighbor] = tentativeGScore;
                         var fScore = tentativeGScore + neighbor.DistanceTo(goal);
                         fScores[neighbor] = fScore;
@@ -77,10 +76,10 @@ namespace AdventOfCode.Y2022.Solvers
             return [];
         }
 
-        private static List<Coords> ReconstructPath(Dictionary<Coords, Coords> cameFrom, Coords current)
+        private static List<Coords> ReconstructPath(Dictionary<Coords, Coords> parents, Coords current)
         {
             var path = new List<Coords>();
-            while (cameFrom.TryGetValue(current, out current))
+            while (parents.TryGetValue(current, out current))
             {
                 path.Add(current);
             }

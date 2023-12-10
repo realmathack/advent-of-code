@@ -21,9 +21,6 @@ namespace AdventOfCode.Y2019.Solvers
             return sum;
         }
 
-        private static int CalculateFuel(int mass)
-        {
-            return Math.Max(0, (mass / 3) - 2);
-        }
+        private static int CalculateFuel(int mass) => Math.Max(0, (mass / 3) - 2);
     }
 }

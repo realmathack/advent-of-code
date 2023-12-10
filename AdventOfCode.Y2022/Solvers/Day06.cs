@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2022.Solvers
     public class Day06 : SolverWithText
     {
         public override object SolvePart1(string input) => FindMarkerPosition(input, 4);
-
         public override object SolvePart2(string input) => FindMarkerPosition(input, 14);
 
         private static int FindMarkerPosition(string input, int charCount)

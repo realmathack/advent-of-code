@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2016.Solvers
     public class Day12 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => ExecuteInstructions(input, new() { { "a", 0 }, { "b", 0 }, { "c", 0 }, { "d", 0 } });
-
         public override object SolvePart2(string[] input) => ExecuteInstructions(input, new() { { "a", 0 }, { "b", 0 }, { "c", 1 }, { "d", 0 } });
 
         private static int ExecuteInstructions(string[] input, Dictionary<string, int> registers)

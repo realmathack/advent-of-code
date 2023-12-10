@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2022.Solvers
     public class Day09 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => FindTailVisitedCount(input, 2);
-
         public override object SolvePart2(string[] input) => FindTailVisitedCount(input, 10);
 
         private static int FindTailVisitedCount(string[] lines, int segmentCount)

@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2015.Solvers
     public class Day24 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => FindIdealConfiguration(input, 3);
-
         public override object SolvePart2(string[] input) => FindIdealConfiguration(input, 4);
 
         private static long FindIdealConfiguration(string[] lines, int compartments)

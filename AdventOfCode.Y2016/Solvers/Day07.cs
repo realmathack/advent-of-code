@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2016.Solvers
     public class Day07 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => input.Count(SupportsTls);
-
         public override object SolvePart2(string[] input) => input.Count(SupportsSsl);
 
         private static bool SupportsTls(string line)

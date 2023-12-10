@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2015.Solvers
     public class Day04 : SolverWithText
     {
         public override object SolvePart1(string input) => FindFirstHashStartingWith(input, "00000");
-
         public override object SolvePart2(string input) => FindFirstHashStartingWith(input, "000000");
 
         private static int FindFirstHashStartingWith(string input, string start)

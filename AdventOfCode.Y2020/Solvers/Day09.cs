@@ -13,7 +13,7 @@ namespace AdventOfCode.Y2020.Solvers
             for (int i = 0; i < numbers.Length; i++)
             {
                 var sum = 0L;
-                long[] range = [];
+                long[] set = [];
                 var span = 2;
                 while (sum < invalid)
                 {
@@ -21,12 +21,12 @@ namespace AdventOfCode.Y2020.Solvers
                     {
                         break;
                     }
-                    range = numbers[i..(i + span++)];
-                    sum = range.Sum();
+                    set = numbers[i..(i + span++)];
+                    sum = set.Sum();
                 }
                 if (sum == invalid)
                 {
-                    return range.Min() + range.Max();
+                    return set.Min() + set.Max();
                 }
             }
             return 0L;

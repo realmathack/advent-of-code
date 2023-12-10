@@ -6,7 +6,6 @@ namespace AdventOfCode.Y2015.Solvers
         private int _lowestManaCost;
 
         public override object SolvePart1(string[] input) => FindLeastAmountOfMana(input);
-
         // HACK: Can't seem to get my code to work for part 2,
         // cheated by using https://github.com/fluttert/AdventOfCode/blob/master/AdventOfCode/Year2015/Day22.cs
         public override object SolvePart2(string[] input) => FindLeastAmountOfMana(input, true);

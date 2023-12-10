@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2015.Solvers
     public class Day02 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => ToPresents(input).Select(ToAreas).Sum(areas => areas.Sum() * 2 + areas.Min());
-
         public override object SolvePart2(string[] input) => ToPresents(input).Sum(ToRibbon);
 
         private static List<int[]> ToPresents(string[] lines)

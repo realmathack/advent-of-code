@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2016.Solvers
     public class Day10 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => ExecuteInstructions(input);
-
         public override object SolvePart2(string[] input) => ExecuteInstructions(input, true);
 
         private static int ExecuteInstructions(string[] input, bool returnOutputs = false)

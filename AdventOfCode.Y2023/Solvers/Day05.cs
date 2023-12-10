@@ -26,7 +26,7 @@ namespace AdventOfCode.Y2023.Solvers
             var current = "seed";
             while (maps.TryGetValue(current, out var map))
             {
-                var destination = new List<Int64Range>(ranges.Count);
+                var destination = new List<Range<long>>(ranges.Count);
                 foreach (var range in ranges)
                 {
                     destination.AddRange(FindDestinationRanges(map, range));
@@ -42,7 +42,7 @@ namespace AdventOfCode.Y2023.Solvers
             var destination = source;
             foreach (var mapping in map.Mappings)
             {
-                if (source >= mapping.Start && source <= mapping.End)
+                if (source >= mapping.Range.Start && source <= mapping.Range.End)
                 {
                     destination += mapping.Offset;
                     break;
@@ -51,9 +51,9 @@ namespace AdventOfCode.Y2023.Solvers
             return destination;
         }
 
-        private static List<Int64Range> ToRanges(long[] seeds)
+        private static List<Range<long>> ToRanges(long[] seeds)
         {
-            var ranges = new List<Int64Range>();
+            var ranges = new List<Range<long>>();
             for (int i = 0; i < seeds.Length; i += 2)
             {
                 ranges.Add(new(seeds[i], seeds[i] + seeds[i + 1] - 1));
@@ -61,55 +61,44 @@ namespace AdventOfCode.Y2023.Solvers
             return ranges;
         }
 
-        private static List<Int64Range> FindDestinationRanges(Map map, Int64Range source)
+        private static List<Range<long>> FindDestinationRanges(Map map, Range<long> source)
         {
-            var ranges = new List<Int64Range>() { source };
-            var destinations = new List<Int64Range>();
+            var ranges = new List<Range<long>>() { source };
+            var destinations = new List<Range<long>>();
             foreach (var mapping in map.Mappings)
             {
                 for (int i = ranges.Count - 1; i >= 0; i--)
                 {
                     var range = ranges[i];
-                    // Complete encapsulation
-                    if (mapping.Start <= range.Start && mapping.End >= range.End)
+                    if (mapping.Range.FullyOverlaps(range))
                     {
-                        destinations.Add(new(range.Start + mapping.Offset, range.End + mapping.Offset));
-                        ranges.RemoveAt(i);
+                        destinations.Add(range + mapping.Offset);
                     }
-                    // Complete overlap
-                    else if (mapping.Start >= range.Start && mapping.End <= range.End)
+                    else if (mapping.Range.FullyEncloses(range))
                     {
-                        destinations.Add(new(mapping.Start + mapping.Offset, mapping.End + mapping.Offset));
-                        if (mapping.Start != range.Start)
-                        {
-                            ranges.Add(new(range.Start, mapping.Start - 1));
-                        }
-                        if (mapping.End != range.End)
-                        {
-                            ranges.Add(new(mapping.End + 1, range.End));
-                        }
-                        ranges.RemoveAt(i);
+                        destinations.Add(mapping.Range + mapping.Offset);
                     }
-                    // Partial overlap (start)
-                    else if (mapping.Start >= range.Start && mapping.Start <= range.End)
+                    else if (mapping.Range.StartOverlaps(range))
                     {
-                        destinations.Add(new(mapping.Start + mapping.Offset, range.End + mapping.Offset));
-                        if (mapping.Start != range.Start)
-                        {
-                            ranges.Add(new(range.Start, mapping.Start - 1));
-                        }
-                        ranges.RemoveAt(i);
+                        destinations.Add(new(mapping.Range.Start + mapping.Offset, range.End + mapping.Offset));
                     }
-                    // Partial overlap (end)
-                    else if (mapping.End >= range.Start && mapping.End <= range.End)
+                    else if (mapping.Range.EndOverlaps(range))
                     {
-                        destinations.Add(new(range.Start + mapping.Offset, mapping.End + mapping.Offset));
-                        if (mapping.End != range.End)
-                        {
-                            ranges.Add(new(mapping.End + 1, range.End));
-                        }
-                        ranges.RemoveAt(i);
+                        destinations.Add(new(range.Start + mapping.Offset, mapping.Range.End + mapping.Offset));
                     }
+                    else
+                    {
+                        continue;
+                    }
+                    if (mapping.Range.Start > range.Start)
+                    {
+                        ranges.Add(new(range.Start, mapping.Range.Start - 1));
+                    }
+                    if (mapping.Range.End < range.End)
+                    {
+                        ranges.Add(new(mapping.Range.End + 1, range.End));
+                    }
+                    ranges.RemoveAt(i);
                 }
             }
             destinations.AddRange(ranges);
@@ -130,7 +119,7 @@ namespace AdventOfCode.Y2023.Solvers
                 for (int j = 1; j < lines.Length; j++)
                 {
                     var numbers = lines[j].Split(' ').Select(long.Parse).ToArray();
-                    map.Mappings.Add(new(numbers[1], numbers[1] + numbers[2] - 1, numbers[0] - numbers[1]));
+                    map.Mappings.Add(new(new(numbers[1], numbers[1] + numbers[2] - 1), numbers[0] - numbers[1]));
                 }
             }
             return (seeds, maps);
@@ -141,7 +130,6 @@ namespace AdventOfCode.Y2023.Solvers
             public List<Mapping> Mappings { get; set; } = [];
         }
 
-        private readonly record struct Mapping(long Start, long End, long Offset);
-        private readonly record struct Int64Range(long Start, long End);
+        private record class Mapping(Range<long> Range, long Offset);
     }
 }

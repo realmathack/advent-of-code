@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2015.Solvers
     public class Day14 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => ToReindeers(input).Max(reindeer => Fly(reindeer, 2503));
-
         public override object SolvePart2(string[] input) => FindHighestScoreAtSeconds(ToReindeers(input), 2503);
 
         private static List<Reindeer> ToReindeers(string[] lines)

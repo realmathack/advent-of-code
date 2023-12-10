@@ -15,6 +15,11 @@ namespace AdventOfCode
             return input.Split(Environment.NewLine + Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
         }
 
+        public static string ToMD5Hex(this string input)
+        {
+            return Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes(input))).ToLower();
+        }
+
         public static IEnumerable<IEnumerable<T>> PowerSet<T>(this IList<T> input)
         {
             var powerSetSize = (int)Math.Pow(2, input.Count);
@@ -30,11 +35,6 @@ namespace AdventOfCode
                 }
                 yield return set;
             }
-        }
-
-        public static string ToMD5Hex(this string input)
-        {
-            return Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes(input))).ToLower();
         }
     }
 }

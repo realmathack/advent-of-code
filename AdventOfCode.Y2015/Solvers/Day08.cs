@@ -7,7 +7,6 @@ namespace AdventOfCode.Y2015.Solvers
         private readonly Regex _hexCharRegex = new(@"\\x([0-9a-f]{2})");
 
         public override object SolvePart1(string[] input) => input.Sum(line => line.Length) - input.Sum(ToMemoryLength);
-
         public override object SolvePart2(string[] input) => input.Sum(ToEncodeLength) - input.Sum(line => line.Length);
 
         private int ToMemoryLength(string line)

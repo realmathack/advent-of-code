@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2021.Solvers
     public class Day06 : SolverWithText
     {
         public override object SolvePart1(string input) => GrowFish(input, 80).Values.Sum();
-
         public override object SolvePart2(string input) => GrowFish(input, 256).Values.Sum();
 
         private static Dictionary<int, long> GrowFish(string input, int days)

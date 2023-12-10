@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2015.Solvers
     public class Day05 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => input.Count(IsNicePart1);
-
         public override object SolvePart2(string[] input) => input.Count(IsNicePart2);
 
         private static bool IsNicePart1(string line)
@@ -14,8 +13,6 @@ namespace AdventOfCode.Y2015.Solvers
             }
             return HasDoubleLetter(line) && line.Count(IsVowel) >= 3;
         }
-
-        private static bool IsVowel(char letter) => letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u';
 
         private static bool HasDoubleLetter(string line)
         {
@@ -29,6 +26,7 @@ namespace AdventOfCode.Y2015.Solvers
             return false;
         }
 
+        private static bool IsVowel(char letter) => letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u';
         private static bool IsNicePart2(string line) => HasDoubleLetterWithGap(line) && HasDoublePair(line);
 
         private static bool HasDoubleLetterWithGap(string line)

@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2019.Solvers
     public class Day05 : SolverWithText
     {
         public override object SolvePart1(string input) => ExecuteProgram(input, 1);
-
         public override object SolvePart2(string input) => ExecuteProgram(input, 5);
 
         private static int ExecuteProgram(string input, int givenInput)
@@ -54,9 +53,6 @@ namespace AdventOfCode.Y2019.Solvers
             return output[^1];
         }
 
-        private static int GetParameter(int[] program, int pointer, char mode)
-        {
-            return mode == '1' ? program[pointer] : program[program[pointer]];
-        }
+        private static int GetParameter(int[] program, int pointer, char mode) => mode == '1' ? program[pointer] : program[program[pointer]];
     }
 }

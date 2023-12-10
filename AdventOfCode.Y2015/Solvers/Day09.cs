@@ -3,7 +3,6 @@ namespace AdventOfCode.Y2015.Solvers
     public class Day09 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => ToNodes(input).Min(node => CalculateDistance(node, [node]));
-
         public override object SolvePart2(string[] input) => ToNodes(input).Max(node => CalculateDistance(node, [node], true));
 
         private static List<Node> ToNodes(string[] lines)

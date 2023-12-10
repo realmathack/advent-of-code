@@ -35,10 +35,10 @@ namespace AdventOfCode.Y2022.Solvers
         {
             int maxXY = givenNumber * 2;
             var beacons = ToBeacons(input);
-            var remaining = new Dictionary<int, List<(int Start, int End)>>();
+            var remaining = new Dictionary<int, List<Range<int>>>();
             for (int i = 0; i <= maxXY; i++)
             {
-                remaining.Add(i, [(0, maxXY)]);
+                remaining.Add(i, [new(0, maxXY)]);
             }
             foreach (var beacon in beacons)
             {
@@ -57,21 +57,21 @@ namespace AdventOfCode.Y2022.Solvers
             return remaining.First().Value.First().Start * 4000000L + remaining.First().Key;
         }
 
-        private static void ProcessRow(int row, Dictionary<int, List<(int Start, int End)>> remaining, Coords beacon, int distanceX, int maxXY)
+        private static void ProcessRow(int row, Dictionary<int, List<Range<int>>> remaining, Coords beacon, int distanceX, int maxXY)
         {
             if (!remaining.TryGetValue(row, out var ranges))
             {
                 return;
             }
-            var currentRange = (Start: beacon.X - distanceX, End: beacon.X + distanceX);
-            var affectedRanges = new List<(int Start, int End)>();
+            var currentRange = new Range<int>(beacon.X - distanceX, beacon.X + distanceX);
+            var affectedRanges = new List<Range<int>>();
             for (int i = ranges.Count - 1; i >= 0; i--)
             {
-                if (FullOverlap(ranges[i], currentRange))
+                if (currentRange.FullyOverlaps(ranges[i]))
                 {
                     ranges.RemoveAt(i);
                 }
-                else if (AnyOverlap(ranges[i], currentRange))
+                else if (currentRange.AnyOverlap(ranges[i]))
                 {
                     affectedRanges.Add(ranges[i]);
                     ranges.RemoveAt(i);
@@ -96,9 +96,6 @@ namespace AdventOfCode.Y2022.Solvers
                 remaining.Remove(row);
             }
         }
-
-        private static bool FullOverlap((int Start, int End) old, (int Start, int End) current) => old.Start >= current.Start && current.End >= old.End;
-        private static bool AnyOverlap((int Start, int End) old, (int Start, int End) current) => old.Start <= current.End && current.Start <= old.End;
 
         private static readonly char[] _separator = [' ', ',', ':', '='];
         private static Dictionary<Coords, Coords> ToBeacons(string[] input)

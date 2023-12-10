@@ -16,7 +16,7 @@ namespace AdventOfCode.Y2022.Solvers
 
         private static int SimulateSand(List<Coords[]> formations, Coords bottomRight, Coords sandStart)
         {
-            var grid = ToGrid(bottomRight);
+            var grid = InitGrid(bottomRight);
             AddFormationsToGrid(formations, grid);
             var sandDropped = 0;
             var sand = sandStart;
@@ -121,7 +121,7 @@ namespace AdventOfCode.Y2022.Solvers
             return (formations, bottomRight, sandStart);
         }
 
-        private static bool[][] ToGrid(Coords bottomRight)
+        private static bool[][] InitGrid(Coords bottomRight)
         {
             var grid = new bool[bottomRight.Y + 1][];
             for (int i = 0; i < grid.Length; i++)
