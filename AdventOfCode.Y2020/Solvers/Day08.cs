@@ -7,7 +7,7 @@ namespace AdventOfCode.Y2020.Solvers
         public override object SolvePart2(string[] input)
         {
             var indexes = input
-                .Select((line, i) => (Instruction: line, Index: i))
+                .Select((line, index) => (Instruction: line, Index: index))
                 .Where(line => line.Instruction.StartsWith("nop") || line.Instruction.StartsWith("jmp"))
                 .Select(line => line.Index)
                 .ToList();

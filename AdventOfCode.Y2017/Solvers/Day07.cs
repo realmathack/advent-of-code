@@ -11,10 +11,7 @@ namespace AdventOfCode.Y2017.Solvers
                 var parts = line.Split(" -> ");
                 if (parts.Length > 1)
                 {
-                    foreach (var child in parts[1].Split(", "))
-                    {
-                        childeren.Add(child);
-                    }
+                    childeren.UnionWith(parts[1].Split(", "));
                 }
                 programs.Add(parts[0].Split(' ')[0]);
             }
@@ -24,16 +21,16 @@ namespace AdventOfCode.Y2017.Solvers
         public override object SolvePart2(string[] input)
         {
             var programs = new Dictionary<string, (int Weight, List<string> Children)>();
-            var alllChilderen = new List<string>();
+            var alllChilderen = new HashSet<string>();
             foreach (var line in input)
             {
                 var parts = line.Split(" -> ");
                 var children = (parts.Length == 1) ? [] : parts[1].Split(", ").ToList();
-                alllChilderen.AddRange(children);
+                alllChilderen.UnionWith(children);
                 parts = parts[0].Split(' ');
                 programs.Add(parts[0], (int.Parse(parts[1].Trim('(', ')')), children));
             }
-            var root = programs.Keys.ToArray().Except(alllChilderen).Single();
+            var root = programs.Keys.ToHashSet().Except(alllChilderen).Single();
             var (found, correctedWeight, _) = CheckWeights(programs, root);
             if (!found)
             {
