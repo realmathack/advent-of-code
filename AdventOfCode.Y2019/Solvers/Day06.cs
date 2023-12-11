@@ -24,7 +24,7 @@ namespace AdventOfCode.Y2019.Solvers
             var start = orbits.Single(orbit => orbit.Value.Contains("YOU")).Key;
             var goal = orbits.Single(orbit => orbit.Value.Contains("SAN")).Key;
             var depth = 0;
-            var current = new List<string>() { start };
+            var current = new HashSet<string>() { start };
             while (!current.Contains(goal))
             {
                 var nextObjects = orbits
@@ -43,13 +43,13 @@ namespace AdventOfCode.Y2019.Solvers
             return depth;
         }
 
-        private static Dictionary<string, List<string>> ToOrbits(string[] input)
+        private static Dictionary<string, HashSet<string>> ToOrbits(string[] input)
         {
             return input
                 .Select(line => line.Split(')'))
                 .Select(parts => (Center: parts[0], Object: parts[1]))
                 .GroupBy(orbit => orbit.Center)
-                .Select(g => (g.Key, Value: g.Select(orbit => orbit.Object).ToList()))
+                .Select(g => (g.Key, Value: g.Select(orbit => orbit.Object).ToHashSet()))
                 .ToDictionary(g => g.Key, g => g.Value);
         }
     }

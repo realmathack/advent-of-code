@@ -2,7 +2,7 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day13 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => ToNodes(input).Max(node => CalculateHapiness(node, [node]));
+        public override object SolvePart1(string[] input) => ToNodes(input).Max(node => CalculateHapiness(node, node, [node]));
 
         public override object SolvePart2(string[] input)
         {
@@ -13,7 +13,7 @@ namespace AdventOfCode.Y2015.Solvers
                 nodeSelf.Neighbors.Add(node, 0);
                 node.Neighbors.Add(nodeSelf, 0);
             }
-            return nodes.Max(node => CalculateHapiness(node, [node]));
+            return nodes.Max(node => CalculateHapiness(node, node, [node]));
         }
 
         private static List<Node> ToNodes(string[] lines)
@@ -38,7 +38,7 @@ namespace AdventOfCode.Y2015.Solvers
             return [.. nodes.Values];
         }
 
-        private static int CalculateHapiness(Node node, List<Node> visited)
+        private static int CalculateHapiness(Node start, Node node, HashSet<Node> visited)
         {
             var distances = new List<int>();
             foreach (var neighbor in node.Neighbors)
@@ -48,10 +48,10 @@ namespace AdventOfCode.Y2015.Solvers
                     continue;
                 }
                 visited.Add(neighbor.Key);
-                distances.Add(neighbor.Value + neighbor.Key.Neighbors[node] + CalculateHapiness(neighbor.Key, visited));
+                distances.Add(neighbor.Value + neighbor.Key.Neighbors[node] + CalculateHapiness(start, neighbor.Key, visited));
                 visited.Remove(neighbor.Key);
             }
-            return (distances.Count == 0) ? node.Neighbors[visited[0]] + visited[0].Neighbors[node] : distances.Max();
+            return (distances.Count == 0) ? node.Neighbors[start] + start.Neighbors[node] : distances.Max();
         }
 
         private record class Node(string Name)

@@ -2,15 +2,15 @@ namespace AdventOfCode.Y2018.Solvers
 {
     public class Day03 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => ToClaimedSquares(input).Count(square => square.Value.Count >= 2);
+        public override object SolvePart1(string[] input) => ToClaimedSquares(input).Values.Count(square => square.Ids.Count >= 2);
 
         public override object SolvePart2(string[] input)
         {
-            var claimedSquares = ToClaimedSquares(input);
-            var singles = claimedSquares.Where(square => square.Value.Count == 1).ToList();
-            var singleIds = singles.Select(single => single.Value.Single()).Distinct().ToList();
+            var claimedSquares = ToClaimedSquares(input).Values;
+            var singles = claimedSquares.Where(square => square.Ids.Count == 1).ToList();
+            var singleIds = singles.Select(single => single.Ids.Single()).Distinct().ToArray();
             var others = claimedSquares.Except(singles).ToList();
-            var otherIds = others.SelectMany(other => other.Value).Distinct().ToList();
+            var otherIds = others.SelectMany(other => other.Ids).Distinct().ToHashSet();
             foreach (var id in singleIds)
             {
                 if (!otherIds.Contains(id))
@@ -21,18 +21,19 @@ namespace AdventOfCode.Y2018.Solvers
             return 0;
         }
 
-        private Dictionary<Coords, List<int>> ToClaimedSquares(string[] input)
+        private Dictionary<Coords, ClaimedSquare> ToClaimedSquares(string[] input)
         {
-            var claimedSquares = new Dictionary<Coords, List<int>>();
+            var claimedSquares = new Dictionary<Coords, ClaimedSquare>();
             foreach (var claim in ToClaims(input))
             {
                 foreach (var square in ToSquares(claim))
                 {
-                    if (!claimedSquares.TryGetValue(square, out var counts))
+                    if (!claimedSquares.TryGetValue(square, out var claimedSquare))
                     {
-                        counts = [];
+                        claimedSquare = new(square, []);
+                        claimedSquares[square] = claimedSquare;
                     }
-                    claimedSquares[square] = [.. counts, claim.Id];
+                    claimedSquare.Ids.Add(claim.Id);
                 }
             }
             return claimedSquares;
@@ -64,5 +65,6 @@ namespace AdventOfCode.Y2018.Solvers
         }
 
         private record class Claim(int Id, Coords Coords, int Width, int Height);
+        private record class ClaimedSquare(Coords Coords, HashSet<int> Ids);
     }
 }

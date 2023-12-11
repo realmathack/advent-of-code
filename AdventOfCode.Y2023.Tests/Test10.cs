@@ -4,7 +4,7 @@ namespace AdventOfCode.Y2023.Tests
     {
         [Theory]
         [InlineData(_input1, 4)]
-        //[InlineData(_input2, 8)]
+        [InlineData(_input2, 8)]
         public void TestPart1(string input, int expected)
         {
             var subject = new Day10();

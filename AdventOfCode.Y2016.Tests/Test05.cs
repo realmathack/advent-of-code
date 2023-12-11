@@ -2,7 +2,7 @@ namespace AdventOfCode.Y2016.Tests
 {
     public class Test05
     {
-        [Fact(Skip = "Test takes too long")]
+        [Fact(Skip = "Test takes too long (MD5)")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "xUnit1004:Test methods should not be skipped")]
         public void TestPart1()
         {
@@ -14,7 +14,7 @@ namespace AdventOfCode.Y2016.Tests
             Assert.Equal("18f47a30", result);
         }
 
-        [Fact(Skip = "Test takes too long")]
+        [Fact(Skip = "Test takes too long (MD5)")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "xUnit1004:Test methods should not be skipped")]
         public void TestPart2()
         {
