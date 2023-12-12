@@ -7,6 +7,7 @@ namespace AdventOfCode.Y2023.Solvers
         public override object SolvePart1(string[] input) => CalculateSumOfDistances(ToCoords(input));
         public override object SolvePart2(string[] input) => CalculateSumOfDistances(ToCoords(input, _timesLarger - 1));
 
+        // See https://github.com/maksverver/AdventOfCode/blob/master/2023/day11/snel-met-uitleg.py for a solution with explanation (NL)
         private static long CalculateSumOfDistances(List<Coords> coords)
         {
             var sum = 0L;
