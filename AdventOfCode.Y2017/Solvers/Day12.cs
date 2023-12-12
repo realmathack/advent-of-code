@@ -8,9 +8,8 @@ namespace AdventOfCode.Y2017.Solvers
             var connected = new HashSet<int>() { 0 };
             var toProcess = new Queue<int>();
             programs[0].ForEach(toProcess.Enqueue);
-            while (toProcess.Count > 0)
+            while (toProcess.TryDequeue(out var program))
             {
-                var program = toProcess.Dequeue();
                 if (connected.Add(program))
                 {
                     programs[program].ForEach(toProcess.Enqueue);
@@ -30,9 +29,8 @@ namespace AdventOfCode.Y2017.Solvers
                 var toProcess = new Queue<int>();
                 programs[root].ForEach(toProcess.Enqueue);
                 programs.Remove(root);
-                while (toProcess.Count > 0)
+                while (toProcess.TryDequeue(out var program))
                 {
-                    var program = toProcess.Dequeue();
                     if (connected[root].Add(program))
                     {
                         programs[program].ForEach(toProcess.Enqueue);

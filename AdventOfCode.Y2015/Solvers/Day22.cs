@@ -5,6 +5,7 @@ namespace AdventOfCode.Y2015.Solvers
         private readonly Dictionary<SpellNames, Spell> _spells = GetSpells();
         private int _lowestManaCost;
 
+        // TODO: Apparently this code doesn't work anymore
         public override object SolvePart1(string[] input) => FindLeastAmountOfMana(input);
         // HACK: Can't seem to get my code to work for part 2,
         // cheated by using https://github.com/fluttert/AdventOfCode/blob/master/AdventOfCode/Year2015/Day22.cs
@@ -20,9 +21,8 @@ namespace AdventOfCode.Y2015.Solvers
             {
                 possibleMoves.Enqueue(startingState.NextRound(spell.Key));
             }
-            while (possibleMoves.Count > 0)
+            while (possibleMoves.TryDequeue(out var current))
             {
-                var current = possibleMoves.Dequeue();
                 // player
                 if (isHardDifficulty)
                 {

@@ -4,6 +4,7 @@ namespace AdventOfCode.Y2022.Solvers
     {
         public override object SolvePart1(string[] input)
         {
+            // TODO: This might need a better implementation, takes 1000+ ms
             var root = ToValves(input);
             return FindHighestFlowRate(root, [root], 30);
         }
@@ -106,14 +107,14 @@ namespace AdventOfCode.Y2022.Solvers
             return valves["AA"];
         }
 
+        // TODO: Is this BFS?
         private static int FindShortestPath(Dictionary<string, (int FlowRate, string[] Tunnels)> list, string start, string target)
         {
             var parents = new Dictionary<string, string>();
             var queue = new Queue<string>();
             queue.Enqueue(start);
-            while (queue.Count > 0)
+            while (queue.TryDequeue(out var current))
             {
-                var current = queue.Dequeue();
                 foreach (var tunnel in list[current].Tunnels)
                 {
                     if (parents.ContainsKey(tunnel))
