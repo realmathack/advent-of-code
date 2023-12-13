@@ -1,11 +1,13 @@
 namespace AdventOfCode.Y2016.Solvers
 {
-    public class Day10 : SolverWithLines
+    public class Day10(int _value1, int _value2) : SolverWithLines
     {
+        public Day10() : this(61, 17) { }
+
         public override object SolvePart1(string[] input) => ExecuteInstructions(input);
         public override object SolvePart2(string[] input) => ExecuteInstructions(input, true);
 
-        private static int ExecuteInstructions(string[] input, bool returnOutputs = false)
+        private int ExecuteInstructions(string[] input, bool returnOutputs = false)
         {
             var outputs = new Dictionary<int, int>();
             var bots = new Dictionary<int, Bot>();
@@ -27,7 +29,7 @@ namespace AdventOfCode.Y2016.Solvers
                 {
                     return outputs[0] * outputs[1] * outputs[2];
                 }
-                if (!returnOutputs && bot.Values.Contains(61) && bot.Values.Contains(17))
+                if (!returnOutputs && bot.Values.Contains(_value1) && bot.Values.Contains(_value2))
                 {
                     return bot.Number;
                 }
