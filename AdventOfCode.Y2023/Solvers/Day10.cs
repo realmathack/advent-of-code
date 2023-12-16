@@ -10,17 +10,49 @@ namespace AdventOfCode.Y2023.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            // TODO: Implement
-            //var (grid, start) = ToGrid(input);
-            //var loop = GetLoop(grid, start);
-            //loop.Add(start);
-            return null!;
+            var (grid, start) = ToGrid(input);
+            var loop = GetLoop(grid, start);
+            IsolateLoop(grid, loop);
+            var enclosed = 0;
+            for (int y = 0; y < grid.Length; y++)
+            {
+                var crossings = 0;
+                for (int x = 0; x < grid[y].Length; x++)
+                {
+                    if (_oddEvenWalls.Contains(grid[y][x]))
+                    {
+                        crossings++;
+                    }
+                    else if (crossings % 2 == 1 && grid[y][x] == '.')
+                    {
+                        enclosed++;
+                    }
+                }
+            }
+            return enclosed;
         }
 
-        private static List<Coords> GetLoop(char[][] grid, Coords current)
+        // https://en.wikipedia.org/wiki/Even%E2%80%93odd_rule
+        private static readonly char[] _oddEvenWalls = ['|', 'J', 'L'];
+
+        private static void IsolateLoop(char[][] grid, HashSet<Coords> loop)
+        {
+            for (int y = 0; y < grid.Length; y++)
+            {
+                for (int x = 0; x < grid[y].Length; x++)
+                {
+                    if (!loop.Contains(new(x, y)))
+                    {
+                        grid[y][x] = '.';
+                    }
+                }
+            }
+        }
+
+        private static HashSet<Coords> GetLoop(char[][] grid, Coords current)
         {
             var visited = new HashSet<Coords>();
-            var loop = new List<Coords>();
+            var loop = new HashSet<Coords>();
             while (!visited.Contains(current))
             {
                 loop.Add(current);
@@ -45,18 +77,6 @@ namespace AdventOfCode.Y2023.Solvers
         {
             var neighbors = new List<Coords>();
             var currentPipe = grid[node.Y][node.X];
-            if (currentPipe == 'S')
-            {
-                var right = node.Right;
-                var down = node.Down;
-                var left = node.Left;
-                var up = node.Up;
-                if (right.X < grid[right.Y].Length - 1 && _pipes["west"].Contains(grid[right.Y][right.X])) { neighbors.Add(right); }
-                if (down.Y < grid.Length - 1           && _pipes["north"].Contains(grid[down.Y][down.X]) ) { neighbors.Add(down); }
-                if (left.X > 0                         && _pipes["east"].Contains(grid[left.Y][left.X])  ) { neighbors.Add(left); }
-                if (up.Y > 0                           && _pipes["south"].Contains(grid[up.Y][up.X])     ) { neighbors.Add(up); }
-                return neighbors;
-            }
             if (node.X > 0                       && _pipes["west"].Contains(currentPipe) ) { neighbors.Add(node.Left); }
             if (node.Y > 0                       && _pipes["north"].Contains(currentPipe)) { neighbors.Add(node.Up); }
             if (node.X < grid[node.Y].Length - 1 && _pipes["east"].Contains(currentPipe) ) { neighbors.Add(node.Right); }
@@ -75,6 +95,14 @@ namespace AdventOfCode.Y2023.Solvers
                 if (start is null && (col = lines[row].IndexOf('S')) != -1)
                 {
                     start = new Coords(col, row);
+                    if (start.Value.Left.X > 0 && _pipes["east"].Contains(grid[start.Value.Left.Y][start.Value.Left.X]))
+                    {
+                        grid[row][col] = (start.Value.Up.Y > 0 && _pipes["south"].Contains(grid[start.Value.Up.Y][start.Value.Up.X])) ? 'J' : '7';
+                    }
+                    else
+                    {
+                        grid[row][col] = (start.Value.Up.Y > 0 && _pipes["south"].Contains(grid[start.Value.Up.Y][start.Value.Up.X])) ? 'L' : 'F';
+                    }
                 }
             }
             if (start is null)

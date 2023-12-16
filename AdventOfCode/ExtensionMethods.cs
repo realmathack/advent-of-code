@@ -20,6 +20,23 @@ namespace AdventOfCode
             return Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes(input))).ToLower();
         }
 
+        public static HashSet<int> CalculateFactors(this int input)
+        {
+            var factors = new HashSet<int>() { 1, input };
+            for (int i = 2; i * i <= input; i++)
+            {
+                if (input % i == 0)
+                {
+                    factors.Add(i);
+                    if (i * i != input)
+                    {
+                        factors.Add(input / i);
+                    }
+                }
+            }
+            return factors;
+        }
+
         public static IEnumerable<IList<T>> PowerSet<T>(this IList<T> input)
         {
             var powerSetSize = (int)Math.Pow(2, input.Count);
