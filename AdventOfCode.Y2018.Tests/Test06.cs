@@ -16,12 +16,12 @@ namespace AdventOfCode.Y2018.Tests
         [Fact]
         public void TestPart2()
         {
-            var subject = new Day06();
+            var subject = new Day06(32);
             subject.SetInput(_input);
 
             var result = subject.SolvePart2();
 
-            Assert.Equal(null!, result);
+            Assert.Equal(16, result);
         }
 
         private const string _input = @"1, 1
