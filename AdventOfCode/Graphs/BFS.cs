@@ -3,25 +3,24 @@
     public abstract class BFS<T>
         where T : notnull
     {
-        public List<T> FindPath(T start, T goal)
+        public List<T> Search(T root)
         {
-            var visited = new HashSet<T>() { start };
+            var visited = new HashSet<T>() { root };
             var cameFrom = new Dictionary<T, T>();
             var queue = new Queue<T>();
-            queue.Enqueue(start);
+            queue.Enqueue(root);
             while (queue.TryDequeue(out var current))
             {
-                if (current.Equals(goal))
+                if (IsGoal(current))
                 {
                     return ReconstructPath(cameFrom, current);
                 }
                 foreach (var neighbor in FindNeighbors(current))
                 {
-                    if (visited.Contains(neighbor))
+                    if (!visited.Add(neighbor))
                     {
                         continue;
                     }
-                    visited.Add(neighbor);
                     cameFrom[neighbor] = current;
                     queue.Enqueue(neighbor);
                 }
@@ -30,6 +29,7 @@
         }
 
         protected abstract List<T> FindNeighbors(T node);
+        protected abstract bool IsGoal(T node);
 
         private static List<T> ReconstructPath(Dictionary<T, T> cameFrom, T node)
         {
