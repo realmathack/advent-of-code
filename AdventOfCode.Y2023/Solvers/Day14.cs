@@ -5,14 +5,14 @@ namespace AdventOfCode.Y2023.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var grid = ToGrid(input);
+            var grid = input.ToCharGrid();
             MoveRoundedRocksNorth(grid);
             return CalculateLoad(grid);
         }
 
         public override object SolvePart2(string[] input)
         {
-            var grid = ToGrid(input);
+            var grid = input.ToCharGrid();
             var cache = new List<string>();
             var cycleStart = int.MinValue;
             for (int i = 0; i < 1_000_000_000; i++)
@@ -158,11 +158,6 @@ namespace AdventOfCode.Y2023.Solvers
                 sum += grid[i].Count(space => space == 'O') * (grid.Length - i);
             }
             return sum;
-        }
-
-        private static char[][] ToGrid(string[] input)
-        {
-            return input.Select(line => line.ToCharArray()).ToArray();
         }
     }
 }

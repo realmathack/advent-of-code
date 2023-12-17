@@ -18,10 +18,10 @@ namespace AdventOfCode.Y2022.Solvers
         {
             var neighbors = new List<Coords>();
             var currentHeight = grid[current.Y][current.X];
-            if (current.X > 0                           && (grid[current.Y][current.X - 1] - currentHeight) <= 1) { neighbors.Add(current.Left); }
-            if (current.Y > 0                           && (grid[current.Y - 1][current.X] - currentHeight) <= 1) { neighbors.Add(current.Up); }
-            if (current.X < grid[current.Y].Length - 1  && (grid[current.Y][current.X + 1] - currentHeight) <= 1) { neighbors.Add(current.Right); }
-            if (current.Y < grid.Length - 1             && (grid[current.Y + 1][current.X] - currentHeight) <= 1) { neighbors.Add(current.Down); }
+            if (current.X > 0                          && (grid[current.Y][current.X - 1] - currentHeight) <= 1) { neighbors.Add(current.Left); }
+            if (current.Y > 0                          && (grid[current.Y - 1][current.X] - currentHeight) <= 1) { neighbors.Add(current.Up); }
+            if (current.X < grid[current.Y].Length - 1 && (grid[current.Y][current.X + 1] - currentHeight) <= 1) { neighbors.Add(current.Right); }
+            if (current.Y < grid.Length - 1            && (grid[current.Y + 1][current.X] - currentHeight) <= 1) { neighbors.Add(current.Down); }
             return neighbors;
         }
 
@@ -29,10 +29,10 @@ namespace AdventOfCode.Y2022.Solvers
         {
             var neighbors = new List<Coords>();
             var currentHeight = grid[current.Y][current.X];
-            if (current.X > 0                           && (grid[current.Y][current.X - 1] - currentHeight) >= -1) { neighbors.Add(current.Left); }
-            if (current.Y > 0                           && (grid[current.Y - 1][current.X] - currentHeight) >= -1) { neighbors.Add(current.Up); }
-            if (current.X < grid[current.Y].Length - 1  && (grid[current.Y][current.X + 1] - currentHeight) >= -1) { neighbors.Add(current.Right); }
-            if (current.Y < grid.Length - 1             && (grid[current.Y + 1][current.X] - currentHeight) >= -1) { neighbors.Add(current.Down); }
+            if (current.X > 0                          && (grid[current.Y][current.X - 1] - currentHeight) >= -1) { neighbors.Add(current.Left); }
+            if (current.Y > 0                          && (grid[current.Y - 1][current.X] - currentHeight) >= -1) { neighbors.Add(current.Up); }
+            if (current.X < grid[current.Y].Length - 1 && (grid[current.Y][current.X + 1] - currentHeight) >= -1) { neighbors.Add(current.Right); }
+            if (current.Y < grid.Length - 1            && (grid[current.Y + 1][current.X] - currentHeight) >= -1) { neighbors.Add(current.Down); }
             return neighbors;
         }
 

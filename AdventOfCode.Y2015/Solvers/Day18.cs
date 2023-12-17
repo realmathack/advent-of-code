@@ -6,7 +6,7 @@ namespace AdventOfCode.Y2015.Solvers
 
         public override object SolvePart1(string[] input)
         {
-            var grid = ToGrid(input);
+            var grid = input.ToBoolGrid(light => light == '#');
             for (int step = 0; step < steps; step++)
             {
                 grid = ExecuteStep(grid);
@@ -16,22 +16,12 @@ namespace AdventOfCode.Y2015.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var grid = SetCornersOn(ToGrid(input));
+            var grid = SetCornersOn(input.ToBoolGrid(light => light == '#'));
             for (int step = 0; step < steps; step++)
             {
                 grid = SetCornersOn(ExecuteStep(grid));
             }
             return grid.Select(row => row.Count(light => light)).Sum();
-        }
-
-        private static bool[][] ToGrid(string[] lines)
-        {
-            var grid = new bool[lines.Length][];
-            for (int i = 0; i < lines.Length; i++)
-            {
-                grid[i] = lines[i].Select(light => light == '#').ToArray();
-            }
-            return grid;
         }
 
         private static bool[][] ExecuteStep(bool[][] grid)

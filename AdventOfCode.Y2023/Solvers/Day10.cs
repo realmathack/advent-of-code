@@ -53,10 +53,9 @@ namespace AdventOfCode.Y2023.Solvers
         {
             var visited = new HashSet<Coords>();
             var loop = new HashSet<Coords>();
-            while (!visited.Contains(current))
+            while (visited.Add(current))
             {
                 loop.Add(current);
-                visited.Add(current);
                 foreach (var neighbor in FindPossibleNeighbors(grid, current).Where(neighbor => !visited.Contains(neighbor)))
                 {
                     current = neighbor;

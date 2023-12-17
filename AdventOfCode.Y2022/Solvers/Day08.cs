@@ -4,7 +4,7 @@ namespace AdventOfCode.Y2022.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var grid = ToGrid(input);
+            var grid = input.ToNumberGrid();
             var count = (grid.Length + grid[0].Length - 2) * 2;
             for (int row = 1; row < grid.Length - 1; row++)
             {
@@ -22,7 +22,7 @@ namespace AdventOfCode.Y2022.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var grid = ToGrid(input);
+            var grid = input.ToNumberGrid();
             var biggestView = 0;
             for (int row = 1; row < grid.Length - 1; row++)
             {
@@ -37,20 +37,6 @@ namespace AdventOfCode.Y2022.Solvers
                 }
             }
             return biggestView;
-        }
-
-        private static int[][] ToGrid(string[] lines)
-        {
-            var result = new int[lines.Length][];
-            for (int row = 0; row < lines.Length; row++)
-            {
-                result[row] = new int[lines[row].Length];
-                for (int col = 0; col < lines[row].Length; col++)
-                {
-                    result[row][col] = lines[row][col] - '0';
-                }
-            }
-            return result;
         }
 
         private static bool IsVisibleFromLeft(int[][] grid, int row, int col)

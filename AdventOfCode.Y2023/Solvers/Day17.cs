@@ -7,7 +7,7 @@ namespace AdventOfCode.Y2023.Solvers
 
         private static int FindLeastHeatPath(string[] input, Action<PriorityQueue<Move, int>, Move, int, Coords> queueMethod)
         {
-            var grid = ToGrid(input);
+            var grid = input.ToNumberGrid();
             var start = new Coords(0, 0);
             var goal = new Coords(grid.Length - 1, grid[0].Length - 1);
             var visited = new HashSet<Move>();
@@ -57,8 +57,6 @@ namespace AdventOfCode.Y2023.Solvers
                 queue.Enqueue(new(nextPosition, current.Direction.RotateRight, 1), heat);
             }
         }
-
-        private static int[][] ToGrid(string[] input) => input.Select(line => line.Select(block => block - '0').ToArray()).ToArray();
 
         private record class Move(Coords Position, Coords Direction, int CountSameDirection);
     }

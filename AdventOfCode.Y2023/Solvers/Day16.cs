@@ -2,11 +2,11 @@ namespace AdventOfCode.Y2023.Solvers
 {
     public class Day16 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => EnergizeTiles(ToGrid(input), [new(new(0, 0), Coords.OffsetRight)]);
+        public override object SolvePart1(string[] input) => EnergizeTiles(input.ToCharGrid(), [new(new(0, 0), Coords.OffsetRight)]);
 
         public override object SolvePart2(string[] input)
         {
-            var grid = ToGrid(input);
+            var grid = input.ToCharGrid();
             var highest = 0;
             var beams = new List<Beam>();
             beams.AddRange(Enumerable.Range(0, grid.Length).Select(i => new Beam(new(0, i), Coords.OffsetRight)));
@@ -67,11 +67,6 @@ namespace AdventOfCode.Y2023.Solvers
         }
 
         private static bool IsOutOfBounds(char[][] grid, Coords coords) => (coords.X < 0 || coords.Y < 0 || coords.Y >= grid.Length || coords.X >= grid[coords.Y].Length);
-
-        private static char[][] ToGrid(string[] input)
-        {
-            return input.Select(line => line.ToCharArray()).ToArray();
-        }
 
         private class Beam(Coords pos, Coords direction)
         {

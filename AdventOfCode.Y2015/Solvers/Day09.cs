@@ -33,11 +33,10 @@ namespace AdventOfCode.Y2015.Solvers
             var distances = new List<int>();
             foreach (var route in node.Routes)
             {
-                if (visited.Contains(route.Key))
+                if (!visited.Add(route.Key))
                 {
                     continue;
                 }
-                visited.Add(route.Key);
                 distances.Add(route.Value + CalculateDistance(route.Key, visited, longestRoute));
                 visited.Remove(route.Key);
             }

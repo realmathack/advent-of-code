@@ -4,8 +4,6 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day12 : SolverWithText
     {
-        private readonly Regex _numberRegex = new(@"-?\d+");
-
         public override object SolvePart1(string input) => SumNumbers(input);
 
         public override object SolvePart2(string input)
@@ -33,6 +31,7 @@ namespace AdventOfCode.Y2015.Solvers
             return SumNumbers(input);
         }
 
+        private readonly Regex _numberRegex = new(@"-?\d+");
         private int SumNumbers(string input)
         {
             var sum = 0;

@@ -48,11 +48,10 @@
             }
             while (queue.TryDequeue(out var current, out _))
             {
-                if (visited.Contains(current))
+                if (!visited.Add(current))
                 {
                     continue;
                 }
-                visited.Add(current);
                 foreach (var neighbor in FindNeighbors(current))
                 {
                     if (visited.Contains(neighbor))

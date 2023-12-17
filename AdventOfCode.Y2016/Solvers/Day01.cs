@@ -30,11 +30,10 @@ namespace AdventOfCode.Y2016.Solvers
                 for (int i = 0; i < int.Parse(instruction[1..]); i++)
                 {
                     current += offset;
-                    if (visited.Contains(current))
+                    if (!visited.Add(current))
                     {
                         return Math.Abs(current.X) + Math.Abs(current.Y);
                     }
-                    visited.Add(current);
                 }
             }
             return 0;

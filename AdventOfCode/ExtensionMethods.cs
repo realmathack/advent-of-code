@@ -15,10 +15,10 @@ namespace AdventOfCode
             return input.Split(Environment.NewLine + Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        public static string ToMD5Hex(this string input)
-        {
-            return Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes(input))).ToLower();
-        }
+        public static char[][] ToCharGrid(this string[] input) => input.Select(line => line.ToCharArray()).ToArray();
+        public static int[][] ToNumberGrid(this string[] input) => input.Select(line => line.Select(cell => cell - '0').ToArray()).ToArray();
+        public static bool[][] ToBoolGrid(this string[] input, Func<char, bool> selector) => input.Select(line => line.Select(selector).ToArray()).ToArray();
+        public static bool IsEdge<T>(this T[][] input, Coords cell) => cell.X == 0 || cell.Y == 0 || cell.Y == input.Length - 1 || cell.X == input[0].Length - 1;
 
         public static HashSet<int> CalculateFactors(this int input)
         {
@@ -54,28 +54,33 @@ namespace AdventOfCode
             }
         }
 
-        public static IEnumerable<T[]> Permutations<T>(this T[] values, int indexFrom = 0)
+        public static IEnumerable<IList<T>> Permutations<T>(this IList<T> input, int indexFrom = 0)
         {
-            if (indexFrom + 1 == values.Length)
+            if (indexFrom + 1 == input.Count)
             {
-                yield return values;
+                yield return input;
             }
             else
             {
-                foreach (var permutation in Permutations(values, indexFrom + 1))
+                foreach (var permutation in Permutations(input, indexFrom + 1))
                 {
                     yield return permutation;
                 }
-                for (var i = indexFrom + 1; i < values.Length; i++)
+                for (var i = indexFrom + 1; i < input.Count; i++)
                 {
-                    (values[indexFrom], values[i]) = (values[i], values[indexFrom]);
-                    foreach (var permutation in Permutations(values, indexFrom + 1))
+                    (input[indexFrom], input[i]) = (input[i], input[indexFrom]);
+                    foreach (var permutation in Permutations(input, indexFrom + 1))
                     {
                         yield return permutation;
                     }
-                    (values[indexFrom], values[i]) = (values[i], values[indexFrom]);
+                    (input[indexFrom], input[i]) = (input[i], input[indexFrom]);
                 }
             }
+        }
+
+        public static string ToMD5Hex(this string input)
+        {
+            return Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes(input))).ToLower();
         }
     }
 }

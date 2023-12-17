@@ -43,11 +43,10 @@ namespace AdventOfCode.Y2015.Solvers
             var distances = new List<int>();
             foreach (var neighbor in node.Neighbors)
             {
-                if (visited.Contains(neighbor.Key))
+                if (!visited.Add(neighbor.Key))
                 {
                     continue;
                 }
-                visited.Add(neighbor.Key);
                 distances.Add(neighbor.Value + neighbor.Key.Neighbors[node] + CalculateHapiness(start, neighbor.Key, visited));
                 visited.Remove(neighbor.Key);
             }

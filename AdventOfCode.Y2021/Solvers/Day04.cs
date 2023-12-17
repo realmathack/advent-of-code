@@ -89,9 +89,6 @@ namespace AdventOfCode.Y2021.Solvers
             return rows > 0 || columns > 0;
         }
 
-        private static int SumUnmarkedNumbers(string[][] board)
-        {
-            return board.SelectMany(row => row).Where(cell => cell != "X").Sum(int.Parse);
-        }
+        private static int SumUnmarkedNumbers(string[][] board) => board.SelectMany(row => row).Where(cell => cell != "X").Sum(int.Parse);
     }
 }
