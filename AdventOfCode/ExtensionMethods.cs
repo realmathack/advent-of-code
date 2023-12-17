@@ -18,7 +18,7 @@ namespace AdventOfCode
         public static char[][] ToCharGrid(this string[] input) => input.Select(line => line.ToCharArray()).ToArray();
         public static int[][] ToNumberGrid(this string[] input) => input.Select(line => line.Select(cell => cell - '0').ToArray()).ToArray();
         public static bool[][] ToBoolGrid(this string[] input, Func<char, bool> selector) => input.Select(line => line.Select(selector).ToArray()).ToArray();
-        public static bool IsEdge<T>(this T[][] input, Coords cell) => cell.X == 0 || cell.Y == 0 || cell.Y == input.Length - 1 || cell.X == input[0].Length - 1;
+        public static bool IsOutOfBounds<T>(this T[][] grid, Coords coords) => (coords.X < 0 || coords.Y < 0 || coords.Y >= grid.Length || coords.X >= grid[coords.Y].Length);
 
         public static HashSet<int> CalculateFactors(this int input)
         {

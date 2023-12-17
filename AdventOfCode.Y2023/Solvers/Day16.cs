@@ -32,7 +32,7 @@ namespace AdventOfCode.Y2023.Solvers
                 for (int i = beams.Count - 1; i >= 0; i--)
                 {
                     var beam = beams[i];
-                    if (IsOutOfBounds(grid, beam.Pos) || !visited.Add((beam.Pos, beam.Direction)))
+                    if (grid.IsOutOfBounds(beam.Pos) || !visited.Add((beam.Pos, beam.Direction)))
                     {
                         beams.RemoveAt(i);
                         continue;
@@ -65,8 +65,6 @@ namespace AdventOfCode.Y2023.Solvers
             }
             return visited.Select(tile => tile.Item1).Distinct().Count();
         }
-
-        private static bool IsOutOfBounds(char[][] grid, Coords coords) => (coords.X < 0 || coords.Y < 0 || coords.Y >= grid.Length || coords.X >= grid[coords.Y].Length);
 
         private class Beam(Coords pos, Coords direction)
         {
