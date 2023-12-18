@@ -14,6 +14,7 @@
         public static Coords operator +(Coords a, (int X, int Y) b) => new(a.X + b.X, a.Y + b.Y);
         public static Coords operator -(Coords a, Coords b) => new(a.X - b.X, a.Y - b.Y);
         public static Coords operator -(Coords a, (int X, int Y) b) => new(a.X - b.X, a.Y - b.Y);
+        public static Coords operator *(Coords a, int multiplier) => new(a.X * multiplier, a.Y * multiplier);
         public Coords Left => this + OffsetLeft;
         public Coords Up => this + OffsetUp;
         public Coords Right => this + OffsetRight;
