@@ -19,6 +19,6 @@ namespace AdventOfCode.Y2015.Solvers
         }
 
         private static List<int> ToContainers(string[] lines) => lines.Select(int.Parse).ToList();
-        private static List<(int Sum, int Count)> ToPossibilities(List<int> containers) => containers.PowerSet().Select(set => (set.Sum(), set.Count())).ToList();
+        private static List<(int Sum, int Count)> ToPossibilities(List<int> containers) => containers.PowerSet().Select(set => (set.Sum(), set.Count)).ToList();
     }
 }

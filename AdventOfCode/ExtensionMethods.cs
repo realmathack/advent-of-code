@@ -78,9 +78,6 @@ namespace AdventOfCode
             }
         }
 
-        public static string ToMD5Hex(this string input)
-        {
-            return Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes(input))).ToLower();
-        }
+        public static string ToMD5Hex(this string input) => Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes(input))).ToLower();
     }
 }

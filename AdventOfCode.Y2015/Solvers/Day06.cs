@@ -48,13 +48,13 @@ namespace AdventOfCode.Y2015.Solvers
             return grid.Sum(row => row.Sum());
         }
 
+        private static readonly Regex _regex = new(@"(.+) (\d+),(\d+) through (\d+),(\d+)");
         private static List<Move> ToMoves(string[] lines)
         {
             var result = new List<Move>(lines.Length);
-            var regex = new Regex(@"(.+) (\d+),(\d+) through (\d+),(\d+)");
             foreach (var line in lines)
             {
-                var match = regex.Match(line);
+                var match = _regex.Match(line);
                 var change = match.Groups[1].Value switch
                 {
                     "turn off" => Change.Off,

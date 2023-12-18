@@ -31,8 +31,8 @@ namespace AdventOfCode.Y2015.Solvers
             return SumNumbers(input);
         }
 
-        private readonly Regex _numberRegex = new(@"-?\d+");
-        private int SumNumbers(string input)
+        private static readonly Regex _numberRegex = new(@"-?\d+");
+        private static int SumNumbers(string input)
         {
             var sum = 0;
             foreach (var match in (IEnumerable<Match>)_numberRegex.Matches(input))

@@ -8,10 +8,7 @@ namespace AdventOfCode.Y2022.Solvers
         private static int FindTailVisitedCount(string[] lines, int segmentCount)
         {
             var segments = new Coords[segmentCount];
-            for (int i = 0; i < segmentCount; i++)
-            {
-                segments[i] = new Coords(0, 0);
-            }
+            Array.Fill(segments, new(0, 0));
             var tailVisited = new HashSet<Coords> { segments[^1] };
             foreach (var motion in ToMotions(lines))
             {

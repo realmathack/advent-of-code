@@ -7,8 +7,8 @@ namespace AdventOfCode.Y2015.Solvers
         public override object SolvePart1(string[] input) => input.Sum(line => line.Length) - input.Sum(ToMemoryLength);
         public override object SolvePart2(string[] input) => input.Sum(ToEncodeLength) - input.Sum(line => line.Length);
 
-        private readonly Regex _hexCharRegex = new(@"\\x([0-9a-f]{2})");
-        private int ToMemoryLength(string line)
+        private static readonly Regex _hexCharRegex = new(@"\\x([0-9a-f]{2})");
+        private static int ToMemoryLength(string line)
         {
             line = line.Replace(@"\\", "?").Replace(@"\""", "?");
             line = _hexCharRegex.Replace(line, "?");
