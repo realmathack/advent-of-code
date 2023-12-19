@@ -15,6 +15,18 @@ namespace AdventOfCode
             return input.Split(Environment.NewLine + Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
         }
 
+        public static (string Left, string Right) SplitInTwo(this string input, char separator)
+        {
+            var parts = input.Split(separator, 2);
+            return (parts[0], parts[1]);
+        }
+
+        public static (string Left, string Right) SplitInTwo(this string input, string separator)
+        {
+            var parts = input.Split(separator, 2);
+            return (parts[0], parts[1]);
+        }
+
         public static char[][] ToCharGrid(this string[] input) => input.Select(line => line.ToCharArray()).ToArray();
         public static int[][] ToNumberGrid(this string[] input) => input.Select(line => line.Select(cell => cell - '0').ToArray()).ToArray();
         public static bool[][] ToBoolGrid(this string[] input, Func<char, bool> selector) => input.Select(line => line.Select(selector).ToArray()).ToArray();

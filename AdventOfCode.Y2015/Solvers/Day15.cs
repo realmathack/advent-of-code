@@ -5,7 +5,7 @@ namespace AdventOfCode.Y2015.Solvers
         public override object SolvePart1(string[] input) => ToScores(input).Max(score => score.Score);
         public override object SolvePart2(string[] input) => ToScores(input).Where(score => score.Calories == 500).Max(score => score.Score);
 
-        private static List<RecipeScore> ToScores(string[] input) => FindPossibilties(ToIngredients(input), 0, 100).Select(CalculateScore).ToList();
+        private static List<RecipeScore> ToScores(string[] lines) => FindPossibilties(ToIngredients(lines), 0, 100).Select(CalculateScore).ToList();
 
         private static readonly char[] _separator = [' ', ':', ','];
         private static List<Ingredient> ToIngredients(string[] lines)

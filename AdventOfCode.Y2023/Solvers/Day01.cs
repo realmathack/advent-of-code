@@ -36,27 +36,27 @@ namespace AdventOfCode.Y2023.Solvers
             { "eight", '8' },
             { "nine", '9' }
         };
-        private static List<char> ToDigits(string input)
+        private static List<char> ToDigits(string line)
         {
-            var result = new List<char>();
-            for (int i = 0; i < input.Length; i++)
+            var digits = new List<char>();
+            for (int i = 0; i < line.Length; i++)
             {
-                if (char.IsDigit(input[i]))
+                if (char.IsDigit(line[i]))
                 {
-                    result.Add(input[i]);
+                    digits.Add(line[i]);
                     continue;
                 }
-                var tmp = input[i..];
+                var tmp = line[i..];
                 foreach (var textNumber in _textNumbers)
                 {
                     if (tmp.StartsWith(textNumber.Key))
                     {
-                        result.Add(textNumber.Value);
+                        digits.Add(textNumber.Value);
                         break;
                     }
                 }
             }
-            return result;
+            return digits;
         }
     }
 }

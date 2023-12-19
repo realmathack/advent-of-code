@@ -72,10 +72,10 @@ namespace AdventOfCode.Y2018.Solvers
             return count;
         }
 
-        private static List<(Coords Coords, char Id)> ToPoints(string[] input)
+        private static List<(Coords Coords, char Id)> ToPoints(string[] lines)
         {
             var points = new List<(Coords Coords, char Id)>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
                 var parts = line.Split(", ");
                 points.Add((new(int.Parse(parts[0]), int.Parse(parts[1])), (char)('A' + points.Count)));

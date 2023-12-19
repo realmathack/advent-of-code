@@ -15,10 +15,10 @@ namespace AdventOfCode.Y2023.Solvers
 
         public override object SolvePart2(string[] input) => ToGames(input).Sum(CalculateScore);
 
-        private static List<Game> ToGames(string[] input)
+        private static List<Game> ToGames(string[] lines)
         {
             var games = new List<Game>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
                 var parts = line.Split(": ");
                 var game = new Game(int.Parse(parts[0][5..]));

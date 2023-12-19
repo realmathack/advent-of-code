@@ -4,10 +4,7 @@ namespace AdventOfCode.Y2019.Solvers
     {
         public Day02() : this(true) { }
 
-        public override object SolvePart1(string input)
-        {
-            return restore1202State ? ExecuteProgram(input, 12, 2) : ExecuteProgram(input, null, null);
-        }
+        public override object SolvePart1(string input) => restore1202State ? ExecuteProgram(input, 12, 2) : ExecuteProgram(input);
 
         public override object SolvePart2(string input)
         {
@@ -24,9 +21,9 @@ namespace AdventOfCode.Y2019.Solvers
             return 0;
         }
 
-        private static int ExecuteProgram(string input, int? noun, int? verb)
+        private static int ExecuteProgram(string intCode, int? noun = null, int? verb = null)
         {
-            var program = input.Split(',').Select(int.Parse).ToArray();
+            var program = intCode.Split(',').Select(int.Parse).ToArray();
             if (noun.HasValue && verb.HasValue)
             {
                 program[1] = noun.Value;

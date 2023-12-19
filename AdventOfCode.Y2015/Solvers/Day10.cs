@@ -7,28 +7,28 @@ namespace AdventOfCode.Y2015.Solvers
         public override object SolvePart1(string input) => LookAndSay(input, 40);
         public override object SolvePart2(string input) => LookAndSay(input, 50);
 
-        public static int LookAndSay(string input, int times)
+        public static int LookAndSay(string digits, int times)
         {
             for (int i = 0; i < times; i++)
             {
-                input = LookAndSay(input);
+                digits = LookAndSay(digits);
             }
-            return input.Length;
+            return digits.Length;
         }
 
-        private static string LookAndSay(string input)
+        private static string LookAndSay(string digits)
         {
-            var sequence = new StringBuilder(input.Length);
+            var sequence = new StringBuilder(digits.Length);
             var last = 0;
-            for (int i = 0; i < input.Length; i++)
+            for (int i = 0; i < digits.Length; i++)
             {
-                if (input[last] != input[i])
+                if (digits[last] != digits[i])
                 {
-                    sequence.Append(CreateGroup(input[last], i - last));
+                    sequence.Append(CreateGroup(digits[last], i - last));
                     last = i;
                 }
             }
-            sequence.Append(CreateGroup(input[last], input.Length - last));
+            sequence.Append(CreateGroup(digits[last], digits.Length - last));
             return sequence.ToString();
         }
 

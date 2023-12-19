@@ -34,12 +34,12 @@ namespace AdventOfCode.Y2018.Solvers
             return mostFrequentAsleepId * mostFrequentMinute.Minute;
         }
 
-        private static List<(int Id, int[] Minutes)> ToSleeps(string[] input)
+        private static List<(int Id, int[] Minutes)> ToSleeps(string[] lines)
         {
             var sleeps = new List<(int Id, int[] Minutes)>();
             var id = 0;
             var start = 0;
-            foreach (var line in input)
+            foreach (var line in lines)
             {
                 var minute = int.Parse(line[15..17]);
                 var what = line[25..];

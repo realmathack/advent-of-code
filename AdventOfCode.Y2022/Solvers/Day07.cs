@@ -13,7 +13,7 @@ namespace AdventOfCode.Y2022.Solvers
 
         private static List<int> CalculateFolderSizes(string[] lines)
         {
-            var result = new Dictionary<string, int>();
+            var sizes = new Dictionary<string, int>();
             var current = string.Empty;
             foreach (var line in lines)
             {
@@ -24,18 +24,18 @@ namespace AdventOfCode.Y2022.Solvers
                 if (line.StartsWith("$ cd"))
                 {
                     current = ExecuteDirChange(current, line[5..]);
-                    result.TryAdd(current, 0);
+                    sizes.TryAdd(current, 0);
                 }
                 else
                 {
                     var size = int.Parse(line.Split(' ')[0]);
                     foreach (var folder in GetCurrentAndParentFolders(current))
                     {
-                        result[folder] += size;
+                        sizes[folder] += size;
                     }
                 }
             }
-            return [.. result.Values];
+            return [.. sizes.Values];
         }
 
         private static string ExecuteDirChange(string current, string dirChange)

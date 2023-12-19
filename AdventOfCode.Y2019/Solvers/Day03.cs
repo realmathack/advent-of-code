@@ -1,4 +1,3 @@
-
 namespace AdventOfCode.Y2019.Solvers
 {
     public class Day03 : SolverWithLines
@@ -21,10 +20,10 @@ namespace AdventOfCode.Y2019.Solvers
             return distances.First();
         }
 
-        private static List<Coords> ToWire(string input, Coords current)
+        private static List<Coords> ToWire(string line, Coords current)
         {
             var wire = new List<Coords>();
-            foreach (var direction in input.Split(','))
+            foreach (var direction in line.Split(','))
             {
                 var offset = direction[0] switch
                 {

@@ -51,7 +51,7 @@ namespace AdventOfCode.Y2015.Solvers
         private static readonly Regex _regex = new(@"(.+) (\d+),(\d+) through (\d+),(\d+)");
         private static List<Move> ToMoves(string[] lines)
         {
-            var result = new List<Move>(lines.Length);
+            var moves = new List<Move>(lines.Length);
             foreach (var line in lines)
             {
                 var match = _regex.Match(line);
@@ -62,9 +62,9 @@ namespace AdventOfCode.Y2015.Solvers
                     "toggle" => Change.Toggle,
                     _ => throw new InvalidOperationException($"Unknown change: {match.Groups[1].Value}")
                 };
-                result.Add(new(change, int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value), int.Parse(match.Groups[5].Value)));
+                moves.Add(new(change, int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value), int.Parse(match.Groups[5].Value)));
             }
-            return result;
+            return moves;
         }
 
         private static bool[][] InitBoolGrid()

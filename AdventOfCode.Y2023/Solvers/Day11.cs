@@ -21,23 +21,23 @@ namespace AdventOfCode.Y2023.Solvers
             return sum;
         }
 
-        private static List<Coords> ToCoords(string[] input, int timesLarger = 1)
+        private static List<Coords> ToCoords(string[] lines, int timesLarger = 1)
         {
             var coords = new List<Coords>();
-            for (int y = 0; y < input.Length; y++)
+            for (int y = 0; y < lines.Length; y++)
             {
-                for (int x = 0; x < input[y].Length; x++)
+                for (int x = 0; x < lines[y].Length; x++)
                 {
-                    if (input[y][x] == '#')
+                    if (lines[y][x] == '#')
                     {
                         coords.Add(new(x, y));
                     }
                 }
             }
             var count = 0;
-            for (int y = 0; y < input.Length; y++)
+            for (int y = 0; y < lines.Length; y++)
             {
-                if (input[y].All(data => data == '.'))
+                if (lines[y].All(data => data == '.'))
                 {
                     var offset = new Coords(0, timesLarger);
                     for (int i = 0; i < coords.Count; i++)
@@ -51,9 +51,9 @@ namespace AdventOfCode.Y2023.Solvers
                 }
             }
             count = 0;
-            for (int x = 0; x < input[0].Length; x++)
+            for (int x = 0; x < lines[0].Length; x++)
             {
-                if (input.All(row => row[x] == '.'))
+                if (lines.All(row => row[x] == '.'))
                 {
                     var offset = new Coords(timesLarger, 0);
                     for (int i = 0; i < coords.Count; i++)

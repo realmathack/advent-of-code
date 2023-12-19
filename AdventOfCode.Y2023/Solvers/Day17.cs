@@ -5,9 +5,9 @@ namespace AdventOfCode.Y2023.Solvers
         public override object SolvePart1(string[] input) => FindLeastHeatPath(input, QueuePath);
         public override object SolvePart2(string[] input) => FindLeastHeatPath(input, QueuePathUltra);
 
-        private static int FindLeastHeatPath(string[] input, Action<PriorityQueue<Move, int>, Move, int, Coords> queueMethod)
+        private static int FindLeastHeatPath(string[] lines, Action<PriorityQueue<Move, int>, Move, int, Coords> queueMethod)
         {
-            var grid = input.ToNumberGrid();
+            var grid = lines.ToNumberGrid();
             var start = new Coords(0, 0);
             var goal = new Coords(grid.Length - 1, grid[0].Length - 1);
             var visited = new HashSet<Move>();

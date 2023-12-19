@@ -21,34 +21,34 @@ namespace AdventOfCode.Y2018.Solvers
             return shortest;
         }
 
-        private static int ReduceReturnLength(string input)
+        private static int ReduceReturnLength(string polymer)
         {
-            var reduced = new StringBuilder(input);
+            var reduced = new StringBuilder(polymer);
             do
             {
-                input = reduced.ToString();
+                polymer = reduced.ToString();
                 reduced.Clear();
-                for (int i = 0; i < input.Length; i++)
+                for (int i = 0; i < polymer.Length; i++)
                 {
-                    if (i + 1 != input.Length && input[i] != input[i + 1] && char.ToLower(input[i]) == char.ToLower(input[i + 1]))
+                    if (i + 1 != polymer.Length && polymer[i] != polymer[i + 1] && char.ToLower(polymer[i]) == char.ToLower(polymer[i + 1]))
                     {
                         i++;
                         continue;
                     }
-                    reduced.Append(input[i]);
+                    reduced.Append(polymer[i]);
                 }
-            } while (reduced.Length != input.Length);
+            } while (reduced.Length != polymer.Length);
             return reduced.Length;
         }
 
-        private static string Improve(string input, char c)
+        private static string Improve(string polymer, char c)
         {
-            var improved = new StringBuilder(input.Length);
-            for (int i = 0; i < input.Length; i++)
+            var improved = new StringBuilder(polymer.Length);
+            for (int i = 0; i < polymer.Length; i++)
             {
-                if (char.ToLower(input[i]) != c)
+                if (char.ToLower(polymer[i]) != c)
                 {
-                    improved.Append(input[i]);
+                    improved.Append(polymer[i]);
                 }
             }
             return improved.ToString();

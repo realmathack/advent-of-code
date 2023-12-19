@@ -77,10 +77,10 @@ namespace AdventOfCode.Y2018.Solvers
             return requirements;
         }
 
-        private static List<Instruction> ToInstructions(string[] input)
+        private static List<Instruction> ToInstructions(string[] lines)
         {
             var instructions = new List<Instruction>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
                 var parts = line.Split(' ');
                 instructions.Add(new(parts[7][0], parts[1][0]));

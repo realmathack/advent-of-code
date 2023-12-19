@@ -98,10 +98,10 @@ namespace AdventOfCode.Y2022.Solvers
         }
 
         private static readonly char[] _separator = [' ', ',', ':', '='];
-        private static Dictionary<Coords, Coords> ToBeacons(string[] input)
+        private static Dictionary<Coords, Coords> ToBeacons(string[] lines)
         {
             var beacons = new Dictionary<Coords, Coords>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
                 var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
                 beacons.Add(new(int.Parse(parts[3]), int.Parse(parts[5])), new(int.Parse(parts[11]), int.Parse(parts[13])));

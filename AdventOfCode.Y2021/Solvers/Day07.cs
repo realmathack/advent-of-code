@@ -1,4 +1,3 @@
-
 namespace AdventOfCode.Y2021.Solvers
 {
     public class Day07 : SolverWithText
@@ -6,9 +5,9 @@ namespace AdventOfCode.Y2021.Solvers
         public override object SolvePart1(string input) => FindLowestFuel(input, CalculateFuel1);
         public override object SolvePart2(string input) => FindLowestFuel(input, CalculateFuel2);
 
-        private static int FindLowestFuel(string input, Func<List<int>, int, int> calculateFuel)
+        private static int FindLowestFuel(string numbers, Func<List<int>, int, int> calculateFuel)
         {
-            var positions = input.Split(',').Select(int.Parse).ToList();
+            var positions = numbers.Split(',').Select(int.Parse).ToList();
             var lowest = int.MaxValue;
             for (int i = positions.Min(); i <= positions.Max(); i++)
             {

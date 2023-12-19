@@ -4,10 +4,7 @@ namespace AdventOfCode.Y2016.Solvers
     {
         public Day13() : this(new(31, 39)) { }
 
-        public override object SolvePart1(string input)
-        {
-            return new AStar(int.Parse(input)).FindShortestPath(new Coords(1, 1), _goal).Count;
-        }
+        public override object SolvePart1(string input) => new AStar(int.Parse(input)).FindShortestPath(new Coords(1, 1), _goal).Count;
 
         public override object SolvePart2(string input)
         {

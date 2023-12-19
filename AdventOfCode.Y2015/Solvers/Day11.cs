@@ -18,8 +18,8 @@ namespace AdventOfCode.Y2015.Solvers
         {
             if (password[^offset] == 'z')
             {
-                var result = password[..^offset] + 'a' + password[^(offset - 1)..];
-                return IncreasePassword(result, ++offset);
+                var tmp = password[..^offset] + 'a' + password[^(offset - 1)..];
+                return IncreasePassword(tmp, ++offset);
             }
             return password[..^offset] + (char)(password[^offset] + 1) + password[^(offset - 1)..];
         }

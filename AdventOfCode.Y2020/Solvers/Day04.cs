@@ -47,10 +47,10 @@ namespace AdventOfCode.Y2020.Solvers
             var fields = new Dictionary<string, string>();
             foreach (var field in passport.Split(_separator, StringSplitOptions.RemoveEmptyEntries))
             {
-                var parts = field.Split(':');
-                if (parts[0] != "cid")
+                var (name, value) = field.SplitInTwo(':');
+                if (name != "cid")
                 {
-                    fields.Add(parts[0], parts[1]);
+                    fields.Add(name, value);
                 }
             }
             return fields;

@@ -106,13 +106,13 @@ namespace AdventOfCode.Y2023.Solvers
         }
 
         private static readonly char[] _seperator = [' ', '-'];
-        private static (long[] Seeds, Dictionary<string, Map> Maps) ToSeedsAndMaps(string[] input)
+        private static (long[] Seeds, Dictionary<string, Map> Maps) ToSeedsAndMaps(string[] sections)
         {
-            var seeds = input[0][7..].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
+            var seeds = sections[0][7..].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
             var maps = new Dictionary<string, Map>();
-            for (int i = 1; i < input.Length; i++)
+            for (int i = 1; i < sections.Length; i++)
             {
-                var lines = input[i].SplitIntoLines();
+                var lines = sections[i].SplitIntoLines();
                 var parts = lines[0].Split(_seperator, StringSplitOptions.RemoveEmptyEntries);
                 var map = new Map(parts[0], parts[2]);
                 maps[map.Source] = map;

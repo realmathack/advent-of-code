@@ -7,19 +7,19 @@ namespace AdventOfCode.Y2022.Solvers
 
         private static List<Pair> ToPairs(string[] lines)
         {
-            var result = new List<Pair>();
+            var pairs = new List<Pair>();
             foreach (var line in lines)
             {
-                var assignments = line.Split(',');
-                result.Add(new(ToRange(assignments[0]), ToRange(assignments[1])));
+                var (assignment1, assignment2) = line.SplitInTwo(',');
+                pairs.Add(new(ToRange(assignment1), ToRange(assignment2)));
             }
-            return result;
+            return pairs;
         }
 
-        private static Range<int> ToRange(string section)
+        private static Range<int> ToRange(string assignment)
         {
-            var bounds = section.Split('-');
-            return new(int.Parse(bounds[0]), int.Parse(bounds[1]));
+            var (start, end) = assignment.SplitInTwo('-');
+            return new(int.Parse(start), int.Parse(end));
         }
 
         private record class Pair(Range<int> Range1, Range<int> Range2);

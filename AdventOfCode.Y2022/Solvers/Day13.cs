@@ -38,7 +38,7 @@ namespace AdventOfCode.Y2022.Solvers
 
         private static (SignalList List, int NewPos) ToSignals(string signals, int pos = 0)
         {
-            var result = new SignalList([]);
+            var list = new SignalList([]);
             while (signals[++pos] != ']')
             {
                 if (signals[pos] == ',')
@@ -47,15 +47,15 @@ namespace AdventOfCode.Y2022.Solvers
                 }
                 if (signals[pos] == '[')
                 {
-                    var (list, newPos) = ToSignals(signals, pos);
-                    result.Signals.Add(list);
+                    var (tmp, newPos) = ToSignals(signals, pos);
+                    list.Signals.Add(tmp);
                     pos = newPos;
                     continue;
                 }
                 var number = int.Parse(char.IsDigit(signals[pos + 1]) ? signals[pos..(++pos + 1)] : signals[pos].ToString());
-                result.Signals.Add(new NumberSignal(number));
+                list.Signals.Add(new NumberSignal(number));
             }
-            return (result, pos);
+            return (list, pos);
         }
 
         private static int FindDividerPacketIndex(List<SignalList> signals, int dividerPacket, int startPos = 0)

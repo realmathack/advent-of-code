@@ -32,10 +32,10 @@ namespace AdventOfCode.Y2020.Solvers
         }
 
         private static readonly char[] _separator = [' ', '-', ':'];
-        private static List<Record> ToRecords(string[] input)
+        private static List<Record> ToRecords(string[] lines)
         {
             var records = new List<Record>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
                 var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
                 records.Add(new(int.Parse(parts[0]), int.Parse(parts[1]), parts[2][0], parts[3]));

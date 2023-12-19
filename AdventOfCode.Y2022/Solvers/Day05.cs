@@ -14,8 +14,8 @@ namespace AdventOfCode.Y2022.Solvers
                     stacks[move.Destination - 1].Push(crate);
                 }
             }
-            var result = stacks.Select(stack => stack.Peek()).ToList();
-            return string.Concat(result);
+            var topCrates = stacks.Select(stack => stack.Peek()).ToList();
+            return string.Concat(topCrates);
         }
 
         public override object SolvePart2(string[] input)
@@ -36,42 +36,42 @@ namespace AdventOfCode.Y2022.Solvers
                     stacks[move.Destination - 1].Push(crate);
                 }
             }
-            var result = stacks.Select(stack => stack.Peek()).ToList();
-            return string.Concat(result);
+            var topCrates = stacks.Select(stack => stack.Peek()).ToList();
+            return string.Concat(topCrates);
         }
 
-        private static Stack<char>[] ToStacks(string input)
+        private static Stack<char>[] ToStacks(string section)
         {
-            var stacks = input.SplitIntoLines();
-            var stackCount = (stacks[^1].Length + 1) / 4;
-            var result = new Stack<char>[stackCount];
+            var lines = section.SplitIntoLines();
+            var stackCount = (lines[^1].Length + 1) / 4;
+            var stacks = new Stack<char>[stackCount];
             for (int i = 0; i < stackCount; i++)
             {
-                result[i] = new Stack<char>(stacks.Length);
+                stacks[i] = new Stack<char>(lines.Length);
             }
-            for (int i = stacks.Length - 2; i >= 0; i--)
+            for (int i = lines.Length - 2; i >= 0; i--)
             {
                 for (int j = 0; j < stackCount; j++)
                 {
-                    var crate = stacks[i][j * 4 + 1];
+                    var crate = lines[i][j * 4 + 1];
                     if (crate != ' ')
                     {
-                        result[j].Push(crate);
+                        stacks[j].Push(crate);
                     }
                 }
             }
-            return result;
+            return stacks;
         }
 
-        private static List<Move> ToMoves(string moves)
+        private static List<Move> ToMoves(string section)
         {
-            var result = new List<Move>();
-            foreach (var line in moves.SplitIntoLines())
+            var moves = new List<Move>();
+            foreach (var line in section.SplitIntoLines())
             {
                 var parts = line.Split(' ');
-                result.Add(new Move(int.Parse(parts[1]), int.Parse(parts[3]), int.Parse(parts[5])));
+                moves.Add(new Move(int.Parse(parts[1]), int.Parse(parts[3]), int.Parse(parts[5])));
             }
-            return result;
+            return moves;
         }
 
         private readonly record struct Move(int Count, int Source, int Destination);

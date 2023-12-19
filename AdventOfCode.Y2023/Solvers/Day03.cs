@@ -31,20 +31,20 @@ namespace AdventOfCode.Y2023.Solvers
             return sum;
         }
 
-        private static (Dictionary<List<Coords>, int> Numbers, Dictionary<Coords, char> Parts) ToNumbersAndParts(string[] input)
+        private static (Dictionary<List<Coords>, int> Numbers, Dictionary<Coords, char> Parts) ToNumbersAndParts(string[] lines)
         {
             var numbers = new Dictionary<List<Coords>, int>();
             var parts = new Dictionary<Coords, char>();
-            for (int row = 0; row < input.Length; row++)
+            for (int row = 0; row < lines.Length; row++)
             {
                 var currentCoords = new List<Coords>();
                 var currentNumber = string.Empty;
-                for (int col = 0; col < input[row].Length; col++)
+                for (int col = 0; col < lines[row].Length; col++)
                 {
-                    if (char.IsDigit(input[row][col]))
+                    if (char.IsDigit(lines[row][col]))
                     {
                         currentCoords.Add(new(row, col));
-                        currentNumber += input[row][col];
+                        currentNumber += lines[row][col];
                         continue;
                     }
                     if (currentNumber != string.Empty)
@@ -53,9 +53,9 @@ namespace AdventOfCode.Y2023.Solvers
                         currentNumber = string.Empty;
                         currentCoords = [];
                     }
-                    if (input[row][col] != '.')
+                    if (lines[row][col] != '.')
                     {
-                        parts.Add(new(row, col), input[row][col]);
+                        parts.Add(new(row, col), lines[row][col]);
                     }
                 }
                 if (currentNumber != string.Empty)

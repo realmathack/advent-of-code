@@ -2,12 +2,7 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day19 : SolverWithSections
     {
-        public override object SolvePart1(string[] input)
-        {
-            var molecule = input[1].Trim();
-            var replacements = ToReplacements(input[0]);
-            return FindAllPossibleVariants(replacements, molecule).Distinct().Count();
-        }
+        public override object SolvePart1(string[] input) => FindAllPossibleVariants(ToReplacements(input[0]), input[1].Trim()).Distinct().Count();
 
         public override object SolvePart2(string[] input)
         {
@@ -30,10 +25,10 @@ namespace AdventOfCode.Y2015.Solvers
             return steps;
         }
 
-        private static List<Replacement> ToReplacements(string input, bool reduce = false)
+        private static List<Replacement> ToReplacements(string section, bool reduce = false)
         {
             var replacements = new List<Replacement>();
-            foreach (var line in input.SplitIntoLines())
+            foreach (var line in section.SplitIntoLines())
             {
                 var parts = line.Split(" => ");
                 if (reduce)
@@ -45,14 +40,14 @@ namespace AdventOfCode.Y2015.Solvers
             return replacements;
         }
 
-        private static IEnumerable<string> FindAllPossibleVariants(List<Replacement> replacements, string input)
+        private static IEnumerable<string> FindAllPossibleVariants(List<Replacement> replacements, string molecule)
         {
             foreach (var replacement in replacements)
             {
                 int pos = 0;
-                while ((pos = input.IndexOf(replacement.Find, pos)) != -1)
+                while ((pos = molecule.IndexOf(replacement.Find, pos)) != -1)
                 {
-                    yield return input[..pos] + replacement.Replace + input[(pos++ + replacement.Find.Length)..];
+                    yield return molecule[..pos] + replacement.Replace + molecule[(pos++ + replacement.Find.Length)..];
                 }
             }
         }

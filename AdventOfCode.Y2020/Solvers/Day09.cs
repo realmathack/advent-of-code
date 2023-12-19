@@ -32,9 +32,9 @@ namespace AdventOfCode.Y2020.Solvers
             return 0L;
         }
 
-        private long FindInvalidNumber(string[] input)
+        private long FindInvalidNumber(string[] lines)
         {
-            var numbers = input.Select(long.Parse).ToArray();
+            var numbers = lines.Select(long.Parse).ToArray();
             for (int i = length; i < numbers.Length; i++)
             {
                 var preamble = numbers[(i - length)..i];

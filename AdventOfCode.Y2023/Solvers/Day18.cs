@@ -63,10 +63,10 @@ namespace AdventOfCode.Y2023.Solvers
             return sum / 2L + 1L;
         }
 
-        private static List<Trench> ToTrenches(string[] input)
+        private static List<Trench> ToTrenches(string[] lines)
         {
             var trenches = new List<Trench>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
                 var parts = line.Split(' ');
                 trenches.Add(new(parts[0][0], int.Parse(parts[1]), parts[2][2..^1]));

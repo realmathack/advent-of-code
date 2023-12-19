@@ -5,41 +5,41 @@ namespace AdventOfCode.Y2015.Solvers
         public override object SolvePart1(string[] input) => ExecuteInstructions(input, new() { { 'a', 0 }, { 'b', 0 } });
         public override object SolvePart2(string[] input) => ExecuteInstructions(input, new() { { 'a', 1 }, { 'b', 0 } });
 
-        private static int ExecuteInstructions(string[] input, Dictionary<char, int> registers)
+        private static int ExecuteInstructions(string[] lines, Dictionary<char, int> registers)
         {
             var pc = 0;
-            while (pc >= 0 && pc < input.Length)
+            while (pc >= 0 && pc < lines.Length)
             {
-                switch (input[pc][..3])
+                switch (lines[pc][..3])
                 {
                     case "hlf":
-                        registers[input[pc][4]] /= 2;
+                        registers[lines[pc][4]] /= 2;
                         break;
                     case "tpl":
-                        registers[input[pc][4]] *= 3;
+                        registers[lines[pc][4]] *= 3;
                         break;
                     case "inc":
-                        registers[input[pc][4]]++;
+                        registers[lines[pc][4]]++;
                         break;
                     case "jmp":
-                        pc += int.Parse(input[pc][4..]);
+                        pc += int.Parse(lines[pc][4..]);
                         continue;
                     case "jie":
-                        if (registers[input[pc][4]] % 2 == 0)
+                        if (registers[lines[pc][4]] % 2 == 0)
                         {
-                            pc += int.Parse(input[pc][6..]);
+                            pc += int.Parse(lines[pc][6..]);
                             continue;
                         }
                         break;
                     case "jio":
-                        if (registers[input[pc][4]] == 1)
+                        if (registers[lines[pc][4]] == 1)
                         {
-                            pc += int.Parse(input[pc][6..]);
+                            pc += int.Parse(lines[pc][6..]);
                             continue;
                         }
                         break;
                     default:
-                        throw new InvalidOperationException($"Unknown opcode {input[pc][..2]}!");
+                        throw new InvalidOperationException($"Unknown opcode {lines[pc][..2]}!");
                 }
                 pc++;
             }

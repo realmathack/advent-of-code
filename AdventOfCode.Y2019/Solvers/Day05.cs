@@ -5,9 +5,9 @@ namespace AdventOfCode.Y2019.Solvers
         public override object SolvePart1(string input) => ExecuteProgram(input, 1);
         public override object SolvePart2(string input) => ExecuteProgram(input, 5);
 
-        private static int ExecuteProgram(string input, int givenInput)
+        private static int ExecuteProgram(string intCode, int givenInput)
         {
-            var program = input.Split(',').Select(int.Parse).ToArray();
+            var program = intCode.Split(',').Select(int.Parse).ToArray();
             var output = new List<int>();
             var pointer = 0;
             while (true)

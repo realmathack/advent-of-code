@@ -56,9 +56,9 @@ namespace AdventOfCode.Y2021.Solvers
             return SumUnmarkedNumbers(losingBoard) * losingDraw;
         }
 
-        private static List<string[][]> ToBoards(string[] input)
+        private static List<string[][]> ToBoards(string[] sections)
         {
-            return input
+            return sections
                 .Select(board => board
                     .SplitIntoLines()
                     .Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries))

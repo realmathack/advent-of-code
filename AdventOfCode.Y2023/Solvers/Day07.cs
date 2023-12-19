@@ -17,30 +17,30 @@ namespace AdventOfCode.Y2023.Solvers
         }
 
         private static readonly Dictionary<char, char> _mapping1 = new() { { 'A', 'Z' }, { 'K', 'Y' }, { 'Q', 'X' }, { 'J', 'W' }, { 'T', 'V' } };
-        private static List<Hand> ToHands(string[] input)
+        private static List<Hand> ToHands(string[] lines)
         {
             var hands = new List<Hand>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
-                var parts = line.Split(' ');
-                hands.Add(new(parts[0], ToRank(parts[0]), ToSortableHand(parts[0], _mapping1), int.Parse(parts[1])));
+                var (hand, bet) = line.SplitInTwo(' ');
+                hands.Add(new(hand, ToRank(hand), ToSortableHand(hand, _mapping1), int.Parse(bet)));
             }
             hands.Sort();
             return hands;
         }
 
         private static readonly Dictionary<char, char> _mapping2 = new() { { 'A', 'Z' }, { 'K', 'Y' }, { 'Q', 'X' }, { 'J', '1' }, { 'T', 'V' } };
-        private static List<Hand> ToHands2(string[] input)
+        private static List<Hand> ToHands2(string[] lines)
         {
             var hands = new List<Hand>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
-                var parts = line.Split(' ');
-                var cards = parts[0].GroupBy(card => card).Select(g => (g.Key, Count: g.Count())).ToDictionary(g => g.Key, g => g.Count);
+                var (hand, bet) = line.SplitInTwo(' ');
+                var cards = hand.GroupBy(card => card).Select(g => (g.Key, Count: g.Count())).ToDictionary(g => g.Key, g => g.Count);
                 var jokers = cards.Remove('J', out var tmp) ? tmp : 0;
                 var newCard = (jokers == 5 || jokers == 0) ? 'J' : (cards.Any(card => card.Value >= 2) ? cards.First(card => card.Value >= 2) : cards.First()).Key;
-                var rankingHand = parts[0].Replace('J', newCard);
-                hands.Add(new(parts[0], ToRank(rankingHand), ToSortableHand(parts[0], _mapping2), int.Parse(parts[1])));
+                var rankingHand = hand.Replace('J', newCard);
+                hands.Add(new(hand, ToRank(rankingHand), ToSortableHand(hand, _mapping2), int.Parse(bet)));
             }
             hands.Sort();
             return hands;

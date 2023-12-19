@@ -7,14 +7,14 @@ namespace AdventOfCode.Y2021.Solvers
             var current = new Coords(0, 0);
             foreach (var line in input)
             {
-                var parts = line.Split(' ');
-                var value = int.Parse(parts[1]);
-                current += parts[0] switch
+                var (direction, value) = line.SplitInTwo(' ');
+                var number = int.Parse(value);
+                current += direction switch
                 {
-                    "forward" => new Coords(value, 0),
-                    "down" => new Coords(0, value),
-                    "up" => new Coords(0, -value),
-                    _ => throw new InvalidOperationException($"Unknown command {parts[0]}")
+                    "forward" => new Coords(number, 0),
+                    "down" => new Coords(0, number),
+                    "up" => new Coords(0, -number),
+                    _ => throw new InvalidOperationException($"Unknown command {direction}")
                 };
             }
             return current.X * current.Y;
@@ -26,18 +26,18 @@ namespace AdventOfCode.Y2021.Solvers
             var aim = 0;
             foreach (var line in input)
             {
-                var parts = line.Split(' ');
-                var value = int.Parse(parts[1]);
-                switch (parts[0])
+                var (direction, value) = line.SplitInTwo(' ');
+                var number = int.Parse(value);
+                switch (direction)
                 {
                     case "forward":
-                        current += new Coords(value, value * aim);
+                        current += new Coords(number, number * aim);
                         break;
                     case "down":
-                        aim += value;
+                        aim += number;
                         break;
                     case "up":
-                        aim -= value;
+                        aim -= number;
                         break;
                 }
             }

@@ -74,14 +74,7 @@ namespace AdventOfCode.Y2015.Solvers
         }
 
         private static void Attack(Creature attacker, Creature defender) => defender.HitPoints -= Math.Max(1, attacker.Damage - defender.Armor);
-
-        private static Creature ToBoss(string[] input)
-        {
-            var hitPoints = int.Parse(input[0].Split(' ')[^1]);
-            var damage = int.Parse(input[1].Split(' ')[^1]);
-            var armor = int.Parse(input[2].Split(' ')[^1]);
-            return new Creature(hitPoints, damage, armor);
-        }
+        private static Creature ToBoss(string[] lines) => new(int.Parse(lines[0].Split(' ')[^1]), int.Parse(lines[1].Split(' ')[^1]), int.Parse(lines[2].Split(' ')[^1]));
 
         private static Item[] GetWeapons()
         {

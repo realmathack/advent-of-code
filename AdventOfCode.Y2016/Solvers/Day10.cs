@@ -7,11 +7,11 @@ namespace AdventOfCode.Y2016.Solvers
         public override object SolvePart1(string[] input) => ExecuteInstructions(input);
         public override object SolvePart2(string[] input) => ExecuteInstructions(input, true);
 
-        private int ExecuteInstructions(string[] input, bool returnOutputs = false)
+        private int ExecuteInstructions(string[] lines, bool returnOutputs = false)
         {
             var outputs = new Dictionary<int, int>();
             var bots = new Dictionary<int, Bot>();
-            foreach (var line in input.OrderBy(line => line))
+            foreach (var line in lines.OrderBy(line => line))
             {
                 var parts = line.Split(' ');
                 if (parts[0] == "value")

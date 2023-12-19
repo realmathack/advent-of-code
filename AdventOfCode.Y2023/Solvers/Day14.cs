@@ -1,4 +1,3 @@
-
 namespace AdventOfCode.Y2023.Solvers
 {
     public class Day14 : SolverWithLines

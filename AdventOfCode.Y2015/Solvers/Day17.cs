@@ -4,11 +4,7 @@ namespace AdventOfCode.Y2015.Solvers
     {
         public Day17() : this(150) { }
 
-        public override object SolvePart1(string[] input)
-        {
-            var containers = ToContainers(input);
-            return ToPossibilities(containers).Count(possibility => possibility.Sum == target);
-        }
+        public override object SolvePart1(string[] input) => ToPossibilities(ToContainers(input)).Count(possibility => possibility.Sum == target);
 
         public override object SolvePart2(string[] input)
         {

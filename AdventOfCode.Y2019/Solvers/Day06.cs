@@ -43,9 +43,9 @@ namespace AdventOfCode.Y2019.Solvers
             return depth;
         }
 
-        private static Dictionary<string, HashSet<string>> ToOrbits(string[] input)
+        private static Dictionary<string, HashSet<string>> ToOrbits(string[] lines)
         {
-            return input
+            return lines
                 .Select(line => line.Split(')'))
                 .Select(parts => (Center: parts[0], Object: parts[1]))
                 .GroupBy(orbit => orbit.Center)

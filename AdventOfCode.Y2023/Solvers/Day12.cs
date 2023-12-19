@@ -43,14 +43,17 @@ namespace AdventOfCode.Y2023.Solvers
             return count;
         }
 
-        private static List<(string Pattern, int[] Sizes)> ToRecords(string[] input, bool unfold = false)
+        private static List<(string Pattern, int[] Sizes)> ToRecords(string[] lines, bool unfold = false)
         {
             var records = new List<(string Pattern, int[] Sizes)>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
-                var parts = line.Split(' ');
-                var pattern = unfold ? string.Join('?', Enumerable.Repeat(parts[0], 5)) : parts[0];
-                var sizes = unfold ? string.Join(',', Enumerable.Repeat(parts[1], 5)) : parts[1];
+                var (pattern, sizes) = line.SplitInTwo(' ');
+                if (unfold)
+                {
+                    pattern = string.Join('?', Enumerable.Repeat(pattern, 5));
+                    sizes = string.Join(',', Enumerable.Repeat(sizes, 5));
+                }
                 records.Add((pattern, sizes.Split(',').Select(int.Parse).ToArray()));
             }
             return records;

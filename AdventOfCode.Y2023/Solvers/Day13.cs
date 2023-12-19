@@ -2,15 +2,8 @@ namespace AdventOfCode.Y2023.Solvers
 {
     public class Day13 : SolverWithSections
     {
-        public override object SolvePart1(string[] input)
-        {
-            return input.Sum(section => FindReflection(section));
-        }
-
-        public override object SolvePart2(string[] input)
-        {
-            return input.Sum(FindSmudge);
-        }
+        public override object SolvePart1(string[] input) => input.Sum(section => FindReflection(section));
+        public override object SolvePart2(string[] input) => input.Sum(FindSmudge);
 
         private static int FindSmudge(string section)
         {
@@ -23,10 +16,10 @@ namespace AdventOfCode.Y2023.Solvers
                 }
                 var tmp = section.ToCharArray();
                 tmp[i] = (tmp[i] == '#') ? '.' : '#';
-                var result = FindReflection(string.Concat(tmp), oldReflection);
-                if (result > 0)
+                var reflection = FindReflection(string.Concat(tmp), oldReflection);
+                if (reflection > 0)
                 {
-                    return result;
+                    return reflection;
                 }
             }
             throw new InvalidOperationException("Smudge not found");

@@ -32,10 +32,10 @@ namespace AdventOfCode.Y2015.Solvers
         }
 
         private static readonly Regex _numberRegex = new(@"-?\d+");
-        private static int SumNumbers(string input)
+        private static int SumNumbers(string numbers)
         {
             var sum = 0;
-            foreach (var match in (IEnumerable<Match>)_numberRegex.Matches(input))
+            foreach (var match in (IEnumerable<Match>)_numberRegex.Matches(numbers))
             {
                 sum += int.Parse(match.Groups[0].Value);
             }

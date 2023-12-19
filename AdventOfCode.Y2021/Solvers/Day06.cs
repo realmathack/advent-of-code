@@ -5,9 +5,9 @@ namespace AdventOfCode.Y2021.Solvers
         public override object SolvePart1(string input) => GrowFish(input, 80).Values.Sum();
         public override object SolvePart2(string input) => GrowFish(input, 256).Values.Sum();
 
-        private static Dictionary<int, long> GrowFish(string input, int days)
+        private static Dictionary<int, long> GrowFish(string fishes, int days)
         {
-            var fish = input.Split(',').Select(int.Parse).ToList();
+            var fish = fishes.Split(',').Select(int.Parse).ToList();
             var fishCounts = new Dictionary<int, long>()
             {
                 { 0, fish.Count(timer => timer == 0) },

@@ -24,29 +24,29 @@ namespace AdventOfCode.Y2020.Solvers
             return 0;
         }
 
-        private static (bool Succes, int Accumulator) RunProgram(string[] input)
+        private static (bool Succes, int Accumulator) RunProgram(string[] lines)
         {
             var visited = new HashSet<int>();
             var accumulator = 0;
             var pc = 0;
             while (visited.Add(pc))
             {
-                if (pc == input.Length)
+                if (pc == lines.Length)
                 {
                     return (true, accumulator);
                 }
-                if (pc > input.Length)
+                if (pc > lines.Length)
                 {
                     return (false, accumulator);
                 }
-                switch (input[pc][..3])
+                switch (lines[pc][..3])
                 {
                     case "acc":
-                        accumulator += int.Parse(input[pc][4..]);
+                        accumulator += int.Parse(lines[pc][4..]);
                         pc++;
                         break;
                     case "jmp":
-                        pc += int.Parse(input[pc][4..]);
+                        pc += int.Parse(lines[pc][4..]);
                         break;
                     case "nop":
                         pc++;

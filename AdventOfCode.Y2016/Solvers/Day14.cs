@@ -51,21 +51,21 @@ namespace AdventOfCode.Y2016.Solvers
             return keys.Last().Key;
         }
 
-        private void GenerateNextHashBatch(string input)
+        private void GenerateNextHashBatch(string salt)
         {
             var target = _lastHashIndex + 1000;
             for (;  _lastHashIndex < target; _lastHashIndex++)
             {
-                _hashes[_lastHashIndex] = (input + _lastHashIndex).ToMD5Hex();
+                _hashes[_lastHashIndex] = (salt + _lastHashIndex).ToMD5Hex();
             }
         }
 
-        private void GenerateNextHashBatchWithStretching(string input)
+        private void GenerateNextHashBatchWithStretching(string salt)
         {
             var target = _lastHashIndex + 1000;
             for (; _lastHashIndex < target; _lastHashIndex++)
             {
-                var tmp = input + _lastHashIndex;
+                var tmp = salt + _lastHashIndex;
                 for (int i = 0; i < 2017; i++)
                 {
                     tmp = tmp.ToMD5Hex();

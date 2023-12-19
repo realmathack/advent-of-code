@@ -21,10 +21,10 @@ namespace AdventOfCode.Y2018.Solvers
             return 0;
         }
 
-        private Dictionary<Coords, ClaimedSquare> ToClaimedSquares(string[] input)
+        private Dictionary<Coords, ClaimedSquare> ToClaimedSquares(string[] lines)
         {
             var claimedSquares = new Dictionary<Coords, ClaimedSquare>();
-            foreach (var claim in ToClaims(input))
+            foreach (var claim in ToClaims(lines))
             {
                 foreach (var square in ToSquares(claim))
                 {
@@ -40,10 +40,10 @@ namespace AdventOfCode.Y2018.Solvers
         }
 
         private static readonly char[] _separator = [' ', '#', '@', ',', ':', 'x'];
-        private static List<Claim> ToClaims(string[] input)
+        private static List<Claim> ToClaims(string[] lines)
         {
             var claims = new List<Claim>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
                 var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
                 claims.Add(new(parts[0], new(parts[1], parts[2]), parts[3], parts[4]));

@@ -33,10 +33,10 @@ namespace AdventOfCode.Y2023.Solvers
             return cards.Sum(card => card.Count);
         }
 
-        private static List<ScratchCard> ToScratchCards(string[] input)
+        private static List<ScratchCard> ToScratchCards(string[] lines)
         {
             var cards = new List<ScratchCard>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
                 var parts = line[5..].Split(':', StringSplitOptions.TrimEntries);
                 var id = int.Parse(parts[0]);

@@ -49,12 +49,12 @@ namespace AdventOfCode.Y2017.Solvers
             var childWeights = new Dictionary<string, int>();
             foreach (var child in children)
             {
-                var result = CheckWeights(programs, child);
-                if (result.Found)
+                var weights = CheckWeights(programs, child);
+                if (weights.Found)
                 {
-                    return result;
+                    return weights;
                 }
-                childWeights.Add(child, result.SummedWeight);
+                childWeights.Add(child, weights.SummedWeight);
             }
             if (childWeights.Values.Distinct().Count() > 1)
             {

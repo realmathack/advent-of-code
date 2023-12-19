@@ -42,10 +42,10 @@ namespace AdventOfCode.Y2020.Solvers
         }
 
         private static readonly string _contain = " contain ";
-        private static Dictionary<string, Bag> ToBags(string[] input)
+        private static Dictionary<string, Bag> ToBags(string[] lines)
         {
             var bags = new Dictionary<string, Bag>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
                 var pos = line.IndexOf(" bags ");
                 var bag = new Bag(line[..pos]);

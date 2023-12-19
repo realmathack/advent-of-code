@@ -41,10 +41,10 @@ namespace AdventOfCode.Y2017.Solvers
             return connected.Count;
         }
 
-        private static Dictionary<int, List<int>> ToPrograms(string[] input)
+        private static Dictionary<int, List<int>> ToPrograms(string[] lines)
         {
             var programs = new Dictionary<int, List<int>>();
-            foreach (var line in input)
+            foreach (var line in lines)
             {
                 var parts = line.Split(" <-> ");
                 var neighbors = parts[1].Split(", ").Select(int.Parse).ToList();

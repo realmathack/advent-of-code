@@ -40,24 +40,24 @@ namespace AdventOfCode.Y2022.Solvers
 
         private static List<(string First, string Second)> ToRucksacks(string[] lines)
         {
-            var result = new List<(string First, string Second)>(lines.Length);
+            var rucksacks = new List<(string First, string Second)>(lines.Length);
             foreach (var line in lines)
             {
                 var length = line.Length / 2;
-                result.Add((line[..length], line[length..]));
+                rucksacks.Add((line[..length], line[length..]));
             }
-            return result;
+            return rucksacks;
         }
 
         private static List<string[]> ToGroups(string[] lines)
         {
             var groupCount = lines.Length / 3;
-            var result = new List<string[]>(groupCount);
+            var groups = new List<string[]>(groupCount);
             for (int i = 0; i < groupCount; i++)
             {
-                result.Add(lines.Skip(i * 3).Take(3).ToArray());
+                groups.Add(lines.Skip(i * 3).Take(3).ToArray());
             }
-            return result;
+            return groups;
         }
 
         private static int CalculatePriority(char item)

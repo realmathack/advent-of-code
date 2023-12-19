@@ -5,11 +5,11 @@ namespace AdventOfCode.Y2016.Solvers
         public override object SolvePart1(string[] input) => ExecuteInstructions(input, new() { { "a", 0 }, { "b", 0 }, { "c", 0 }, { "d", 0 } });
         public override object SolvePart2(string[] input) => ExecuteInstructions(input, new() { { "a", 0 }, { "b", 0 }, { "c", 1 }, { "d", 0 } });
 
-        private static int ExecuteInstructions(string[] input, Dictionary<string, int> registers)
+        private static int ExecuteInstructions(string[] lines, Dictionary<string, int> registers)
         {
-            for (int i = 0; i < input.Length; i++)
+            for (int i = 0; i < lines.Length; i++)
             {
-                var parts = input[i].Split(' ');
+                var parts = lines[i].Split(' ');
                 switch (parts[0])
                 {
                     case "cpy":

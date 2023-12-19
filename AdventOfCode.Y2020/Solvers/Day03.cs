@@ -9,14 +9,14 @@ namespace AdventOfCode.Y2020.Solvers
             return (long)TreesOnSlope(input, 1, 1) * TreesOnSlope(input, 3, 1) * TreesOnSlope(input, 5, 1) * TreesOnSlope(input, 7, 1) * TreesOnSlope(input, 1, 2);
         }
 
-        private static int TreesOnSlope(string[] input, int right, int down)
+        private static int TreesOnSlope(string[] lines, int right, int down)
         {
             var trees = 0;
-            var width = input[0].Length;
+            var width = lines[0].Length;
             var x = 0;
-            for (int y = 0; y < input.Length; y += down)
+            for (int y = 0; y < lines.Length; y += down)
             {
-                if (input[y][x % width] == '#')
+                if (lines[y][x % width] == '#')
                 {
                     trees++;
                 }

@@ -5,9 +5,9 @@ namespace AdventOfCode.Y2017.Solvers
         public override object SolvePart1(string input) => CalculateCycles(input);
         public override object SolvePart2(string input) => CalculateCycles(input, true);
 
-        private static int CalculateCycles(string input, bool returnLoopSize = false)
+        private static int CalculateCycles(string blocks, bool returnLoopSize = false)
         {
-            var memory = input.Split('\t').Select(int.Parse).ToArray();
+            var memory = blocks.Split('\t').Select(int.Parse).ToArray();
             var seen = new Dictionary<string, int>();
             var cycle = 0;
             while (!seen.ContainsKey(string.Join(',', memory)))

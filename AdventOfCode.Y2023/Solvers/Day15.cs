@@ -25,8 +25,8 @@ namespace AdventOfCode.Y2023.Solvers
                 }
                 else
                 {
-                    var parts = instruction.Split('=');
-                    var newLens = new Lens(parts[0], int.Parse(parts[1]));
+                    var (label, focalStrength) = instruction.SplitInTwo('=');
+                    var newLens = new Lens(label, int.Parse(focalStrength));
                     var current = CalculateHash(newLens.Label);
                     if (boxes[current].Any(lens => lens.Label == newLens.Label))
                     {

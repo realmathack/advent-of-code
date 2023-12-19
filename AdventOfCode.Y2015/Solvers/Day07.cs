@@ -2,11 +2,7 @@ namespace AdventOfCode.Y2015.Solvers
 {
     public class Day07 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            var instructions = ToInstructions(input);
-            return ExecuteInstructions(instructions);
-        }
+        public override object SolvePart1(string[] input) => ExecuteInstructions(ToInstructions(input));
 
         public override object SolvePart2(string[] input)
         {

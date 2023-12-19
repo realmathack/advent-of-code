@@ -38,13 +38,13 @@ namespace AdventOfCode.Y2016.Solvers
         }
 
         private static readonly Regex _regex = new(@"(?<Name>[a-z]+)(\-compatible)? (?<Type>generator|microchip)");
-        private static State ToInitialState(string[] input, bool addExtraItems = false)
+        private static State ToInitialState(string[] lines, bool addExtraItems = false)
         {
             var floors = 0L;
             var names = new List<string>();
-            for (int i = 0; i < input.Length; i++)
+            for (int i = 0; i < lines.Length; i++)
             {
-                foreach (var match in (IEnumerable<Match>)_regex.Matches(input[i]))
+                foreach (var match in (IEnumerable<Match>)_regex.Matches(lines[i]))
                 {
                     int shift;
                     if ((shift = names.IndexOf(match.Groups["Name"].Value)) == -1)

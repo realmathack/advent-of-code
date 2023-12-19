@@ -1,4 +1,3 @@
-
 namespace AdventOfCode.Y2023.Solvers
 {
     public class Day19 : SolverWithSections
@@ -14,7 +13,7 @@ namespace AdventOfCode.Y2023.Solvers
                 {
                     if (action == "A")
                     {
-                        sum += part.Ratings.Sum(rating => rating.Value);
+                        sum += part.Sum(rating => rating.Value);
                         break;
                     }
                     workflow = workflows[action];
@@ -113,7 +112,7 @@ namespace AdventOfCode.Y2023.Solvers
             return sum;
         }
 
-        private static bool ExecuteWorkflow(Workflow workflow, Part part, out string action)
+        private static bool ExecuteWorkflow(Workflow workflow, Dictionary<char, int> part, out string action)
         {
             action = "R";
             foreach (var condition in workflow.Conditions)
@@ -125,7 +124,7 @@ namespace AdventOfCode.Y2023.Solvers
                 }
                 if (condition.Comparison == '<')
                 {
-                    if (part.Ratings[condition.Category.Value] < condition.Value)
+                    if (part[condition.Category.Value] < condition.Value)
                     {
                         action = condition.Action;
                         break;
@@ -133,7 +132,7 @@ namespace AdventOfCode.Y2023.Solvers
                 }
                 else
                 {
-                    if (part.Ratings[condition.Category.Value] > condition.Value)
+                    if (part[condition.Category.Value] > condition.Value)
                     {
                         action = condition.Action;
                         break;
@@ -143,13 +142,14 @@ namespace AdventOfCode.Y2023.Solvers
             return action != "R";
         }
 
-        private static (Dictionary<string, Workflow> Workflows, List<Part> Parts) ToWorkflowsAndParts(string[] input)
+        private static (Dictionary<string, Workflow> Workflows, List<Dictionary<char, int>> Parts) ToWorkflowsAndParts(string[] sections)
         {
             var workflows = new Dictionary<string, Workflow>();
-            foreach (var workflow in input[0].SplitIntoLines())
+            foreach (var workflow in sections[0].SplitIntoLines())
             {
                 var conditions = new List<Condition>();
-                foreach (var condition in workflow[(workflow.IndexOf('{') + 1)..^1].Split(','))
+                var (name, rest) = workflow.SplitInTwo('{');
+                foreach (var condition in rest[..^1].Split(','))
                 {
                     int pos;
                     if ((pos = condition.IndexOf(':')) == -1)
@@ -161,20 +161,18 @@ namespace AdventOfCode.Y2023.Solvers
                         conditions.Add(new(condition[(pos + 1)..], condition[0], condition[1], int.Parse(condition[2..pos])));
                     }
                 }
-                var name = workflow[..workflow.IndexOf('{')];
                 workflows.Add(name, new(name, conditions));
             }
-            var parts = input[1].SplitIntoLines()
-                .Select(part => new Part(part[1..^1].Split(',')
+            var parts = sections[1].SplitIntoLines()
+                .Select(part => part[1..^1].Split(',')
                     .Select(rating => (Category: rating[0], Value: int.Parse(rating[2..])))
-                    .ToDictionary(rating => rating.Category, rating => rating.Value)))
+                    .ToDictionary(rating => rating.Category, rating => rating.Value))
                 .ToList();
             return (workflows, parts);
         }
 
         private record class Workflow(string Name, List<Condition> Conditions);
         private record class Condition(string Action, char? Category = null, char? Comparison = null, int? Value = null);
-        private record class Part(Dictionary<char, int> Ratings);
         private record class WorkflowInput(string Name, Dictionary<char, Range<int>> Ranges)
         {
             public WorkflowInput Duplicate() => new(Name, Ranges.Select(kv => (kv.Key, kv.Value)).ToDictionary(kv => kv.Key, kv => kv.Value));

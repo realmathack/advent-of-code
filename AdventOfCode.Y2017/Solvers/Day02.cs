@@ -15,7 +15,7 @@ namespace AdventOfCode.Y2017.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var result = 0;
+            var sum = 0;
             foreach (var line in input)
             {
                 var found = false;
@@ -30,7 +30,7 @@ namespace AdventOfCode.Y2017.Solvers
                         }
                         if (high % low == 0)
                         {
-                            result += high / low;
+                            sum += high / low;
                             found = true;
                             break;
                         }
@@ -41,7 +41,7 @@ namespace AdventOfCode.Y2017.Solvers
                     }
                 }
             }
-            return result;
+            return sum;
         }
     }
 }

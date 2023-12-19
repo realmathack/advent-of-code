@@ -5,11 +5,11 @@ namespace AdventOfCode.Y2022.Solvers
         public override object SolvePart1(string input) => FindMarkerPosition(input, 4);
         public override object SolvePart2(string input) => FindMarkerPosition(input, 14);
 
-        private static int FindMarkerPosition(string input, int charCount)
+        private static int FindMarkerPosition(string buffer, int charCount)
         {
-            for (int i = 0; i < input.Length - charCount; i++)
+            for (int i = 0; i < buffer.Length - charCount; i++)
             {
-                var checkSet = new HashSet<char>(input.Substring(i, charCount));
+                var checkSet = new HashSet<char>(buffer.Substring(i, charCount));
                 if (checkSet.Count == charCount)
                 {
                     return i + charCount;
