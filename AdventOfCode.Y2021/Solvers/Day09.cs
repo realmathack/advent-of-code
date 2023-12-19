@@ -36,8 +36,7 @@ namespace AdventOfCode.Y2021.Solvers
                 }
                 sizes.Add(size);
             }
-            var largest = sizes.OrderDescending().Take(3).ToArray();
-            return largest[0] * largest[1] * largest[2];
+            return sizes.OrderDescending().Take(3).Product();
         }
 
         private static List<Coords> GetLowestPoints(int[][] grid)

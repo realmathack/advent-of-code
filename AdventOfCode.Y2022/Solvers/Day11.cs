@@ -20,8 +20,7 @@ namespace AdventOfCode.Y2022.Solvers
                     }
                 }
             }
-            var top2 = inspections.OrderByDescending(inspection => inspection).Take(2).ToArray();
-            return top2[0] * top2[1];
+            return inspections.OrderByDescending(inspection => inspection).Take(2).Product();
         }
 
         public override object SolvePart2(string[] input)
@@ -43,8 +42,7 @@ namespace AdventOfCode.Y2022.Solvers
                     }
                 }
             }
-            var top2 = inspections.OrderByDescending(inspection => inspection).Take(2).ToArray();
-            return top2[0] * top2[1];
+            return inspections.OrderByDescending(inspection => inspection).Take(2).Product();
         }
 
         private static List<Monkey> ToMonkeys(string[] sections)

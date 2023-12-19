@@ -8,12 +8,7 @@ namespace AdventOfCode.Y2023.Solvers
                 .Select(line => line[(line.IndexOf(':') + 1)..].Split(' ', StringSplitOptions.RemoveEmptyEntries))
                 .Select(parts => parts.Select(long.Parse).ToArray())
                 .ToArray();
-            var total = 1L;
-            for (int i = 0; i < records[0].Length; i++)
-            {
-                total *= CountWaysToBeatRecord(records[0][i], records[1][i]);
-            }
-            return total;
+            return Enumerable.Range(0, records[0].Length).Select(i => CountWaysToBeatRecord(records[0][i], records[1][i])).Product();
         }
 
         public override object SolvePart2(string[] input)

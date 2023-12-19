@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Numerics;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace AdventOfCode
@@ -31,6 +32,38 @@ namespace AdventOfCode
         public static int[][] ToNumberGrid(this string[] input) => input.Select(line => line.Select(cell => cell - '0').ToArray()).ToArray();
         public static bool[][] ToBoolGrid(this string[] input, Func<char, bool> selector) => input.Select(line => line.Select(selector).ToArray()).ToArray();
         public static bool IsOutOfBounds<T>(this T[][] grid, Coords coords) => (coords.X < 0 || coords.Y < 0 || coords.Y >= grid.Length || coords.X >= grid[coords.Y].Length);
+
+        #region Product (copied from Enumerable.Sum)
+        public static int Product(this IEnumerable<int> source) => Product<int, int>(source);
+        public static long Product(this IEnumerable<long> source) => Product<long, long>(source);
+        private static TResult Product<TSource, TResult>(this IEnumerable<TSource> source)
+            where TSource : struct, INumber<TSource>
+            where TResult : struct, INumber<TResult>
+        {
+            TResult product = TResult.One;
+            foreach (TSource value in source)
+            {
+                checked { product *= TResult.CreateChecked(value); }
+            }
+            return product;
+        }
+
+        public static int Product<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector) => Product<TSource, int, int>(source, selector);
+        public static long Product<TSource>(this IEnumerable<TSource> source, Func<TSource, long> selector) => Product<TSource, long, long>(source, selector);
+        private static TResult Product<TSource, TResult, TAccumulator>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+            where TResult : struct, INumber<TResult>
+            where TAccumulator : struct, INumber<TAccumulator>
+        {
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(selector);
+            TAccumulator product = TAccumulator.One;
+            foreach (TSource value in source)
+            {
+                checked { product *= TAccumulator.CreateChecked(selector(value)); }
+            }
+            return TResult.CreateTruncating(product);
+        }
+        #endregion
 
         public static HashSet<int> CalculateFactors(this int input)
         {

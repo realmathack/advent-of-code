@@ -3,7 +3,7 @@
 namespace AdventOfCode
 {
     public readonly record struct Range<T>(T Start, T End)
-        where T : struct, IComparisonOperators<T, T, bool>, IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, INumberBase<T>
+        where T : struct, INumber<T>
     {
         public static Range<T> operator +(Range<T> a, T offset) => new(a.Start + offset, a.End + offset);
         public static Range<T> operator -(Range<T> a, T offset) => new(a.Start - offset, a.End - offset);
