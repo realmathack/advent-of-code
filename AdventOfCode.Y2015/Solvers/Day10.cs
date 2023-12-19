@@ -18,18 +18,18 @@ namespace AdventOfCode.Y2015.Solvers
 
         private static string LookAndSay(string input)
         {
-            var sb = new StringBuilder(input.Length);
+            var sequence = new StringBuilder(input.Length);
             var last = 0;
             for (int i = 0; i < input.Length; i++)
             {
                 if (input[last] != input[i])
                 {
-                    sb.Append(CreateGroup(input[last], i - last));
+                    sequence.Append(CreateGroup(input[last], i - last));
                     last = i;
                 }
             }
-            sb.Append(CreateGroup(input[last], input.Length - last));
-            return sb.ToString();
+            sequence.Append(CreateGroup(input[last], input.Length - last));
+            return sequence.ToString();
         }
 
         private static string CreateGroup(char digit, int length) => $"{length}{digit}";

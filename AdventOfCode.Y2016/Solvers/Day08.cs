@@ -1,25 +1,9 @@
-using System.Text;
-
 namespace AdventOfCode.Y2016.Solvers
 {
     public class Day08 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => ExecuteInstructions(input).SelectMany(row => row).Count(pixel => pixel);
-
-        public override object SolvePart2(string[] input)
-        {
-            var grid = ExecuteInstructions(input);
-            var screen = new StringBuilder();
-            for (int row = 0; row < grid.Length; row++)
-            {
-                screen.AppendLine();
-                for (int col = 0; col < grid[row].Length; col++)
-                {
-                    screen.Append(grid[row][col] ? '#' : '.');
-                }
-            }
-            return screen.ToString();
-        }
+        public override object SolvePart2(string[] input) => new Screen(ExecuteInstructions(input)).ReadScreen();
 
         private static bool[][] ExecuteInstructions(string[] lines)
         {

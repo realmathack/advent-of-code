@@ -16,7 +16,7 @@ namespace AdventOfCode.Y2022.Tests
         [Fact]
         public void TestPart2()
         {
-            var subject = new Day10();
+            var subject = new Day10(false);
             subject.SetInput(_input);
 
             var result = subject.SolvePart2();

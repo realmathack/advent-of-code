@@ -1,9 +1,9 @@
-using System.Text;
-
 namespace AdventOfCode.Y2022.Solvers
 {
-    public class Day10 : SolverWithLines
+    public class Day10(bool readScreen) : SolverWithLines
     {
+        public Day10() : this(true) { }
+
         public override object SolvePart1(string[] input)
         {
             var registerX = 1;
@@ -26,21 +26,17 @@ namespace AdventOfCode.Y2022.Solvers
         public override object SolvePart2(string[] input)
         {
             var registerX = 1;
-            var screen = new StringBuilder();
+            var screen = new Screen(40, 6);
             var instructions = ToAddInstructions(input);
             for (int i = 1; i <= 240; i++)
             {
-                if (i % 40 == 1)
-                {
-                    screen.AppendLine();
-                }
-                screen.Append(IsLit(registerX, (i - 1) % 40) ? '#' : '.');
+                screen.DrawPixel((i - 1) % 40, (i - 1) / 40, IsLit(registerX, (i - 1) % 40));
                 if (instructions.TryGetValue(i - 1, out var addition))
                 {
                     registerX += addition;
                 }
             }
-            return screen.ToString();
+            return readScreen ? screen.ReadScreen() : screen.PrintScreen();
         }
 
         private static Dictionary<int, int> ToAddInstructions(string[] lines)
