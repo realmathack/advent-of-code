@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Xml.Linq;
 
 namespace AdventOfCode.Y2023.Solvers
 {
@@ -7,7 +6,7 @@ namespace AdventOfCode.Y2023.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var broadcaster = ToModules(input);
+            var (broadcaster, _) = ToModules(input);
             var queue = new Queue<(string Source, Module Destination, Signal Signal)>();
             var counters = new Dictionary<Signal, long>() { { Signal.Low, 0L }, { Signal.High, 0L } };
             for (int i = 0; i < 1000; i++)
@@ -32,10 +31,6 @@ namespace AdventOfCode.Y2023.Solvers
                         conjunction.LastSignals[source] = signal;
                         signal = conjunction.LastSignals.Values.All(sig => sig == Signal.High) ? Signal.Low : Signal.High;
                     }
-                    else if (module is InverterModule)
-                    {
-                        signal = (signal == Signal.Low) ? Signal.High : Signal.Low;
-                    }
                     foreach (var destination in module.Destinations)
                     {
                         counters[signal]++;
@@ -48,10 +43,10 @@ namespace AdventOfCode.Y2023.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var broadcaster = ToModules(input);
+            var (broadcaster, moduleBeforeRx) = ToModules(input);
             var queue = new Queue<(string Source, Module Destination, Signal Signal)>();
-            var pulses = 0L;
-            // TODO: Dit moet duidelijk anders...
+            var cycles = moduleBeforeRx.LastSignals.Select(signal => signal.Key).ToDictionary(module => module, _ => 0L);
+            var pulses = 0;
             while (true)
             {
                 pulses++;
@@ -74,15 +69,15 @@ namespace AdventOfCode.Y2023.Solvers
                         conjunction.LastSignals[source] = signal;
                         signal = conjunction.LastSignals.Values.All(sig => sig == Signal.High) ? Signal.Low : Signal.High;
                     }
-                    else if (module is InverterModule)
-                    {
-                        signal = (signal == Signal.Low) ? Signal.High : Signal.Low;
-                    }
                     foreach (var destination in module.Destinations)
                     {
-                        if (destination.Name == "rx" && signal == Signal.Low)
+                        if (signal == Signal.High && destination.Name == moduleBeforeRx.Name && cycles.TryGetValue(module.Name, out var cycle) && cycle == 0)
                         {
-                            return pulses;
+                            cycles[module.Name] = pulses;
+                            if (cycles.All(cycle => cycle.Value > 0))
+                            {
+                                return cycles.Values.Product();
+                            }
                         }
                         queue.Enqueue((module.Name, destination, signal));
                     }
@@ -90,7 +85,7 @@ namespace AdventOfCode.Y2023.Solvers
             }
         }
 
-        private static Module ToModules(string[] lines)
+        private static (Module Broadcaster, ConjunctionModule ModuleBeforeRx) ToModules(string[] lines)
         {
             var modules = new Dictionary<string, Module>();
             var destinations = new Dictionary<string, List<string>>();
@@ -111,20 +106,18 @@ namespace AdventOfCode.Y2023.Solvers
             foreach (var conjunction in conjunctions)
             {
                 var sources = destinations.Where(destination => destination.Value.Contains(conjunction)).ToDictionary();
-                if (sources.Count == 1)
-                {
-                    modules[conjunction] = new InverterModule(conjunction, []);
-                }
-                else
-                {
-                    ((ConjunctionModule)modules[conjunction]).LastSignals = sources.Select(source => source.Key).ToDictionary(name => name, _ => Signal.Low);
-                }
+                ((ConjunctionModule)modules[conjunction]).LastSignals = sources.Select(source => source.Key).ToDictionary(name => name, _ => Signal.Low);
             }
             foreach (var name in modules.Keys)
             {
                 modules[name].Destinations.AddRange(destinations[name].Select(destination => modules.TryGetValue(destination, out var tmp) ? tmp : new Module(destination, [])));
             }
-            return modules["broadcaster"];
+            var moduleBeforeTxName = destinations.Where(destination => destination.Value.Contains("rx")).Select(module => module.Key).FirstOrDefault();
+            if (moduleBeforeTxName is not null && modules[moduleBeforeTxName] is ConjunctionModule moduleBeforeTx)
+            {
+                return (modules["broadcaster"], moduleBeforeTx);
+            }
+            return (modules["broadcaster"], new("Bogus", []));
         }
 
         private enum Signal { Low = 0, High = 1 }
@@ -137,6 +130,5 @@ namespace AdventOfCode.Y2023.Solvers
         {
             public Dictionary<string, Signal> LastSignals { get; set; } = [];
         }
-        private record class InverterModule(string Name, List<Module> Destinations) : Module(Name, Destinations);
     }
 }
