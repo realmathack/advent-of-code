@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2018.Solvers
 {
-    public class Day06(int limit) : SolverWithLines
+    public class Day06(int _limit) : SolverWithLines
     {
         public Day06() : this(10000) { }
 
@@ -63,7 +63,7 @@ namespace AdventOfCode.Y2018.Solvers
                 {
                     var current = new Coords(x, y);
                     var tmp = points.Sum(point => current.DistanceTo(point.Coords));
-                    if (tmp < limit)
+                    if (tmp < _limit)
                     {
                         count++;
                     }

@@ -1,15 +1,15 @@
 namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day17(int target) : SolverWithLines
+    public class Day17(int _target) : SolverWithLines
     {
         public Day17() : this(150) { }
 
-        public override object SolvePart1(string[] input) => ToPossibilities(ToContainers(input)).Count(possibility => possibility.Sum == target);
+        public override object SolvePart1(string[] input) => ToPossibilities(ToContainers(input)).Count(possibility => possibility.Sum == _target);
 
         public override object SolvePart2(string[] input)
         {
             var containers = ToContainers(input);
-            var possibilitiesOnTarget = ToPossibilities(containers).Where(possibility => possibility.Sum == target).ToList();
+            var possibilitiesOnTarget = ToPossibilities(containers).Where(possibility => possibility.Sum == _target).ToList();
             var lowestCountContainers = possibilitiesOnTarget.Min(possibility => possibility.Count);
             return possibilitiesOnTarget.Count(possibility => possibility.Count == lowestCountContainers);
         }

@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2020.Solvers
 {
-    public class Day09(int length) : SolverWithLines
+    public class Day09(int _length) : SolverWithLines
     {
         public Day09() : this(25) { }
 
@@ -35,9 +35,9 @@ namespace AdventOfCode.Y2020.Solvers
         private long FindInvalidNumber(string[] lines)
         {
             var numbers = lines.Select(long.Parse).ToArray();
-            for (int i = length; i < numbers.Length; i++)
+            for (int i = _length; i < numbers.Length; i++)
             {
-                var preamble = numbers[(i - length)..i];
+                var preamble = numbers[(i - _length)..i];
                 var success = false;
                 for (int j = 0; j < preamble.Length; j++)
                 {

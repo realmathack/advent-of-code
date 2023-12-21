@@ -1,12 +1,12 @@
 namespace AdventOfCode.Y2022.Solvers
 {
-    public class Day15(int givenNumber) : SolverWithLines
+    public class Day15(int _givenNumber) : SolverWithLines
     {
         public Day15() : this(2000000) { }
 
         public override object SolvePart1(string[] input)
         {
-            int targetRow = givenNumber;
+            int targetRow = _givenNumber;
             var blocked = new HashSet<Coords>();
             var beacons = ToBeacons(input);
             foreach (var beacon in beacons)
@@ -33,7 +33,7 @@ namespace AdventOfCode.Y2022.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            int maxXY = givenNumber * 2;
+            int maxXY = _givenNumber * 2;
             var beacons = ToBeacons(input);
             var remaining = new Dictionary<int, List<Range<int>>>();
             for (int i = 0; i <= maxXY; i++)

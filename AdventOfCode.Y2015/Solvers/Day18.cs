@@ -1,13 +1,13 @@
 namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day18(int steps) : SolverWithLines
+    public class Day18(int _steps) : SolverWithLines
     {
         public Day18() : this(100) { }
 
         public override object SolvePart1(string[] input)
         {
             var grid = input.ToBoolGrid(light => light == '#');
-            for (int step = 0; step < steps; step++)
+            for (int step = 0; step < _steps; step++)
             {
                 grid = ExecuteStep(grid);
             }
@@ -17,7 +17,7 @@ namespace AdventOfCode.Y2015.Solvers
         public override object SolvePart2(string[] input)
         {
             var grid = SetCornersOn(input.ToBoolGrid(light => light == '#'));
-            for (int step = 0; step < steps; step++)
+            for (int step = 0; step < _steps; step++)
             {
                 grid = SetCornersOn(ExecuteStep(grid));
             }

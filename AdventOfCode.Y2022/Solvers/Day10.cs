@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2022.Solvers
 {
-    public class Day10(bool readScreen) : SolverWithLines
+    public class Day10(bool _readScreen) : SolverWithLines
     {
         public Day10() : this(true) { }
 
@@ -36,7 +36,7 @@ namespace AdventOfCode.Y2022.Solvers
                     registerX += addition;
                 }
             }
-            return readScreen ? screen.ReadScreen() : screen.PrintScreen();
+            return _readScreen ? screen.ReadScreen() : screen.PrintScreen();
         }
 
         private static Dictionary<int, int> ToAddInstructions(string[] lines)
