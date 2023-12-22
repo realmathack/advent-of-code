@@ -10,7 +10,7 @@ namespace AdventOfCode.Y2018.Solvers
             var singles = claimedSquares.Where(square => square.Ids.Count == 1).ToList();
             var singleIds = singles.Select(single => single.Ids.Single()).Distinct().ToArray();
             var others = claimedSquares.Except(singles).ToList();
-            var otherIds = others.SelectMany(other => other.Ids).Distinct().ToHashSet();
+            var otherIds = others.SelectMany(other => other.Ids).ToHashSet();
             foreach (var id in singleIds)
             {
                 if (!otherIds.Contains(id))

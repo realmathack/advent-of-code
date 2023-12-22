@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace AdventOfCode.Y2023.Solvers
 {
     public class Day20 : SolverWithLines
