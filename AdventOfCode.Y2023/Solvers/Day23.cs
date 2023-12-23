@@ -34,8 +34,7 @@ namespace AdventOfCode.Y2023.Solvers
                     }
                 }
             }
-            var end = new Coords(grid[0].Length - 2, grid.Length - 1);
-            return FindLongestPath(root, end);
+            return FindLongestPath(root, []);
         }
 
         public override object SolvePart2(string[] input)
@@ -80,29 +79,22 @@ namespace AdventOfCode.Y2023.Solvers
                     }
                 }
             }
-            var end = new Coords(grid[0].Length - 2, grid.Length - 1);
-            return FindLongestPath(root, end);
+            return FindLongestPath(root, []);
         }
 
-        private static int FindLongestPath(Node root, Coords end)
+        private static int FindLongestPath(Node current, HashSet<Node> visited)
         {
-            var largest = 0;
-            var dfs = new Stack<Node>();
-            var bfs = new Queue<(Node Next, int TotalWeight, HashSet<Node> Path)>();
-            bfs.Enqueue((root, 0, []));
-            while (bfs.TryDequeue(out var current))
+            var distances = new List<int>();
+            foreach (var edge in current.Edges)
             {
-                foreach (var edge in current.Next.Edges.Where(edge => !current.Path.Contains(edge.Key)))
+                if (!visited.Add(edge.Key))
                 {
-                    var tmp = current.TotalWeight + edge.Value;
-                    if (edge.Key.Position == end && tmp > largest)
-                    {
-                        largest = tmp;
-                    }
-                    bfs.Enqueue((edge.Key, tmp, [.. current.Path, edge.Key]));
+                    continue;
                 }
+                distances.Add(edge.Value + FindLongestPath(edge.Key, visited));
+                visited.Remove(edge.Key);
             }
-            return largest;
+            return distances.Count == 0 ? 0 : distances.Max();
         }
 
         private static readonly Dictionary<string, char[]> _blocked = new()

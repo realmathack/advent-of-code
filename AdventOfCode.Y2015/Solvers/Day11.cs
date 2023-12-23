@@ -30,14 +30,18 @@ namespace AdventOfCode.Y2015.Solvers
             {
                 return false;
             }
-            var isValid = false;
+            var hasTriple = false;
             for (int i = 0; i < password.Length - 2; i++)
             {
                 if (password[i] == password[i + 1] - 1 && password[i] == password[i + 2] - 2)
                 {
-                    isValid = true;
+                    hasTriple = true;
                     break;
                 }
+            }
+            if (!hasTriple)
+            {
+                return false;
             }
             var pairs = new HashSet<char>();
             for (int i = 0; i < password.Length - 1; i++)
@@ -47,7 +51,7 @@ namespace AdventOfCode.Y2015.Solvers
                     pairs.Add(password[i]);
                 }
             }
-            return isValid && pairs.Count >= 2;
+            return pairs.Count >= 2;
         }
     }
 }
