@@ -9,13 +9,7 @@ namespace AdventOfCode.Y2023.Solvers
             var count = 0;
             for (int i = 0; i < bricks.Count; i++)
             {
-                var neighborsAbove = bricks[i].GetNeighborsAbove(bricks);
-                if (neighborsAbove.Count == 0)
-                {
-                    count++;
-                    continue;
-                }
-                if (neighborsAbove.All(neighbor => neighbor.GetNeighborsBelow(bricks).Count > 1))
+                if (bricks[i].Above.Count == 0 || bricks[i].Above.All(neighbor => neighbor.Below.Count > 1))
                 {
                     count++;
                 }
@@ -32,23 +26,18 @@ namespace AdventOfCode.Y2023.Solvers
             {
                 var removed = new HashSet<Brick>() { bricks[i] };
                 var queue = new Queue<Brick>();
-                foreach (var neighborAbove in bricks[i].GetNeighborsAbove(bricks))
+                foreach (var neighborAbove in bricks[i].Above)
                 {
                     queue.Enqueue(neighborAbove);
                 }
                 while (queue.TryDequeue(out var current))
                 {
-                    if (removed.Contains(current))
-                    {
-                        continue;
-                    }
-                    var shouldBeRemoved = current.GetNeighborsBelow(bricks).All(removed.Contains);
-                    if (!shouldBeRemoved)
+                    if (removed.Contains(current) || !current.Below.All(removed.Contains))
                     {
                         continue;
                     }
                     removed.Add(current);
-                    foreach (var neighborAbove in current.GetNeighborsAbove(bricks))
+                    foreach (var neighborAbove in current.Above)
                     {
                         queue.Enqueue(neighborAbove);
                     }
@@ -60,26 +49,49 @@ namespace AdventOfCode.Y2023.Solvers
 
         private static List<Brick> SimulateFalling(List<Brick> bricks)
         {
-            var isStillFalling = true;
-            while (isStillFalling)
+            var grid = new Dictionary<Coords, Dictionary<int, Brick>>();
+            foreach (var brick in bricks)
             {
-                isStillFalling = false;
-                bricks = [.. bricks.OrderBy(brick => Math.Min(brick.Start.Z, brick.End.Z)).ThenBy(brick => Math.Min(brick.Start.Y, brick.End.Y))];
-                for (int i = 0; i < bricks.Count; i++)
+                foreach (var cube in brick.GetCubes())
                 {
-                    while (true)
+                    if (!grid.TryGetValue(new(cube.X, cube.Y), out var zs))
                     {
-                        var belowCoords = bricks[i].GetCoordsBelow();
-                        if (belowCoords.Any(coord => coord.Z == 0))
-                        {
-                            break; // On the ground
-                        }
-                        if (bricks.Any(brick => brick.GetCubes().Any(cube => belowCoords.Contains(cube))))
-                        {
-                            break; // On another brick
-                        }
-                        isStillFalling = true;
-                        bricks[i] = new Brick(bricks[i].Start.Down, bricks[i].End.Down);
+                        zs = [];
+                        grid[new(cube.X, cube.Y)] = zs;
+                    }
+                    zs.Add(cube.Z, brick);
+                }
+            }
+            bricks = [.. bricks.OrderBy(brick => brick.Start.Z)];
+            for (int i = 0; i < bricks.Count; i++)
+            {
+                if (bricks[i].Start.Z == 1)
+                {
+                    continue;
+                }
+                var cubes = bricks[i].GetCubes();
+                var newZ = 1;
+                foreach (var cube in cubes)
+                {
+                    var zs = grid[new(cube.X, cube.Y)];
+                    var below = zs.Where(z => z.Key < cube.Z).Select(z => z.Key).ToArray();
+                    var tmp = below.Length == 0 ? 1 : below.Max() + 1;
+                    if (tmp > newZ)
+                    {
+                        newZ = tmp;
+                    }
+                    zs.Remove(cube.Z);
+                }
+                var offset = new Coords3D(0, 0, newZ - bricks[i].Start.Z);
+                bricks[i] = new(bricks[i].Start + offset, bricks[i].End + offset);
+                foreach (var cube in bricks[i].GetCubes())
+                {
+                    var zs = grid[new(cube.X, cube.Y)];
+                    zs.Add(cube.Z, bricks[i]);
+                    if (zs.TryGetValue(cube.Z - 1, out var brickBelow) && brickBelow != bricks[i])
+                    {
+                        bricks[i].Below.Add(brickBelow);
+                        brickBelow.Above.Add(bricks[i]);
                     }
                 }
             }
@@ -99,8 +111,10 @@ namespace AdventOfCode.Y2023.Solvers
 
         private record class Brick(Coords3D Start, Coords3D End)
         {
-            private HashSet<Coords3D>? _cubes;
+            public HashSet<Brick> Above { get; } = [];
+            public HashSet<Brick> Below { get; } = [];
 
+            private HashSet<Coords3D>? _cubes;
             public HashSet<Coords3D> GetCubes()
             {
                 if (_cubes is not null)
@@ -130,42 +144,6 @@ namespace AdventOfCode.Y2023.Solvers
                     }
                 }
                 return _cubes;
-            }
-
-            public HashSet<Coords3D> GetCoordsBelow()
-            {
-                var below = new HashSet<Coords3D>();
-                var cubes = GetCubes();
-                foreach (var cube in cubes)
-                {
-                    below.Add(cube.Down);
-                }
-                below.ExceptWith(cubes);
-                return below;
-            }
-
-            public HashSet<Coords3D> GetCoordsAbove()
-            {
-                var above = new HashSet<Coords3D>();
-                var cubes = GetCubes();
-                foreach (var cube in cubes)
-                {
-                    above.Add(cube.Up);
-                }
-                above.ExceptWith(cubes);
-                return above;
-            }
-
-            public HashSet<Brick> GetNeighborsBelow(List<Brick> bricks)
-            {
-                var coordsBelow = GetCoordsBelow();
-                return bricks.Where(brick => coordsBelow.Any(coord => brick.GetCubes().Contains(coord))).ToHashSet();
-            }
-
-            public HashSet<Brick> GetNeighborsAbove(List<Brick> bricks)
-            {
-                var coordsAbove = GetCoordsAbove();
-                return bricks.Where(brick => coordsAbove.Any(coord => brick.GetCubes().Contains(coord))).ToHashSet();
             }
         }
     }
