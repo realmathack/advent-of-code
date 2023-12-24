@@ -24,7 +24,8 @@ namespace AdventOfCode.Y2023.Solvers
             return queue.Count;
         }
 
-        // HACK: This only works because of the empty x/y-axis in the real input, test input would need this solution:
+        // HACK: Implemented https://github.com/jmerle/advent-of-code-2023/blob/master/src/day21/part2.py
+        // This only works because of the empty x/y-axis in the real input, test input would need this solution:
         // https://github.com/maksverver/AdventOfCode/blob/master/2023/day21/solve.py
         public override object SolvePart2(string[] input)
         {
@@ -76,7 +77,6 @@ namespace AdventOfCode.Y2023.Solvers
                 score += totalIncrement;
                 step += size;
             }
-
             return score;
         }
 

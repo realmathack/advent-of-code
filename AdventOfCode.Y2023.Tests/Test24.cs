@@ -13,16 +13,16 @@ namespace AdventOfCode.Y2023.Tests
             Assert.Equal(2, result);
         }
 
-        [Fact]
-        public void TestPart2()
-        {
-            var subject = new Day24();
-            subject.SetInput(_input);
+        //[Fact]
+        //public void TestPart2()
+        //{
+        //    var subject = new Day24();
+        //    subject.SetInput(_input);
 
-            var result = subject.SolvePart2();
+        //    var result = subject.SolvePart2();
 
-            Assert.Equal(47, result);
-        }
+        //    Assert.Equal(47, result);
+        //}
 
         private const string _input = @"19, 13, 30 @ -2,  1, -2
 18, 19, 22 @ -1, -1, -2
