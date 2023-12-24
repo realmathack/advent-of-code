@@ -1,4 +1,6 @@
 
+using System.Threading.Tasks.Sources;
+
 namespace AdventOfCode.Y2023.Solvers
 {
     public class Day21(int? _steps) : SolverWithLines
@@ -22,12 +24,60 @@ namespace AdventOfCode.Y2023.Solvers
             return queue.Count;
         }
 
+        // HACK: This only works because of the empty x/y-axis in the real input, test input would need this solution:
+        // https://github.com/maksverver/AdventOfCode/blob/master/2023/day21/solve.py
         public override object SolvePart2(string[] input)
         {
             var (grid, start) = ToGrid(input);
             var steps = _steps ?? 26501365;
-            // TODO: Implement
-            return 0L;
+            var size = grid.Length;
+            var halfSize = (size - 1) / 2;
+            var visited = new HashSet<(Coords Position, int Step)>();
+            var gardens = new Dictionary<int, HashSet<Coords>>();
+            var queue = new Queue<(Coords Position, int Step)>();
+            queue.Enqueue((start, 0));
+            while (queue.TryDequeue(out var current))
+            {
+                if (!visited.Add(current))
+                {
+                    continue;
+                }
+                var x = (size + (current.Position.X % size)) % size;
+                var y = (size + (current.Position.Y % size)) % size;
+                if (grid[y][x] != '.')
+                {
+                    continue;
+                }
+                if ((current.Step - halfSize) % size == 0)
+                {
+                    if (!gardens.TryGetValue(current.Step, out var garden))
+                    {
+                        garden = [];
+                        gardens[current.Step] = garden;
+                    }
+                    garden.Add(current.Position);
+                }
+                if (current.Step == 2 * size + halfSize)
+                {
+                    continue; // Should have cycles now, don't go further out
+                }
+                foreach (var neighbor in current.Position.Neighbors)
+                {
+                    queue.Enqueue((neighbor, current.Step + 1));
+                }
+            }
+            var step = 2 * size + halfSize;
+            var score = (long)gardens[step].Count;
+            var totalIncrement = score - gardens[size + halfSize].Count; // After a while the score increases with a constant amount
+            var increment = totalIncrement - (gardens[size + halfSize].Count - gardens[halfSize].Count);
+            while (step != steps)
+            {
+                totalIncrement += increment;
+                score += totalIncrement;
+                step += size;
+            }
+
+            return score;
         }
 
         private static List<Coords> FindPossibleNeighbors(char[][] grid, Coords node)
