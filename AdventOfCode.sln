@@ -51,6 +51,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode.Y2023", "Adven
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode.Y2023.Tests", "AdventOfCode.Y2023.Tests\AdventOfCode.Y2023.Tests.csproj", "{3C1D7A50-FA86-421C-81C3-99FAFB5B2FB8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "answers", "answers", "{A5784618-0BC9-46CB-80AF-684C89E5510D}"
+	ProjectSection(SolutionItems) = preProject
+		Answers-2015.md = Answers-2015.md
+		Answers-2016.md = Answers-2016.md
+		Answers-2017.md = Answers-2017.md
+		Answers-2018.md = Answers-2018.md
+		Answers-2019.md = Answers-2019.md
+		Answers-2020.md = Answers-2020.md
+		Answers-2021.md = Answers-2021.md
+		Answers-2022.md = Answers-2022.md
+		Answers-2023.md = Answers-2023.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
