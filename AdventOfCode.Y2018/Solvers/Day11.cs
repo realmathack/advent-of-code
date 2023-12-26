@@ -19,7 +19,7 @@ namespace AdventOfCode.Y2018.Solvers
                     }
                 }
             }
-            return $"{topLeft.X},{topLeft.Y}";
+            return topLeft.ToString();
         }
 
         public override object SolvePart2(string input)
@@ -44,7 +44,7 @@ namespace AdventOfCode.Y2018.Solvers
                     }
                 }
             }
-            return $"{topLeft.X},{topLeft.Y},{squareSize}";
+            return $"{topLeft},{squareSize}";
         }
 
         private static long[][] ToPowerLevels(string number, bool sumFromStart = false)

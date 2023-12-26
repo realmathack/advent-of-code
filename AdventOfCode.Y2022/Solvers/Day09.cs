@@ -24,7 +24,7 @@ namespace AdventOfCode.Y2022.Solvers
                     };
                     for (int i = 1; i < segmentCount; i++)
                     {
-                        if (!segments[i - 1].IsNeighbor(segments[i]))
+                        if (!segments[i - 1].IsAdjacent(segments[i]))
                         {
                             var offsetX = CalculateOffset(segments[i - 1].X, segments[i].X);
                             var offsetY = CalculateOffset(segments[i - 1].Y, segments[i].Y);
