@@ -50,7 +50,7 @@ namespace AdventOfCode.Y2019.Solvers
                 .Select(parts => (Center: parts[0], Object: parts[1]))
                 .GroupBy(orbit => orbit.Center)
                 .Select(g => (g.Key, Value: g.Select(orbit => orbit.Object).ToHashSet()))
-                .ToDictionary(g => g.Key, g => g.Value);
+                .ToDictionary();
         }
     }
 }

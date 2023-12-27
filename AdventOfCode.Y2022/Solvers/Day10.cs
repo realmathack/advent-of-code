@@ -30,7 +30,7 @@ namespace AdventOfCode.Y2022.Solvers
             var instructions = ToAddInstructions(input);
             for (int i = 1; i <= 240; i++)
             {
-                screen.DrawPixel((i - 1) % 40, (i - 1) / 40, IsLit(registerX, (i - 1) % 40));
+                screen.SetPixel((i - 1) % 40, (i - 1) / 40, IsLit(registerX, (i - 1) % 40));
                 if (instructions.TryGetValue(i - 1, out var addition))
                 {
                     registerX += addition;

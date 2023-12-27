@@ -36,7 +36,7 @@ namespace AdventOfCode.Y2023.Solvers
             foreach (var line in lines)
             {
                 var (hand, bet) = line.SplitInTwo(' ');
-                var cards = hand.GroupBy(card => card).Select(g => (g.Key, Count: g.Count())).ToDictionary(g => g.Key, g => g.Count);
+                var cards = hand.GroupBy(card => card).Select(g => (g.Key, Count: g.Count())).ToDictionary();
                 var jokers = cards.Remove('J', out var tmp) ? tmp : 0;
                 var newCard = (jokers == 5 || jokers == 0) ? 'J' : (cards.Any(card => card.Value >= 2) ? cards.First(card => card.Value >= 2) : cards.First()).Key;
                 var rankingHand = hand.Replace('J', newCard);

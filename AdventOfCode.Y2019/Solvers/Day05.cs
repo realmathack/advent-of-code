@@ -12,40 +12,41 @@ namespace AdventOfCode.Y2019.Solvers
             var pointer = 0;
             while (true)
             {
-                var opCode = $"    {program[pointer]}";
-                if (opCode[^2..] == "99")
+                var instruction = program[pointer].ToString().PadLeft(5, '0');
+                var opCode = instruction[4];
+                if (instruction[3] == '9' && opCode == '9')
                 {
                     break;
                 }
-                if (opCode[^1] == '1' || opCode[^1] == '2')
+                if (opCode == '1' || opCode == '2')
                 {
-                    var value1 = GetParameter(program, pointer + 1, opCode[^3]);
-                    var value2 = GetParameter(program, pointer + 2, opCode[^4]);
-                    var result = (opCode[^1] == '1') ? value1 + value2 : value1 * value2;
+                    var value1 = GetParameter(program, pointer + 1, instruction[2]);
+                    var value2 = GetParameter(program, pointer + 2, instruction[1]);
+                    var result = (opCode == '1') ? value1 + value2 : value1 * value2;
                     program[program[pointer + 3]] = result;
                     pointer += 4;
                 }
-                else if (opCode[^1] == '3')
+                else if (opCode == '3')
                 {
                     program[program[pointer + 1]] = givenInput;
                     pointer += 2;
                 }
-                else if (opCode[^1] == '4')
+                else if (opCode == '4')
                 {
-                    output.Add(GetParameter(program, pointer + 1, opCode[^3]));
+                    output.Add(GetParameter(program, pointer + 1, instruction[2]));
                     pointer += 2;
                 }
-                else if (opCode[^1] == '5' || opCode[^1] == '6')
+                else if (opCode == '5' || opCode == '6')
                 {
-                    var value1 = GetParameter(program, pointer + 1, opCode[^3]);
-                    var result = (opCode[^1] == '5') ? value1 != 0 : value1 == 0;
-                    pointer = result ? GetParameter(program, pointer + 2, opCode[^4]) : pointer + 3;
+                    var value1 = GetParameter(program, pointer + 1, instruction[2]);
+                    var result = (opCode == '5') ? value1 != 0 : value1 == 0;
+                    pointer = result ? GetParameter(program, pointer + 2, instruction[1]) : pointer + 3;
                 }
-                else if (opCode[^1] == '7' || opCode[^1] == '8')
+                else if (opCode == '7' || opCode == '8')
                 {
-                    var value1 = GetParameter(program, pointer + 1, opCode[^3]);
-                    var value2 = GetParameter(program, pointer + 2, opCode[^4]);
-                    var result = (opCode[^1] == '7') ? value1 < value2 : value1 == value2;
+                    var value1 = GetParameter(program, pointer + 1, instruction[2]);
+                    var value2 = GetParameter(program, pointer + 2, instruction[1]);
+                    var result = (opCode == '7') ? value1 < value2 : value1 == value2;
                     program[program[pointer + 3]] = result ? 1 : 0;
                     pointer += 4;
                 }

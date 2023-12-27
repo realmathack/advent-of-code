@@ -15,7 +15,7 @@
             }
         }
 
-        public void DrawPixel(int x, int y, bool value = true) => _grid[y][x] = value;
+        public void SetPixel(int x, int y, bool value = true) => _grid[y][x] = value;
         public string PrintScreen() => string.Concat(_grid.Select(row => Environment.NewLine + string.Concat(row.Select(value => value ? '#' : '.'))));
 
         public string ReadScreen()

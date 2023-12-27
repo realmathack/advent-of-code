@@ -164,9 +164,7 @@ namespace AdventOfCode.Y2023.Solvers
                 workflows.Add(name, new(name, conditions));
             }
             var parts = sections[1].SplitIntoLines()
-                .Select(part => part[1..^1].Split(',')
-                    .Select(rating => (Category: rating[0], Value: int.Parse(rating[2..])))
-                    .ToDictionary(rating => rating.Category, rating => rating.Value))
+                .Select(part => part[1..^1].Split(',').Select(rating => (Category: rating[0], Value: int.Parse(rating[2..]))).ToDictionary())
                 .ToList();
             return (workflows, parts);
         }
@@ -175,7 +173,7 @@ namespace AdventOfCode.Y2023.Solvers
         private record class Condition(string Action, char? Category = null, char? Comparison = null, int? Value = null);
         private record class WorkflowInput(string Name, Dictionary<char, Range<int>> Ranges)
         {
-            public WorkflowInput Duplicate() => new(Name, Ranges.Select(kv => (kv.Key, kv.Value)).ToDictionary(kv => kv.Key, kv => kv.Value));
+            public WorkflowInput Duplicate() => new(Name, Ranges.Select(kv => (kv.Key, kv.Value)).ToDictionary());
         }
     }
 }

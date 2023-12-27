@@ -14,7 +14,7 @@ namespace AdventOfCode.Y2020.Solvers
                     .SelectMany(answers => answers.ToCharArray())
                     .GroupBy(answer => answer)
                     .Select(g => (g.Key, Count: g.Count()))
-                    .ToDictionary(g => g.Key, g => g.Count)
+                    .ToDictionary()
                     .Count(count => count.Value == lines.Length);
             }
             return sum;
