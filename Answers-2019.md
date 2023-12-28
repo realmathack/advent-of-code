@@ -9,7 +9,7 @@ Fast is everything below 100 ms.
 | 04 | 889 | Fast | 589 | Fast |
 | 05 | 7692125 | Fast | 14340395 | Fast |
 | 06 | 295834 | Fast | 361 | 200 ms |
-| 07 | 30940 | Fast | ??? | ? |
+| 07 | 30940 | Fast | 76211147 | Fast |
 | 08 | 2904 | Fast | HGBCF | Fast |
 | 09 | 2752191671 | Fast | 87571 | Fast |
 | 10 | ??? | ? | ??? | ? |

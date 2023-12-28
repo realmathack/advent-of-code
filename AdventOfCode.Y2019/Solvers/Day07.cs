@@ -8,11 +8,11 @@ namespace AdventOfCode.Y2019.Solvers
             var phaseSettings = new int[] { 0, 1, 2, 3, 4 };
             foreach (var permutation in phaseSettings.Permutations())
             {
-                var result = new IntCodeInterpreter(input).ExecuteProgram(permutation[0], 0);
-                result = new IntCodeInterpreter(input).ExecuteProgram([permutation[1], .. result]);
-                result = new IntCodeInterpreter(input).ExecuteProgram([permutation[2], .. result]);
-                result = new IntCodeInterpreter(input).ExecuteProgram([permutation[3], .. result]);
-                result = new IntCodeInterpreter(input).ExecuteProgram([permutation[4], .. result]);
+                var (_, result) = new IntCodeInterpreter(input).ExecuteProgram(permutation[0], 0);
+                (_, result) = new IntCodeInterpreter(input).ExecuteProgram([permutation[1], .. result]);
+                (_, result) = new IntCodeInterpreter(input).ExecuteProgram([permutation[2], .. result]);
+                (_, result) = new IntCodeInterpreter(input).ExecuteProgram([permutation[3], .. result]);
+                (_, result) = new IntCodeInterpreter(input).ExecuteProgram([permutation[4], .. result]);
                 if (result[0] > highest)
                 {
                     highest = result[0];
@@ -27,12 +27,26 @@ namespace AdventOfCode.Y2019.Solvers
             var phaseSettings = new int[] { 5, 6, 7, 8, 9 };
             foreach (var permutation in phaseSettings.Permutations())
             {
-                // TODO: Implement way to interrupt execution in Interpreter
-                var result = new IntCodeInterpreter(input).ExecuteProgram(permutation[0], 0);
-                result = new IntCodeInterpreter(input).ExecuteProgram([permutation[1], .. result]);
-                result = new IntCodeInterpreter(input).ExecuteProgram([permutation[2], .. result]);
-                result = new IntCodeInterpreter(input).ExecuteProgram([permutation[3], .. result]);
-                result = new IntCodeInterpreter(input).ExecuteProgram([permutation[4], .. result]);
+                var amplifierA = new IntCodeInterpreter(input);
+                amplifierA.Inputs.Enqueue(permutation[0]);
+                var amplifierB = new IntCodeInterpreter(input);
+                amplifierB.Inputs.Enqueue(permutation[1]);
+                var amplifierC = new IntCodeInterpreter(input);
+                amplifierC.Inputs.Enqueue(permutation[2]);
+                var amplifierD = new IntCodeInterpreter(input);
+                amplifierD.Inputs.Enqueue(permutation[3]);
+                var amplifierE = new IntCodeInterpreter(input);
+                amplifierE.Inputs.Enqueue(permutation[4]);
+                var halted = false;
+                var result = new int[1] { 0 };
+                while (!halted)
+                {
+                    (halted, result) = amplifierA.ExecuteProgram(result);
+                    (halted, result) = amplifierB.ExecuteProgram(result);
+                    (halted, result) = amplifierC.ExecuteProgram(result);
+                    (halted, result) = amplifierD.ExecuteProgram(result);
+                    (halted, result) = amplifierE.ExecuteProgram(result);
+                }
                 if (result[0] > highest)
                 {
                     highest = result[0];
@@ -47,21 +61,22 @@ namespace AdventOfCode.Y2019.Solvers
             private int _pointer = 0;
 
             public Queue<int> Inputs { get; } = [];
-            public List<int> Outputs { get; } = [];
 
-            public List<int> ExecuteProgram(params int[] inputs)
+            public (bool Halted, int[] Outputs) ExecuteProgram(params int[] inputs)
             {
                 foreach (var input in inputs)
                 {
                     Inputs.Enqueue(input);
                 }
-                Outputs.Clear();
+                var halted = false;
+                var outputs = new List<int>();
                 while (true)
                 {
                     var instruction = _memory[_pointer].ToString().PadLeft(5, '0');
                     var opCode = instruction[4];
                     if (instruction[3] == '9' && opCode == '9')
                     {
+                        halted = true;
                         break;
                     }
                     if (opCode == '1' || opCode == '2')
@@ -74,12 +89,16 @@ namespace AdventOfCode.Y2019.Solvers
                     }
                     else if (opCode == '3')
                     {
-                        _memory[_memory[_pointer + 1]] = Inputs.Dequeue();
+                        if (!Inputs.TryDequeue(out var input))
+                        {
+                            break;
+                        }
+                        _memory[_memory[_pointer + 1]] = input;
                         _pointer += 2;
                     }
                     else if (opCode == '4')
                     {
-                        Outputs.Add(GetParameter(_pointer + 1, instruction[2]));
+                        outputs.Add(GetParameter(_pointer + 1, instruction[2]));
                         _pointer += 2;
                     }
                     else if (opCode == '5' || opCode == '6')
@@ -97,7 +116,7 @@ namespace AdventOfCode.Y2019.Solvers
                         _pointer += 4;
                     }
                 }
-                return Outputs;
+                return (halted, [.. outputs]);
             }
 
             private int GetParameter(int pointer, char mode) => mode == '1' ? _memory[pointer] : _memory[_memory[pointer]];
