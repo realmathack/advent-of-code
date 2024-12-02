@@ -24,6 +24,6 @@ dayClass = dayClass.Replace("2000", year);
 dayClass = dayClass.Replace("00", day);
 File.WriteAllText(@$"AdventOfCode.Y{year}\Solvers\Day{day}.cs", dayClass);
 
-var projectFile = File.ReadAllText(@$"AdventOfCode.Y{year}\AdventOfCode.Y{year}.csproj");
-projectFile = projectFile.Insert(projectFile.IndexOf("</ItemGroup>"), $"  <None Update=\"inputs\\{day}.txt\">\r\n      <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n    </None>\r\n  ");
-File.WriteAllText(@$"AdventOfCode.Y{year}\AdventOfCode.Y{year}.csproj", projectFile);
+//var projectFile = File.ReadAllText(@$"AdventOfCode.Y{year}\AdventOfCode.Y{year}.csproj");
+//projectFile = projectFile.Insert(projectFile.IndexOf("</ItemGroup>"), $"  <None Update=\"inputs\\{day}.txt\">\r\n      <CopyToOutputDirectory>Always</CopyToOutputDirectory>\r\n    </None>\r\n  ");
+//File.WriteAllText(@$"AdventOfCode.Y{year}\AdventOfCode.Y{year}.csproj", projectFile);
