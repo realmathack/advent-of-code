@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Y2016.Solvers
 {
-    public class Day11 : SolverWithLines
+    public partial class Day11 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => new BFS().Search(ToInitialState(input)).Count;
         public override object SolvePart2(string[] input) => new BFS().Search(ToInitialState(input, true)).Count;
@@ -37,14 +37,13 @@ namespace AdventOfCode.Y2016.Solvers
             return nextStates.Where(state => state.IsValid()).ToList();
         }
 
-        private static readonly Regex _regex = new(@"(?<Name>[a-z]+)(\-compatible)? (?<Type>generator|microchip)");
         private static State ToInitialState(string[] lines, bool addExtraItems = false)
         {
             var floors = 0L;
             var names = new List<string>();
             for (int i = 0; i < lines.Length; i++)
             {
-                foreach (var match in (IEnumerable<Match>)_regex.Matches(lines[i]))
+                foreach (var match in (IReadOnlyList<Match>)InputRegex().Matches(lines[i]))
                 {
                     int shift;
                     if ((shift = names.IndexOf(match.Groups["Name"].Value)) == -1)
@@ -61,6 +60,9 @@ namespace AdventOfCode.Y2016.Solvers
             }
             return new(0, floors);
         }
+
+        [GeneratedRegex(@"(?<Name>[a-z]+)(\-compatible)? (?<Type>generator|microchip)")]
+        private static partial Regex InputRegex();
 
         // every 16 bits is a floor (first set is floor 1, fourth set is floor 4)
         // every  2 bits on a floor is a matching generator & microchip set

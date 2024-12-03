@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day12 : SolverWithText
+    public partial class Day12 : SolverWithText
     {
         public override object SolvePart1(string input) => SumNumbers(input);
 
@@ -31,15 +31,17 @@ namespace AdventOfCode.Y2015.Solvers
             return SumNumbers(input);
         }
 
-        private static readonly Regex _numberRegex = new(@"-?\d+");
         private static int SumNumbers(string numbers)
         {
             var sum = 0;
-            foreach (var match in (IEnumerable<Match>)_numberRegex.Matches(numbers))
+            foreach (var match in (IReadOnlyList<Match>)NumberRegex().Matches(numbers))
             {
                 sum += int.Parse(match.Groups[0].Value);
             }
             return sum;
         }
+
+        [GeneratedRegex(@"-?\d+")]
+        private static partial Regex NumberRegex();
     }
 }

@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Y2018.Solvers
 {
-    public class Day10 : SolverWithLines
+    public partial class Day10 : SolverWithLines
     {
         public override object SolvePart1(string[] input)
         {
@@ -68,17 +68,19 @@ namespace AdventOfCode.Y2018.Solvers
             return screen.PrintScreen();
         }
 
-        private static readonly Regex _regex = new(@".+< *(-?\d+), +(-?\d+)>.+< *(-?\d+), +(-?\d+)>");
         private static List<Light> ToLights(string[] lines)
         {
             var lights = new List<Light>();
             foreach (var line in lines)
             {
-                var match = _regex.Match(line);
+                var match = LightRegex().Match(line);
                 lights.Add(new(new(int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value)), new(int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value))));
             }
             return lights;
         }
+
+        [GeneratedRegex(@".+< *(-?\d+), +(-?\d+)>.+< *(-?\d+), +(-?\d+)>")]
+        private static partial Regex LightRegex();
 
         private class Light(Coords position, Coords direction)
         {

@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day06 : SolverWithLines
+    public partial class Day06 : SolverWithLines
     {
         public override object SolvePart1(string[] input)
         {
@@ -48,13 +48,12 @@ namespace AdventOfCode.Y2015.Solvers
             return grid.Sum(row => row.Sum());
         }
 
-        private static readonly Regex _regex = new(@"(.+) (\d+),(\d+) through (\d+),(\d+)");
         private static List<Move> ToMoves(string[] lines)
         {
             var moves = new List<Move>(lines.Length);
             foreach (var line in lines)
             {
-                var match = _regex.Match(line);
+                var match = MoveRegex().Match(line);
                 var change = match.Groups[1].Value switch
                 {
                     "turn off" => Change.Off,
@@ -86,6 +85,9 @@ namespace AdventOfCode.Y2015.Solvers
             }
             return grid;
         }
+
+        [GeneratedRegex(@"(.+) (\d+),(\d+) through (\d+),(\d+)")]
+        private static partial Regex MoveRegex();
 
         private enum Change { Off, On, Toggle }
         private readonly record struct Move(Change Change, int TopX, int TopY, int BottomX, int BottomY);
