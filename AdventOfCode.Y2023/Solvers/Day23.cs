@@ -41,7 +41,7 @@ namespace AdventOfCode.Y2023.Solvers
         {
             var grid = input.ToCharGrid();
             var root = new Node(new Coords(1, 0), []);
-            var nodes = new Dictionary<Coords, Node>() { { root.Position, root } };
+            var nodes = new Dictionary<Coords, Node>() { [root.Position] = root };
             var queue = new Queue<(Node From, Coords Next)>();
             queue.Enqueue((root, FindNeighbors(grid, root.Position).Single()));
             while (queue.TryDequeue(out var branch))
@@ -99,10 +99,10 @@ namespace AdventOfCode.Y2023.Solvers
 
         private static readonly Dictionary<string, char[]> _blocked = new()
         {
-            { "west" , ['#', '>'] },
-            { "north", ['#', 'v'] },
-            { "east" , ['#', '<'] },
-            { "south", ['#', '^'] }
+            ["west"]  = ['#', '>'],
+            ["north"] = ['#', 'v'],
+            ["east"]  = ['#', '<'],
+            ["south"] = ['#', '^']
         };
         private static List<Coords> FindNeighbors(char[][] grid, Coords node)
         {

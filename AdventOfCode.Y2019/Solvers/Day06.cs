@@ -7,7 +7,7 @@ namespace AdventOfCode.Y2019.Solvers
             var orbits = ToOrbits(input);
             var total = 0;
             var depth = 0;
-            var sortedByDepth = new Dictionary<int, List<string>>() { { 0, ["COM"] } };
+            var sortedByDepth = new Dictionary<int, List<string>>() { [0] = ["COM"] };
             while (orbits.Count > 0)
             {
                 var tmp = sortedByDepth[depth].Where(orbits.ContainsKey).SelectMany(obj => orbits[obj]).ToList();

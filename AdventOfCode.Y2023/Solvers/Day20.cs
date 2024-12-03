@@ -6,7 +6,7 @@ namespace AdventOfCode.Y2023.Solvers
         {
             var (broadcaster, _) = ToModules(input);
             var queue = new Queue<(string Source, Module Destination, Signal Signal)>();
-            var counters = new Dictionary<Signal, long>() { { Signal.Low, 0L }, { Signal.High, 0L } };
+            var counters = new Dictionary<Signal, long>() { [Signal.Low] = 0L, [Signal.High] = 0L };
             for (int i = 0; i < 1000; i++)
             {
                 counters[Signal.Low]++;

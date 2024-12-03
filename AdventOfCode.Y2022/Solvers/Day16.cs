@@ -4,7 +4,8 @@ namespace AdventOfCode.Y2022.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            // TODO: This might need a better implementation, takes 1000+ ms
+            // TODO: This might need a better implementation, takes 1000+ ms (? https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm ?)
+            // https://github.com/varienaja/adventofcode/blob/main/src/test/java/org/varienaja/adventofcode2022/Puzzle16.java
             var root = ToValves(input);
             return FindHighestFlowRate(root, [root], 30);
         }
@@ -16,8 +17,8 @@ namespace AdventOfCode.Y2022.Solvers
             var root = ToValves(input);
             var totalValves = root.Neighbors.Count + 1;
             var visited = new HashSet<Valve> { root };
-            var timers = new Dictionary<int, int> { { 0, 26 }, { 1, 26 } };
-            var current = new Dictionary<int, Valve> { { 0, root }, { 1, root } };
+            var timers = new Dictionary<int, int> { [0] = 26, [1] = 26 };
+            var current = new Dictionary<int, Valve> { [0] = root, [1] = root };
             while (timers.All(timer => timer.Value > 0) && visited.Count < totalValves)
             {
                 var person = (timers[0] == timers[1] && current[0] != current[1]) ?

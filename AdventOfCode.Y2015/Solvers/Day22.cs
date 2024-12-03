@@ -1,21 +1,22 @@
 namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day22 : SolverWithLines
+    public class Day22(int _playerHitPoints, int _playerMana) : SolverWithLines
     {
+        public Day22() : this(50, 500) { }
+
         private readonly Dictionary<SpellNames, Spell> _spells = GetSpells();
         private int _lowestManaCost;
 
         // TODO: Apparently this code doesn't work anymore
-        public override object SolvePart1(string[] input) => FindLeastAmountOfMana(input);
+        public override object SolvePart1(string[] input) => FindLeastAmountOfMana(ToBoss(input));
         // HACK: Can't seem to get my code to work for part 2,
         // cheated by using https://github.com/fluttert/AdventOfCode/blob/master/AdventOfCode/Year2015/Day22.cs
-        public override object SolvePart2(string[] input) => FindLeastAmountOfMana(input, true);
+        public override object SolvePart2(string[] input) => FindLeastAmountOfMana(ToBoss(input), true);
 
-        private int FindLeastAmountOfMana(string[] input, bool isHardDifficulty = false)
+        private int FindLeastAmountOfMana(Boss boss, bool isHardDifficulty = false)
         {
-            var boss = ToBoss(input);
             _lowestManaCost = int.MaxValue;
-            var startingState = new GameState(50, 0, 500, boss.HitPoints, boss.Damage, 0);
+            var startingState = new GameState(_playerHitPoints, 0, _playerMana, boss.HitPoints, boss.Damage, 0);
             var possibleMoves = new Queue<GameState>();
             foreach (var spell in _spells)
             {
@@ -62,7 +63,7 @@ namespace AdventOfCode.Y2015.Solvers
             return _lowestManaCost;
         }
 
-        private static Boss ToBoss(string[] input) => new(int.Parse(input[0].Split(' ')[^1]), int.Parse(input[1].Split(' ')[^1]));
+        private static Boss ToBoss(string[] lines) => new(int.Parse(lines[0].Split(' ')[^1]), int.Parse(lines[1].Split(' ')[^1]));
 
         private bool IsGameOver(GameState current)
         {
@@ -105,17 +106,14 @@ namespace AdventOfCode.Y2015.Solvers
             }
         }
 
-        private static Dictionary<SpellNames, Spell> GetSpells()
+        private static Dictionary<SpellNames, Spell> GetSpells() => new()
         {
-            return new()
-            {
-                { SpellNames.MagicMissile, new Spell(SpellNames.MagicMissile, 53, 4, 0, 0, 0, 0) },
-                { SpellNames.Drain, new Spell(SpellNames.Drain, 73, 2, 0, 2, 0, 0) },
-                { SpellNames.Shield, new Spell(SpellNames.Shield, 113, 0, 7, 0, 0, 6) },
-                { SpellNames.Poison, new Spell(SpellNames.Poison, 173, 3, 0, 0, 0, 6) },
-                { SpellNames.Recharge, new Spell(SpellNames.Recharge, 229, 0, 0, 0, 101, 5) }
-            };
-        }
+            [SpellNames.MagicMissile] = new Spell(SpellNames.MagicMissile, 53, 4, 0, 0, 0, 0),
+            [SpellNames.Drain] = new Spell(SpellNames.Drain, 73, 2, 0, 2, 0, 0),
+            [SpellNames.Shield] = new Spell(SpellNames.Shield, 113, 0, 7, 0, 0, 6),
+            [SpellNames.Poison] = new Spell(SpellNames.Poison, 173, 3, 0, 0, 0, 6),
+            [SpellNames.Recharge] = new Spell(SpellNames.Recharge, 229, 0, 0, 0, 101, 5)
+        };
 
         private enum SpellNames { None, MagicMissile, Drain, Shield, Poison, Recharge }
         private readonly record struct Spell(SpellNames Name, int Cost, int Damage, int Armor, int Heal, int Mana, int Duration);

@@ -16,7 +16,7 @@ namespace AdventOfCode.Y2023.Solvers
             return hands.Sum(hand => hand.Bet * rank++);
         }
 
-        private static readonly Dictionary<char, char> _mapping1 = new() { { 'A', 'Z' }, { 'K', 'Y' }, { 'Q', 'X' }, { 'J', 'W' }, { 'T', 'V' } };
+        private static readonly Dictionary<char, char> _mapping1 = new() { ['A'] = 'Z', ['K'] = 'Y', ['Q'] = 'X', ['J'] = 'W', ['T'] = 'V' };
         private static List<Hand> ToHands(string[] lines)
         {
             var hands = new List<Hand>();
@@ -29,7 +29,7 @@ namespace AdventOfCode.Y2023.Solvers
             return hands;
         }
 
-        private static readonly Dictionary<char, char> _mapping2 = new() { { 'A', 'Z' }, { 'K', 'Y' }, { 'Q', 'X' }, { 'J', '1' }, { 'T', 'V' } };
+        private static readonly Dictionary<char, char> _mapping2 = new() { ['A'] = 'Z', ['K'] = 'Y', ['Q'] = 'X', ['J'] = '1', ['T'] = 'V' };
         private static List<Hand> ToHands2(string[] lines)
         {
             var hands = new List<Hand>();

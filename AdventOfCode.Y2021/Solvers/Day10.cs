@@ -10,7 +10,7 @@ namespace AdventOfCode.Y2021.Solvers
             return scores[scores.Length / 2];
         }
 
-        private static readonly Dictionary<char, int> _errorScores = new() { { ')', 3 }, { ']', 57 }, { '}', 1197 }, { '>', 25137 } };
+        private static readonly Dictionary<char, int> _errorScores = new() { [')'] = 3, [']'] = 57, ['}'] = 1197, ['>'] = 25137 };
         private int CalculateErrorScore(string line)
         {
             var stack = new Stack<char>();
@@ -29,7 +29,7 @@ namespace AdventOfCode.Y2021.Solvers
             return 0;
         }
 
-        private static readonly Dictionary<char, long> _autoCompleteScores = new() { { '(', 1L }, { '[', 2L }, { '{', 3L }, { '<', 4L } };
+        private static readonly Dictionary<char, long> _autoCompleteScores = new() { ['('] = 1L, ['['] = 2L, ['{'] = 3L, ['<'] = 4L };
         private long CalculateAutoCompleteScore(string line)
         {
             var stack = new Stack<char>();

@@ -32,7 +32,7 @@ namespace AdventOfCode.Y2017.Solvers
             var target = int.Parse(input);
             var current = new Coords(0, 0);
             var direction = Coords.OffsetRight;
-            var values = new Dictionary<Coords, int> { { current, 1 } };
+            var values = new Dictionary<Coords, int> { [current] = 1 };
             for (int length = 1; ; length++)
             {
                 for (int side = 0; side < 2; side++)

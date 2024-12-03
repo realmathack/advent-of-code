@@ -67,10 +67,10 @@ namespace AdventOfCode.Y2023.Solvers
 
         private static readonly Dictionary<string, char[]> _pipes = new()
         {
-            { "north", ['|', 'L', 'J'] },
-            { "east",  ['-', 'L', 'F'] },
-            { "south", ['|', '7', 'F'] },
-            { "west",  ['-', '7', 'J'] }
+            ["north"] = ['|', 'L', 'J'],
+            ["east"]  = ['-', 'L', 'F'],
+            ["south"] = ['|', '7', 'F'],
+            ["west"]  = ['-', '7', 'J']
         };
         private static List<Coords> FindPossibleNeighbors(char[][] grid, Coords node)
         {

@@ -8,7 +8,7 @@
         {
             var visited = new HashSet<T>();
             var cameFrom = new Dictionary<T, T>();
-            var distances = new Dictionary<T, int>() { { start, 0 } };
+            var distances = new Dictionary<T, int>() { [start] = 0 };
             var queue = new PriorityQueue<T, int>();
             queue.Enqueue(start, 0);
             while (queue.TryDequeue(out var current, out _))
@@ -40,7 +40,7 @@
         {
             var visited = new HashSet<T>();
             var cameFrom = new Dictionary<T, T>();
-            var distances = new Dictionary<T, int>() { { start, 0 } };
+            var distances = new Dictionary<T, int>() { [start] = 0 };
             var queue = new PriorityQueue<T, int>();
             foreach (var node in nodes)
             {
