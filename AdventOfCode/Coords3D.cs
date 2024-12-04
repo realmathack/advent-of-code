@@ -18,7 +18,7 @@
         public Coords3D Back => new(X, Y + 1, Z);
         public Coords3D Down => new(X, Y, Z - 1);
         public Coords3D Up => new(X, Y, Z + 1);
-        public Coords3D[] Neighbors => new[] { Left, Right, Forward, Back, Down, Up };
+        public Coords3D[] Neighbors => [Left, Right, Forward, Back, Down, Up];
         public override string ToString() => $"{X},{Y},{Z}";
     }
 }

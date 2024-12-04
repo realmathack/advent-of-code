@@ -10,6 +10,10 @@
         public static Coords OffsetUpRight => new(1, -1);
         public static Coords OffsetDownLeft => new(-1, 1);
         public static Coords OffsetDownRight => new(1, 1);
+        /// <summary>Horizontal & Vertical</summary>
+        public static Coords[] NeighborOffsets => [OffsetLeft, OffsetRight, OffsetUp, OffsetDown];
+        /// <summary>Horizontal, Vertical & Diagonal</summary>
+        public static Coords[] AdjacentOffsets => [OffsetLeft, OffsetRight, OffsetUp, OffsetDown, OffsetUpLeft, OffsetUpRight, OffsetDownLeft, OffsetDownRight];
         public static Coords operator +(Coords a, Coords b) => new(a.X + b.X, a.Y + b.Y);
         public static Coords operator +(Coords a, (int X, int Y) b) => new(a.X + b.X, a.Y + b.Y);
         public static Coords operator -(Coords a, Coords b) => new(a.X - b.X, a.Y - b.Y);
@@ -24,9 +28,9 @@
         public Coords DownLeft => new(X - 1, Y + 1);
         public Coords DownRight => new(X + 1, Y + 1);
         /// <summary>Horizontal & Vertical</summary>
-        public Coords[] Neighbors => new[] { Left, Right, Up, Down };
+        public Coords[] Neighbors => [Left, Right, Up, Down];
         /// <summary>Horizontal, Vertical & Diagonal</summary>
-        public Coords[] Adjacents => new[] { Left, Right, Up, Down, UpLeft, UpRight, DownLeft, DownRight };
+        public Coords[] Adjacents => [Left, Right, Up, Down, UpLeft, UpRight, DownLeft, DownRight];
         /// <summary>Adjacent or on top</summary>
         public bool IsAdjacent(Coords other) => Math.Abs(other.X - X) <= 1 && Math.Abs(other.Y - Y) <= 1;
         /// <summary>Calculate Manhattan Distance</summary>
