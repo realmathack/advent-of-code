@@ -1,16 +1,16 @@
 namespace AdventOfCode.Y2022.Solvers
 {
-    public class Day13 : SolverWithSections
+    public class Day13 : SolverWithLineGroups
     {
         public override object SolvePart1(string[] input)
         {
             var correctPairs = new List<int>();
-            for (int section = 0; section < input.Length; section++)
+            for (int lineGroup = 0; lineGroup < input.Length; lineGroup++)
             {
-                var (left, right) = ToPair(input[section]);
+                var (left, right) = ToPair(input[lineGroup]);
                 if (left.CompareTo(right) < 0)
                 {
-                    correctPairs.Add(section + 1);
+                    correctPairs.Add(lineGroup + 1);
                 }
             }
             return correctPairs.Sum();
@@ -18,7 +18,7 @@ namespace AdventOfCode.Y2022.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var lines = input.SelectMany(section => section.SplitIntoLines()).ToList();
+            var lines = input.SelectMany(lineGroup => lineGroup.SplitIntoLines()).ToList();
             lines.Add("[[2]]");
             lines.Add("[[6]]");
             var signals = lines.Select(line => ToSignals(line).List).ToList();
@@ -28,9 +28,9 @@ namespace AdventOfCode.Y2022.Solvers
             return decoderKey;
         }
 
-        private static (SignalList Left, SignalList Right) ToPair(string section)
+        private static (SignalList Left, SignalList Right) ToPair(string lineGroup)
         {
-            var lines = section.SplitIntoLines();
+            var lines = lineGroup.SplitIntoLines();
             var left = ToSignals(lines[0]).List;
             var right = ToSignals(lines[1]).List;
             return (left, right);

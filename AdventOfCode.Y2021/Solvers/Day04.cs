@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2021.Solvers
 {
-    public class Day04 : SolverWithSections
+    public class Day04 : SolverWithLineGroups
     {
         public override object SolvePart1(string[] input)
         {
@@ -56,9 +56,9 @@ namespace AdventOfCode.Y2021.Solvers
             return SumUnmarkedNumbers(losingBoard) * losingDraw;
         }
 
-        private static List<string[][]> ToBoards(string[] sections)
+        private static List<string[][]> ToBoards(string[] lineGroups)
         {
-            return sections
+            return lineGroups
                 .Select(board => board
                     .SplitIntoLines()
                     .Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries))

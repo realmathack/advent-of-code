@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2018.Solvers
 {
-    public class Day12 : SolverWithSections
+    public class Day12 : SolverWithLineGroups
     {
         public override object SolvePart1(string[] input) => CalculateGenerationSums(input[0][15..], ToNotes(input[1]), 20)[^1];
 

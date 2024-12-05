@@ -63,6 +63,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "answers", "answers", "{A578
 		Answers-2022.md = Answers-2022.md
 		Answers-2023.md = Answers-2023.md
 		Answers-2024.md = Answers-2024.md
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2024", "AdventOfCode.Y2024\AdventOfCode.Y2024.csproj", "{A5232476-BA9C-41CD-98A0-F0765E20B11C}"

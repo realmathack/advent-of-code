@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day19 : SolverWithSections
+    public class Day19 : SolverWithLineGroups
     {
         public override object SolvePart1(string[] input) => FindAllPossibleVariants(ToReplacements(input[0]), input[1].Trim()).Distinct().Count();
 
@@ -25,10 +25,10 @@ namespace AdventOfCode.Y2015.Solvers
             return steps;
         }
 
-        private static List<Replacement> ToReplacements(string section, bool reduce = false)
+        private static List<Replacement> ToReplacements(string lineGroup, bool reduce = false)
         {
             var replacements = new List<Replacement>();
-            foreach (var line in section.SplitIntoLines())
+            foreach (var line in lineGroup.SplitIntoLines())
             {
                 var parts = line.Split(" => ");
                 if (reduce)

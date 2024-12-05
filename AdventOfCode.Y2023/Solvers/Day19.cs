@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2023.Solvers
 {
-    public class Day19 : SolverWithSections
+    public class Day19 : SolverWithLineGroups
     {
         public override object SolvePart1(string[] input)
         {
@@ -142,10 +142,10 @@ namespace AdventOfCode.Y2023.Solvers
             return action != "R";
         }
 
-        private static (Dictionary<string, Workflow> Workflows, List<Dictionary<char, int>> Parts) ToWorkflowsAndParts(string[] sections)
+        private static (Dictionary<string, Workflow> Workflows, List<Dictionary<char, int>> Parts) ToWorkflowsAndParts(string[] lineGroups)
         {
             var workflows = new Dictionary<string, Workflow>();
-            foreach (var workflow in sections[0].SplitIntoLines())
+            foreach (var workflow in lineGroups[0].SplitIntoLines())
             {
                 var conditions = new List<Condition>();
                 var (name, rest) = workflow.SplitInTwo('{');
@@ -163,7 +163,7 @@ namespace AdventOfCode.Y2023.Solvers
                 }
                 workflows.Add(name, new(name, conditions));
             }
-            var parts = sections[1].SplitIntoLines()
+            var parts = lineGroups[1].SplitIntoLines()
                 .Select(part => part[1..^1].Split(',').Select(rating => (Category: rating[0], Value: int.Parse(rating[2..]))).ToDictionary())
                 .ToList();
             return (workflows, parts);

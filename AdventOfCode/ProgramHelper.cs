@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode
+﻿using Stopwatch = System.Diagnostics.Stopwatch;
+
+namespace AdventOfCode
 {
     public static class ProgramHelper
     {
@@ -25,20 +27,18 @@
             {
                 return solver;
             }
-            throw new InvalidOperationException($"Type {type.FullName} is not a {nameof(ISolver)}!");
+            throw new InvalidOperationException($"Type {type.FullName} is not an {nameof(ISolver)}!");
         }
 
         public static void Run(this ISolver solver, string day)
         {
             solver.SetInput(File.ReadAllText(@$"inputs\{day}.txt"));
-            var sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
+            var startTime = Stopwatch.GetTimestamp();
             var part1Answer = solver.SolvePart1();
-            var part1Time = sw.Elapsed;
-            sw.Restart();
+            var part1Time = Stopwatch.GetElapsedTime(startTime);
+            startTime = Stopwatch.GetTimestamp();
             var part2Answer = solver.SolvePart2();
-            var part2Time = sw.Elapsed;
-            sw.Stop();
+            var part2Time = Stopwatch.GetElapsedTime(startTime);
             Console.WriteLine($"Part1:\t\t{part1Answer}");
             Console.WriteLine($"Part2:\t\t{part2Answer}");
             Console.WriteLine();

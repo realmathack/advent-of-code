@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2020.Solvers
 {
-    public class Day04 : SolverWithSections
+    public class Day04 : SolverWithLineGroups
     {
         private static readonly char[] _separator = [' ', '\r', '\n'];
         public override object SolvePart1(string[] input)

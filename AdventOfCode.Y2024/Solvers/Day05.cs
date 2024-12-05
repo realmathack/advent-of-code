@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2024.Solvers
 {
-    public class Day05 : SolverWithSections
+    public class Day05 : SolverWithLineGroups
     {
         public override object SolvePart1(string[] input)
         {
@@ -37,13 +37,13 @@ namespace AdventOfCode.Y2024.Solvers
 
         }
 
-        private static ((int Before, int After)[] Rules, List<int[]> Updates) ToRulesAndUpdates(string[] sections)
+        private static ((int Before, int After)[] Rules, List<int[]> Updates) ToRulesAndUpdates(string[] lineGroups)
         {
-            var rules = sections[0].SplitIntoLines()
+            var rules = lineGroups[0].SplitIntoLines()
                 .Select(rule => rule.Split('|', 2))
                 .Select(pages => (int.Parse(pages[0]), int.Parse(pages[1])))
                 .ToArray();
-            var updates = sections[1].SplitIntoLines()
+            var updates = lineGroups[1].SplitIntoLines()
                 .Select(update => update.Split(',').Select(int.Parse).ToArray())
                 .ToList();
             return (rules, updates);

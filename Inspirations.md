@@ -5,6 +5,7 @@
 - https://github.com/fluttert/AdventOfCode
 - https://github.com/jmerle (every year has a dedicated repo)
 - https://github.com/maksverver/AdventOfCode
-- https://github.com/remcosiemonsma/adventofcode/
+- https://github.com/remcosiemonsma/adventofcode
+- https://github.com/rversteeg/AdventOfCode2020 (is repo for all years)
 - https://github.com/varienaja/adventofcode
 - https://github.com/veldsla/adventofcode

@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2022.Solvers
 {
-    public class Day11 : SolverWithSections
+    public class Day11 : SolverWithLineGroups
     {
         public override object SolvePart1(string[] input)
         {
@@ -45,12 +45,12 @@ namespace AdventOfCode.Y2022.Solvers
             return inspections.OrderByDescending(inspection => inspection).Take(2).Product();
         }
 
-        private static List<Monkey> ToMonkeys(string[] sections)
+        private static List<Monkey> ToMonkeys(string[] lineGroups)
         {
             var monkeys = new List<Monkey>();
-            foreach (var section in sections)
+            foreach (var lineGroup in lineGroups)
             {
-                var lines = section.SplitIntoLines().Select(line => line.Trim()).ToArray();
+                var lines = lineGroup.SplitIntoLines().Select(line => line.Trim()).ToArray();
                 var number = int.Parse(lines[0].TrimEnd(':').Split(' ')[1]);
                 var items = lines[1].Split(": ")[1].Split(", ").Select(long.Parse).ToArray();
                 var operation = GenerateOperation(lines[2].Split(": ")[1]);

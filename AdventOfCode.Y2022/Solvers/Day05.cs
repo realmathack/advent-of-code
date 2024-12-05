@@ -1,6 +1,6 @@
 namespace AdventOfCode.Y2022.Solvers
 {
-    public class Day05 : SolverWithSections
+    public class Day05 : SolverWithLineGroups
     {
         public override object SolvePart1(string[] input)
         {
@@ -40,9 +40,9 @@ namespace AdventOfCode.Y2022.Solvers
             return string.Concat(topCrates);
         }
 
-        private static Stack<char>[] ToStacks(string section)
+        private static Stack<char>[] ToStacks(string lineGroup)
         {
-            var lines = section.SplitIntoLines();
+            var lines = lineGroup.SplitIntoLines();
             var stackCount = (lines[^1].Length + 1) / 4;
             var stacks = new Stack<char>[stackCount];
             for (int i = 0; i < stackCount; i++)
@@ -63,10 +63,10 @@ namespace AdventOfCode.Y2022.Solvers
             return stacks;
         }
 
-        private static List<Move> ToMoves(string section)
+        private static List<Move> ToMoves(string lineGroup)
         {
             var moves = new List<Move>();
-            foreach (var line in section.SplitIntoLines())
+            foreach (var line in lineGroup.SplitIntoLines())
             {
                 var parts = line.Split(' ');
                 moves.Add(new Move(int.Parse(parts[1]), int.Parse(parts[3]), int.Parse(parts[5])));

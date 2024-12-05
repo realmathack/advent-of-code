@@ -11,7 +11,7 @@ namespace AdventOfCode
             return input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        public static string[] SplitIntoSections(this string input)
+        public static string[] SplitIntoLineGroups(this string input)
         {
             return input.Split(Environment.NewLine + Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
         }

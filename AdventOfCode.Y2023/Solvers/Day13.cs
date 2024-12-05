@@ -1,20 +1,20 @@
 namespace AdventOfCode.Y2023.Solvers
 {
-    public class Day13 : SolverWithSections
+    public class Day13 : SolverWithLineGroups
     {
-        public override object SolvePart1(string[] input) => input.Sum(section => FindReflection(section));
+        public override object SolvePart1(string[] input) => input.Sum(lineGroup => FindReflection(lineGroup));
         public override object SolvePart2(string[] input) => input.Sum(FindSmudge);
 
-        private static int FindSmudge(string section)
+        private static int FindSmudge(string lineGroup)
         {
-            var oldReflection = FindReflection(section);
-            for (int i = 0; i < section.Length; i++)
+            var oldReflection = FindReflection(lineGroup);
+            for (int i = 0; i < lineGroup.Length; i++)
             {
-                if (section[i] != '.' && section[i] != '#')
+                if (lineGroup[i] != '.' && lineGroup[i] != '#')
                 {
                     continue;
                 }
-                var tmp = section.ToCharArray();
+                var tmp = lineGroup.ToCharArray();
                 tmp[i] = (tmp[i] == '#') ? '.' : '#';
                 var reflection = FindReflection(string.Concat(tmp), oldReflection);
                 if (reflection > 0)
@@ -25,9 +25,9 @@ namespace AdventOfCode.Y2023.Solvers
             throw new InvalidOperationException("Smudge not found");
         }
 
-        private static int FindReflection(string section, int oldReflection = -1)
+        private static int FindReflection(string lineGroup, int oldReflection = -1)
         {
-            var rows = section.SplitIntoLines();
+            var rows = lineGroup.SplitIntoLines();
             for (int row = 1; row < rows.Length; row++)
             {
                 if (IsMirror(rows, row - 1, row) && oldReflection != 100 * row)
