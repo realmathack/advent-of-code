@@ -22,9 +22,13 @@ namespace AdventOfCode.Y2024.Solvers
                         {
                             '+' => result += numbers[i + 1],
                             '*' => result *= numbers[i + 1],
-                            '|' => result = long.Parse($"{result}{numbers[i + 1]}"),
+                            '|' => result = Concat(result, numbers[i + 1]),
                             _ => throw new InvalidOperationException($"Unknown operator: {permutation[i]}")
                         };
+                        if (result > testValue)
+                        {
+                            break;
+                        }
                     }
                     if (result == testValue)
                     {
@@ -34,6 +38,16 @@ namespace AdventOfCode.Y2024.Solvers
                 }
             }
             return total;
+        }
+
+        private static long Concat(long left, long right)
+        {
+            var multiplier = 10L;
+            while (right >= multiplier)
+            {
+                multiplier *= 10;
+            }
+            return left * multiplier + right;
         }
     }
 }
