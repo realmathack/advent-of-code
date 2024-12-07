@@ -82,7 +82,7 @@ namespace AdventOfCode
             return factors;
         }
 
-        public static IEnumerable<IList<T>> PowerSet<T>(this IList<T> input)
+        public static IEnumerable<IList<T>> PowerSet<T>(this IReadOnlyList<T> input)
         {
             var powerSetSize = (int)Math.Pow(2, input.Count);
             for (int mask = 0; mask < powerSetSize; mask++)
@@ -99,9 +99,9 @@ namespace AdventOfCode
             }
         }
 
-        public static IEnumerable<IList<T>> Permutations<T>(this IList<T> input, int indexFrom = 0)
+        public static IEnumerable<T[]> Permutations<T>(this T[] input, int indexFrom = 0)
         {
-            if (indexFrom + 1 == input.Count)
+            if (indexFrom + 1 == input.Length)
             {
                 yield return input;
             }
@@ -111,7 +111,7 @@ namespace AdventOfCode
                 {
                     yield return permutation;
                 }
-                for (var i = indexFrom + 1; i < input.Count; i++)
+                for (var i = indexFrom + 1; i < input.Length; i++)
                 {
                     (input[indexFrom], input[i]) = (input[i], input[indexFrom]);
                     foreach (var permutation in Permutations(input, indexFrom + 1))
@@ -120,6 +120,21 @@ namespace AdventOfCode
                     }
                     (input[indexFrom], input[i]) = (input[i], input[indexFrom]);
                 }
+            }
+        }
+
+        public static IEnumerable<T[]> PermutationsWithRepetition<T>(this T[] input, int repetitions)
+        {
+            var count = (int)Math.Pow(input.Length, repetitions);
+            for (int i = 0; i < count; i++)
+            {
+                var result = new T[repetitions];
+                for (int k = 0; k < repetitions; k++)
+                {
+                    var selector = (i / (int)Math.Pow(input.Length, k)) % input.Length;
+                    result[k] = input[selector];
+                }
+                yield return result;
             }
         }
 
