@@ -11,33 +11,42 @@ namespace AdventOfCode.Y2024.Solvers
             foreach (var line in lines)
             {
                 var (left, right) = line.SplitInTwo(": ");
-                var testValue = long.Parse(left);
+                var target = long.Parse(left);
                 var numbers = right.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
-                foreach (var permutation in operators.PermutationsWithRepetition(numbers.Length - 1))
+                if (IsPossible(target, numbers, 1, numbers[0], operators))
                 {
-                    var result = numbers[0];
-                    for (int i = 0; i < permutation.Length; i++)
-                    {
-                        result = permutation[i] switch
-                        {
-                            '+' => result += numbers[i + 1],
-                            '*' => result *= numbers[i + 1],
-                            '|' => result = Concat(result, numbers[i + 1]),
-                            _ => throw new InvalidOperationException($"Unknown operator: {permutation[i]}")
-                        };
-                        if (result > testValue)
-                        {
-                            break;
-                        }
-                    }
-                    if (result == testValue)
-                    {
-                        total += testValue;
-                        break;
-                    }
+                    total += target;
                 }
             }
             return total;
+        }
+
+        private static bool IsPossible(long target, long[] numbers, int index, long current, char[] operators)
+        {
+            if (index == numbers.Length)
+            {
+                return current == target;
+            }
+            var next = numbers[index++];
+            foreach (var op in operators)
+            {
+                var result = op switch
+                {
+                    '+' => current + next,
+                    '*' => current * next,
+                    '|' => Concat(current, next),
+                    _ => throw new InvalidOperationException($"Unknown operator: {op}")
+                };
+                if (result > target)
+                {
+                    continue;
+                }
+                if (IsPossible(target, numbers, index, result, operators))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static long Concat(long left, long right)
@@ -45,7 +54,7 @@ namespace AdventOfCode.Y2024.Solvers
             var multiplier = 10L;
             while (right >= multiplier)
             {
-                multiplier *= 10;
+                multiplier *= 10L;
             }
             return left * multiplier + right;
         }

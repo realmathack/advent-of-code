@@ -123,21 +123,6 @@ namespace AdventOfCode
             }
         }
 
-        public static IEnumerable<T[]> PermutationsWithRepetition<T>(this T[] input, int repetitions)
-        {
-            var count = (int)Math.Pow(input.Length, repetitions);
-            for (int i = 0; i < count; i++)
-            {
-                var result = new T[repetitions];
-                for (int k = 0; k < repetitions; k++)
-                {
-                    var selector = (i / (int)Math.Pow(input.Length, k)) % input.Length;
-                    result[k] = input[selector];
-                }
-                yield return result;
-            }
-        }
-
         public static string ToMD5Hex(this string input) => Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes(input))).ToLower();
     }
 }
