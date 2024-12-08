@@ -2,11 +2,11 @@ namespace AdventOfCode.Y2018.Solvers
 {
     public class Day09 : SolverWithText
     {
-        public override object SolvePart1(string input) => Solve(input);
+        public override object SolvePart1(string input) => FindWinningScore(input);
 
-        public override object SolvePart2(string input) => Solve(input, true);
+        public override object SolvePart2(string input) => FindWinningScore(input, true);
 
-        private static long Solve(string text, bool timesHundred = false)
+        private static long FindWinningScore(string text, bool timesHundred = false)
         {
             var (playerCount, last) = ToPlayersAndMarbles(text);
             if (timesHundred)

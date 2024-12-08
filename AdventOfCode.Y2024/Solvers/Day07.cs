@@ -2,10 +2,10 @@ namespace AdventOfCode.Y2024.Solvers
 {
     public class Day07 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => Solve(input, ['+', '*']);
-        public override object SolvePart2(string[] input) => Solve(input, ['+', '*', '|']);
+        public override object SolvePart1(string[] input) => FindTotalCalibrationResult(input, ['+', '*']);
+        public override object SolvePart2(string[] input) => FindTotalCalibrationResult(input, ['+', '*', '|']);
 
-        private static long Solve(string[] lines, char[] operators)
+        private static long FindTotalCalibrationResult(string[] lines, char[] operators)
         {
             var total = 0L;
             foreach (var line in lines)

@@ -2,22 +2,22 @@ namespace AdventOfCode.Y2024.Solvers
 {
     public class Day08 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => Solve(input, CalculateAntinodesPart1);
-        public override object SolvePart2(string[] input) => Solve(input, CalculateAntinodesPart2);
+        public override object SolvePart1(string[] input) => FindUniqueAntinodesCount(input, CalculateAntinodesPart1);
+        public override object SolvePart2(string[] input) => FindUniqueAntinodesCount(input, CalculateAntinodesPart2);
 
-        private static int Solve(string[] lines, Func<char[][], Coords, Coords, List<Coords>> calculateAntinodes)
+        private static int FindUniqueAntinodesCount(string[] lines, Func<char[][], Coords, Coords, List<Coords>> calculateAntinodes)
         {
             var grid = lines.ToCharGrid();
             var groupedAntennas = ToGroupedAntennas(grid);
             var antinondes = new HashSet<Coords>();
             foreach (var group in groupedAntennas)
             {
-                antinondes.UnionWith(GetAntinodesForGroup(grid, group.Value, calculateAntinodes));
+                antinondes.UnionWith(GetUniqueAntinodesForGroup(grid, group.Value, calculateAntinodes));
             }
             return antinondes.Count;
         }
 
-        private static HashSet<Coords> GetAntinodesForGroup(char[][] grid, List<Coords> antennas, Func<char[][], Coords, Coords, List<Coords>> calculateAntinodes)
+        private static HashSet<Coords> GetUniqueAntinodesForGroup(char[][] grid, List<Coords> antennas, Func<char[][], Coords, Coords, List<Coords>> calculateAntinodes)
         {
             var antinondes = new HashSet<Coords>();
             for (int i = 0; i < antennas.Count; i++)

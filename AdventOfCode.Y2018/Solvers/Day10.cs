@@ -6,17 +6,17 @@ namespace AdventOfCode.Y2018.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var (lights, _) = Solve(input);
+            var (lights, _) = FindSky(input);
             return ToMessage(lights);
         }
 
         public override object SolvePart2(string[] input)
         {
-            var (_, seconds) = Solve(input);
+            var (_, seconds) = FindSky(input);
             return seconds;
         }
 
-        private static (List<Light> Lights, long Seconds) Solve(string[] lines)
+        private static (List<Light> Lights, long Seconds) FindSky(string[] lines)
         {
             var lights = ToLights(lines);
             var seconds = 0L;
