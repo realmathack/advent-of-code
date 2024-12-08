@@ -64,10 +64,10 @@ namespace AdventOfCode.Y2016.Solvers
         [GeneratedRegex(@"(?<Name>[a-z]+)(\-compatible)? (?<Type>generator|microchip)")]
         private static partial Regex InputRegex();
 
-        // every 16 bits is a floor (first set is floor 1, fourth set is floor 4)
-        // every  2 bits on a floor is a matching generator & microchip set
-        // generator = 10
-        // microchip = 01
+        // Every 16 bits is a floor (first set is floor 1, fourth set is floor 4)
+        // Every  2 bits on a floor is a matching generator & microchip set
+        // Generator = 10
+        // Microchip = 01
         private const long _setMask = 0b11L;
         private const long _floorMask = 0b1111_1111_1111_1111L;
         private readonly record struct State(int CurrentFloor, long Floors)

@@ -4,13 +4,10 @@ namespace AdventOfCode.Y2015.Solvers
     {
         public Day22() : this(50, 500) { }
 
-        private readonly Dictionary<SpellNames, Spell> _spells = GetSpells();
+        private static readonly Dictionary<SpellNames, Spell> _spells = GetSpells();
         private int _lowestManaCost;
 
-        // TODO: Apparently this code doesn't work anymore
         public override object SolvePart1(string[] input) => FindLeastAmountOfMana(ToBoss(input));
-        // HACK: Can't seem to get my code to work for part 2,
-        // cheated by using https://github.com/fluttert/AdventOfCode/blob/master/AdventOfCode/Year2015/Day22.cs
         public override object SolvePart2(string[] input) => FindLeastAmountOfMana(ToBoss(input), true);
 
         private int FindLeastAmountOfMana(Boss boss, bool isHardDifficulty = false)
@@ -24,7 +21,7 @@ namespace AdventOfCode.Y2015.Solvers
             }
             while (possibleMoves.TryDequeue(out var current))
             {
-                // player
+                // Player turn
                 if (isHardDifficulty)
                 {
                     current.PlayerHitPoints--;
@@ -33,6 +30,10 @@ namespace AdventOfCode.Y2015.Solvers
                 ExecuteEffects(current);
                 if (IsGameOver(current)) { continue; }
                 var spellToCast = _spells[current.NextSpell];
+                if (current.PlayerMana < spellToCast.Cost || current.ActiveEffects.Any(effect => effect.SpellName == current.NextSpell))
+                {
+                    continue; // Not enough mana or effect already active
+                }
                 current.PlayerMana -= spellToCast.Cost;
                 current.TotalManaCost += spellToCast.Cost;
                 if (spellToCast.Duration == 0)
@@ -44,19 +45,15 @@ namespace AdventOfCode.Y2015.Solvers
                 {
                     current.ActiveEffects.Add(new Effect(spellToCast.Name) { Duration = spellToCast.Duration });
                 }
-                // boss
+                // Boss turn
                 if (IsGameOver(current)) { continue; }
                 ExecuteEffects(current);
                 if (IsGameOver(current)) { continue; }
                 current.PlayerHitPoints -= Math.Max(1, current.BossDamage - current.PlayerArmor);
                 if (IsGameOver(current)) { continue; }
-                // queue next round
+                // Queue next round
                 foreach (var spell in _spells)
                 {
-                    if (spell.Value.Cost > current.PlayerMana || current.ActiveEffects.Any(effect => effect.SpellName == spell.Key))
-                    {
-                        continue;
-                    }
                     possibleMoves.Enqueue(current.NextRound(spell.Key));
                 }
             }
@@ -86,14 +83,14 @@ namespace AdventOfCode.Y2015.Solvers
             return false;
         }
 
-        private void ExecuteEffects(GameState current)
+        private static void ExecuteEffects(GameState current)
         {
             for (int i = current.ActiveEffects.Count - 1; i >= 0; i--)
             {
                 var effect = current.ActiveEffects[i];
                 var spell = _spells[effect.SpellName];
                 current.BossHitPoints -= spell.Damage;
-                current.PlayerArmor = spell.Armor;
+                current.PlayerArmor = Math.Max(current.PlayerArmor, spell.Armor);
                 current.PlayerMana += spell.Mana;
                 if (--effect.Duration == 0)
                 {
@@ -119,7 +116,7 @@ namespace AdventOfCode.Y2015.Solvers
         private readonly record struct Spell(SpellNames Name, int Cost, int Damage, int Armor, int Heal, int Mana, int Duration);
         private readonly record struct Boss(int HitPoints, int Damage);
 
-        private record struct Effect(SpellNames SpellName)
+        private record class Effect(SpellNames SpellName)
         {
             public int Duration { get; set; }
             public Effect Duplicate() => new(SpellName) { Duration = Duration };
