@@ -11,7 +11,7 @@ namespace AdventOfCode.Y2022.Solvers
             var jetIndex = 0;
             var currentHeight = 0L;
             var knownResults = new Dictionary<string, (long Rock, long Height)>();
-            var fallen = new HashSet<LongCoords>();
+            var fallen = new HashSet<CoordsInt64>();
             for (long rock = 0L; rock < rocks; rock++)
             {
                 var shape = GetShape(rock, currentHeight);
@@ -44,7 +44,7 @@ namespace AdventOfCode.Y2022.Solvers
                     var cycles = (rocks - rock) / deltaRocks;
                     currentHeight += cycles * deltaHeight;
                     rock += cycles * deltaRocks;
-                    var offset = new LongCoords(0, cycles * deltaHeight);
+                    var offset = new CoordsInt64(0, cycles * deltaHeight);
                     fallen = fallen.Select(coord => coord + offset).ToHashSet();
                 }
                 else
@@ -55,7 +55,7 @@ namespace AdventOfCode.Y2022.Solvers
             return currentHeight;
         }
 
-        private static string GetTopRows(HashSet<LongCoords> fallen, long currentHeight)
+        private static string GetTopRows(HashSet<CoordsInt64> fallen, long currentHeight)
         {
             var topRows = new List<string>();
             for (long y = currentHeight; y > currentHeight - 20; y--)
@@ -65,7 +65,7 @@ namespace AdventOfCode.Y2022.Solvers
             return string.Concat(topRows);
         }
 
-        private static List<LongCoords> GetShape(long rock, long height)
+        private static List<CoordsInt64> GetShape(long rock, long height)
         {
             return (rock % 5L) switch
             {
@@ -76,14 +76,6 @@ namespace AdventOfCode.Y2022.Solvers
                 4L => [new(2, height + 5), new(3, height + 5), new(2, height + 4), new(3, height + 4)],
                 _ => throw new InvalidOperationException()
             };
-        }
-
-        private readonly record struct LongCoords(long X, long Y)
-        {
-            public static LongCoords operator +(LongCoords a, LongCoords b) => new(a.X + b.X, a.Y + b.Y);
-            public LongCoords Left => new(X - 1, Y);
-            public LongCoords Right => new(X + 1, Y);
-            public LongCoords Up => new(X, Y - 1);
         }
     }
 }
