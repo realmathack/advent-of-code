@@ -4,18 +4,19 @@ namespace AdventOfCode.Y2022.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            // TODO: This might need a better implementation, takes 1000+ ms (? https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm ?)
-            // https://github.com/varienaja/adventofcode/blob/main/src/test/java/org/varienaja/adventofcode2022/Puzzle16.java
             var root = ToValves(input);
-            return FindHighestFlowRate(root, [root], 30);
+            return FindHighestFlowRate(30, root, []);
         }
 
         public override object SolvePart2(string[] input)
         {
-            // TODO: Fix implementation (elephant)
+            // TODO: Fix implementation (elephant) -> build with states, like Y2015.Day22?
+            // https://github.com/varienaja/adventofcode/blob/main/src/test/java/org/varienaja/adventofcode2022/Puzzle16.java
+            // https://github.com/Janoz-NL/aoc2021/blob/master/src/main/java/com/janoz/aoc/y2022/day16/Day16.java
+
             var sum = 0;
             var root = ToValves(input);
-            var totalValves = root.Neighbors.Count + 1;
+            var totalValves = root.Distances.Count + 1;
             var visited = new HashSet<Valve> { root };
             var timers = new Dictionary<int, int> { [0] = 26, [1] = 26 };
             var current = new Dictionary<int, Valve> { [0] = root, [1] = root };
@@ -31,36 +32,38 @@ namespace AdventOfCode.Y2022.Solvers
                 current[person] = valve;
             }
             return sum;
+            // 1737 = too low
         }
 
-        private static int FindHighestFlowRate(Valve current, HashSet<Valve> visited, int minutesLeft)
+        private static int FindHighestFlowRate(int minutesLeft, Valve current, HashSet<Valve> opened)
         {
-            if (minutesLeft <= 0)
+            if (minutesLeft <= 1) // Moving through a tunnel or opening a valve takes at least 1 minute
             {
                 return 0;
             }
-            var highest = new List<int>();
             var currentFlowRate = (current.FlowRate > 0) ? current.FlowRate * --minutesLeft : 0;
-            highest.Add( currentFlowRate);
-            foreach (var neighbor in current.Neighbors)
+            var highest = currentFlowRate;
+            opened.Add(current);
+            foreach (var next in current.Distances)
             {
-                if (visited.Contains(neighbor.Key))
+                if (next.Value >= minutesLeft || opened.Contains(next.Key))
                 {
                     continue;
                 }
-                var flowRateNeighbor = FindHighestFlowRate(neighbor.Key, [.. visited, neighbor.Key], minutesLeft - neighbor.Value);
-                if (flowRateNeighbor > 0)
+                var flowRateNext = FindHighestFlowRate(minutesLeft - next.Value, next.Key, new(opened));
+                var result = currentFlowRate + flowRateNext;
+                if (result > highest)
                 {
-                    highest.Add(currentFlowRate + flowRateNeighbor);
+                    highest = result;
                 }
             }
-            return highest.Max();
+            return highest;
         }
 
         private static (Valve Valve, int Flow, int Distance) FindHighestFlowRate2(HashSet<Valve> visited, int timeLeft, Valve current)
         {
             var highest = (Valve: Valve.Empty, Flow: 0, Distance: 0);
-            foreach (var neighbor in current.Neighbors)
+            foreach (var neighbor in current.Distances)
             {
                 if (visited.Contains(neighbor.Key))
                 {
@@ -78,68 +81,44 @@ namespace AdventOfCode.Y2022.Solvers
         private static readonly char[] _separator = [' ', '=', ';', ','];
         private static Valve ToValves(string[] lines)
         {
-            var tmpList = new Dictionary<string, (int FlowRate, string[] Tunnels)>();
+            var valves = new Dictionary<string, Valve>();
+            var tunnels = new Dictionary<string, string[]>();
             foreach (var line in lines)
             {
                 var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-                tmpList.Add(parts[1], (int.Parse(parts[5]), parts[10..]));
-            }
-            var valves = new Dictionary<string, Valve>();
-            var valvesWithFlowRate = tmpList.Where(tmp => tmp.Value.FlowRate > 0).Select(tmp => tmp.Key).ToArray();
-            foreach (var tmp in tmpList.Where(tmp => tmp.Key == "AA" || valvesWithFlowRate.Contains(tmp.Key)))
-            {
-                if (!valves.TryGetValue(tmp.Key, out var valve))
+                var valveId = parts[1];
+                tunnels.Add(valveId, parts[10..]);
+                var flowRate = int.Parse(parts[5]);
+                if (valveId == "AA" || flowRate > 0)
                 {
-                    valve = new(tmp.Key);
-                    valves.Add(tmp.Key, valve);
+                    valves[valveId] = new(valveId, flowRate);
                 }
-                valve.FlowRate = tmp.Value.FlowRate;
-                foreach (var target in valvesWithFlowRate.Where(valve => valve != tmp.Key))
+            }
+            var valveIds = valves.Keys.ToArray();
+            for (int i = 0; i < valveIds.Length; i++)
+            {
+                for (int j = i + 1; j < valveIds.Length; j++)
                 {
-                    var distance = FindShortestPath(tmpList, tmp.Key, target);
-                    if (!valves.TryGetValue(target, out var neighbor))
-                    {
-                        neighbor = new(target);
-                        valves.Add(target, neighbor);
-                    }
-                    valve.Neighbors.Add(neighbor, distance);
+                    var first = valveIds[i];
+                    var second = valveIds[j];
+                    var distance = new BFS(tunnels, first).Search(second).Count;
+                    valves[first].Distances[valves[second]] = distance;
+                    valves[second].Distances[valves[first]] = distance;
                 }
             }
             return valves["AA"];
         }
 
-        // TODO: Is this BFS?
-        private static int FindShortestPath(Dictionary<string, (int FlowRate, string[] Tunnels)> list, string start, string target)
+        private class BFS(Dictionary<string, string[]> tunnels, string goal) : Graphs.BFS<string>
         {
-            var parents = new Dictionary<string, string>();
-            var queue = new Queue<string>();
-            queue.Enqueue(start);
-            while (queue.TryDequeue(out var current))
-            {
-                foreach (var tunnel in list[current].Tunnels)
-                {
-                    if (parents.ContainsKey(tunnel))
-                    {
-                        continue;
-                    }
-                    parents.Add(tunnel, current);
-                    queue.Enqueue(tunnel);
-                }
-            }
-            var length = 0;
-            while (target != start)
-            {
-                length++;
-                target = parents[target];
-            }
-            return length;
+            protected override List<string> FindNeighbors(string node) => [.. tunnels[node]];
+            protected override bool IsGoal(string node) => node == goal;
         }
 
-        private record class Valve(string Name)
+        private record class Valve(string Name, int FlowRate)
         {
-            public int FlowRate { get; set; } = 0;
-            public Dictionary<Valve, int> Neighbors { get; } = [];
-            public static Valve Empty => new(string.Empty);
+            public Dictionary<Valve, int> Distances { get; } = [];
+            public static Valve Empty => new(string.Empty, 0);
         }
     }
 }
