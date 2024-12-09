@@ -10,29 +10,11 @@ namespace AdventOfCode.Y2022.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            // TODO: Fix implementation (elephant) -> build with states, like Y2015.Day22?
+            // TODO: Very slow, might need a faster implementation
             // https://github.com/varienaja/adventofcode/blob/main/src/test/java/org/varienaja/adventofcode2022/Puzzle16.java
             // https://github.com/Janoz-NL/aoc2021/blob/master/src/main/java/com/janoz/aoc/y2022/day16/Day16.java
-
-            var sum = 0;
             var root = ToValves(input);
-            var totalValves = root.Distances.Count + 1;
-            var visited = new HashSet<Valve> { root };
-            var timers = new Dictionary<int, int> { [0] = 26, [1] = 26 };
-            var current = new Dictionary<int, Valve> { [0] = root, [1] = root };
-            while (timers.All(timer => timer.Value > 0) && visited.Count < totalValves)
-            {
-                var person = (timers[0] == timers[1] && current[0] != current[1]) ?
-                    ((FindHighestFlowRate2(visited, timers[0], current[0]).Flow > FindHighestFlowRate2(visited, timers[1], current[1]).Flow) ? 0 : 1) :
-                    timers.OrderByDescending(timer => timer.Value).ThenBy(timer => timer.Key).First().Key;
-                var (valve, flow, distance) = FindHighestFlowRate2(visited, timers[person], current[person]);
-                timers[person] -= distance;
-                sum += flow;
-                visited.Add(valve);
-                current[person] = valve;
-            }
-            return sum;
-            // 1737 = too low
+            return FindHighestFlowRate(new State([26, 26], [root, root], [root], 0)).TotalFlowRate;
         }
 
         private static int FindHighestFlowRate(int minutesLeft, Valve current, HashSet<Valve> opened)
@@ -50,8 +32,8 @@ namespace AdventOfCode.Y2022.Solvers
                 {
                     continue;
                 }
-                var flowRateNext = FindHighestFlowRate(minutesLeft - next.Value, next.Key, new(opened));
-                var result = currentFlowRate + flowRateNext;
+                var nextFlowRate = FindHighestFlowRate(minutesLeft - next.Value, next.Key, new(opened));
+                var result = currentFlowRate + nextFlowRate;
                 if (result > highest)
                 {
                     highest = result;
@@ -60,19 +42,26 @@ namespace AdventOfCode.Y2022.Solvers
             return highest;
         }
 
-        private static (Valve Valve, int Flow, int Distance) FindHighestFlowRate2(HashSet<Valve> visited, int timeLeft, Valve current)
+        private static State FindHighestFlowRate(State state)
         {
-            var highest = (Valve: Valve.Empty, Flow: 0, Distance: 0);
-            foreach (var neighbor in current.Distances)
+            if (state.MinutesLeft[0] <= 1 && state.MinutesLeft[1] <= 1)
             {
-                if (visited.Contains(neighbor.Key))
+                return state;
+            }
+            var actor = (state.MinutesLeft[1] > state.MinutesLeft[0]) ? 1 : 0;
+            var minutesLeft = state.MinutesLeft[actor];
+            var current = state.Current[actor];
+            var highest = state;
+            foreach (var next in current.Distances)
+            {
+                if (next.Value >= minutesLeft || state.Opened.Contains(next.Key))
                 {
                     continue;
                 }
-                var flow = neighbor.Key.FlowRate * (timeLeft - (1 + neighbor.Value));
-                if (flow > highest.Flow)
+                var result = FindHighestFlowRate(state.MoveNext(actor, minutesLeft - next.Value - 1, next.Key));
+                if (result.TotalFlowRate > highest.TotalFlowRate)
                 {
-                    highest = (neighbor.Key, flow, 1 + neighbor.Value);
+                    highest = result;
                 }
             }
             return highest;
@@ -119,6 +108,20 @@ namespace AdventOfCode.Y2022.Solvers
         {
             public Dictionary<Valve, int> Distances { get; } = [];
             public static Valve Empty => new(string.Empty, 0);
+        }
+
+        private class State(int[] minutesLeft, Valve[] next, HashSet<Valve> opened, int totalFlowRate)
+        {
+            public int[] MinutesLeft { get; set; } = minutesLeft;
+            public Valve[] Current { get; set; } = next;
+            public HashSet<Valve> Opened { get; set; } = opened;
+            public int TotalFlowRate { get; set; } = totalFlowRate;
+            public State MoveNext(int actor, int minutesLeft, Valve next)
+            {
+                return (actor == 0)
+                    ? new([minutesLeft, MinutesLeft[1]], [next, Current[1]], new(Opened) { next }, TotalFlowRate + minutesLeft * next.FlowRate)
+                    : new([MinutesLeft[0], minutesLeft], [Current[0], next], new(Opened) { next }, TotalFlowRate + minutesLeft * next.FlowRate);
+            }
         }
     }
 }
