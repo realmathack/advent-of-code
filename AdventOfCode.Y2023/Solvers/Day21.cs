@@ -1,4 +1,4 @@
-namespace AdventOfCode.Y2023.Solvers
+﻿namespace AdventOfCode.Y2023.Solvers
 {
     public class Day21(int? _steps) : SolverWithCharGrid
     {

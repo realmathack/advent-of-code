@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 
 namespace AdventOfCode.Y2018.Solvers
 {

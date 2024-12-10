@@ -1,4 +1,4 @@
-namespace AdventOfCode.Y2017.Solvers
+﻿namespace AdventOfCode.Y2017.Solvers
 {
     public class Day02 : SolverWithLines
     {

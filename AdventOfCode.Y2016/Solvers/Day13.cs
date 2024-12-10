@@ -1,4 +1,4 @@
-namespace AdventOfCode.Y2016.Solvers
+﻿namespace AdventOfCode.Y2016.Solvers
 {
     public class Day13(Coords _goal) : SolverWithText
     {

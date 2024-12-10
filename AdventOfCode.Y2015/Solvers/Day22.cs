@@ -1,4 +1,4 @@
-namespace AdventOfCode.Y2015.Solvers
+﻿namespace AdventOfCode.Y2015.Solvers
 {
     public class Day22(int _playerHitPoints, int _playerMana) : SolverWithLines
     {

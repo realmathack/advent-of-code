@@ -1,4 +1,4 @@
-namespace AdventOfCode.Y2018.Tests
+﻿namespace AdventOfCode.Y2018.Tests
 {
     public class Test04
     {
