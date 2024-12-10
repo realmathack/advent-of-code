@@ -7,7 +7,7 @@ namespace AdventOfCode.Y2016.Solvers
             var triangles = 0;
             foreach (var line in input)
             {
-                var sides = line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+                var sides = line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
                 if (sides[0] + sides[1] > sides[2] && sides[2] + sides[0] > sides[1] && sides[1] + sides[2] > sides[0])
                 {
                     triangles++;

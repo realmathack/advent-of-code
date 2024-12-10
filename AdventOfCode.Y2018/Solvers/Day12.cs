@@ -7,7 +7,7 @@ namespace AdventOfCode.Y2018.Solvers
         public override object SolvePart2(string[] input)
         {
             var sums = CalculateGenerationSums(input[0][15..], ToNotes(input[1]), 500);
-            return sums[^1] + (50000000000 - 500) * (sums[^1] - sums[^2]);
+            return sums[^1] + (50_000_000_000 - 500) * (sums[^1] - sums[^2]);
         }
 
         private static List<int> CalculateGenerationSums(string pots, Dictionary<string, char> notes, int generations)

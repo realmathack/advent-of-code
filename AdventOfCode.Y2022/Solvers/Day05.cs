@@ -14,7 +14,7 @@ namespace AdventOfCode.Y2022.Solvers
                     stacks[move.Destination - 1].Push(crate);
                 }
             }
-            var topCrates = stacks.Select(stack => stack.Peek()).ToList();
+            var topCrates = stacks.Select(stack => stack.Peek()).ToArray();
             return string.Concat(topCrates);
         }
 
@@ -36,7 +36,7 @@ namespace AdventOfCode.Y2022.Solvers
                     stacks[move.Destination - 1].Push(crate);
                 }
             }
-            var topCrates = stacks.Select(stack => stack.Peek()).ToList();
+            var topCrates = stacks.Select(stack => stack.Peek()).ToArray();
             return string.Concat(topCrates);
         }
 

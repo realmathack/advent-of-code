@@ -29,7 +29,7 @@ namespace AdventOfCode.Y2022.Solvers
             var inspections = new long[monkeys.Count];
             Array.Fill(inspections, 0);
             var divisionTestProduct = NumberTheory.LeastCommonMultiple(monkeys.Select(monkey => monkey.TestDivision));
-            for (int round = 0; round < 10000; round++)
+            for (int round = 0; round < 10_000; round++)
             {
                 foreach (var monkey in monkeys)
                 {

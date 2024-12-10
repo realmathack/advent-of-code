@@ -2,7 +2,7 @@ namespace AdventOfCode.Y2023.Solvers
 {
     public class Day11(int _timesLarger) : SolverWithLines
     {
-        public Day11() : this(1000000) { }
+        public Day11() : this(1_000_000) { }
 
         public override object SolvePart1(string[] input) => CalculateSumOfDistances(ToCoords(input));
         public override object SolvePart2(string[] input) => CalculateSumOfDistances(ToCoords(input, _timesLarger - 1));

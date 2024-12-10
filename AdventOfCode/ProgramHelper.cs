@@ -32,8 +32,10 @@ namespace AdventOfCode
 
         public static void Run(this ISolver solver, string day)
         {
-            solver.SetInput(File.ReadAllText(@$"inputs\{day}.txt"));
             var startTime = Stopwatch.GetTimestamp();
+            solver.SetInput(File.ReadAllText(@$"inputs\{day}.txt"));
+            var inputTime = Stopwatch.GetElapsedTime(startTime);
+            startTime = Stopwatch.GetTimestamp();
             var part1Answer = solver.SolvePart1();
             var part1Time = Stopwatch.GetElapsedTime(startTime);
             startTime = Stopwatch.GetTimestamp();
@@ -44,6 +46,7 @@ namespace AdventOfCode
             Console.WriteLine();
             Console.WriteLine($"Part1 in {part1Time.TotalMilliseconds}ms");
             Console.WriteLine($"Part2 in {part2Time.TotalMilliseconds}ms");
+            Console.WriteLine($"Input in {inputTime.TotalMilliseconds}ms (read + basic parse)");
             Console.WriteLine();
         }
     }

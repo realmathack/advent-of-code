@@ -8,13 +8,12 @@ namespace AdventOfCode.Y2015.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var containers = ToContainers(input);
-            var possibilitiesOnTarget = ToPossibilities(containers).Where(possibility => possibility.Sum == _target).ToList();
+            var possibilitiesOnTarget = ToPossibilities(ToContainers(input)).Where(possibility => possibility.Sum == _target).ToArray();
             var lowestCountContainers = possibilitiesOnTarget.Min(possibility => possibility.Count);
             return possibilitiesOnTarget.Count(possibility => possibility.Count == lowestCountContainers);
         }
 
-        private static List<int> ToContainers(string[] lines) => lines.Select(int.Parse).ToList();
-        private static List<(int Sum, int Count)> ToPossibilities(List<int> containers) => containers.PowerSet().Select(set => (set.Sum(), set.Count)).ToList();
+        private static int[] ToContainers(string[] lines) => lines.Select(int.Parse).ToArray();
+        private static (int Sum, int Count)[] ToPossibilities(int[] containers) => containers.PowerSet().Select(set => (set.Sum(), set.Count)).ToArray();
     }
 }

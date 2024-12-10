@@ -5,7 +5,7 @@ namespace AdventOfCode.Y2021.Solvers
         private readonly static int[] _lengths = [2, 3, 4, 7];
         public override object SolvePart1(string[] input)
         {
-            var outputs = input.Select(line => line.Split(" | ")[1]).Select(output => output.Split(' ')).ToList();
+            var outputs = input.Select(line => line.Split(" | ")[1]).Select(output => output.Split(' ')).ToArray();
             return outputs.Sum(display => display.Count(segments => _lengths.Contains(segments.Length)));
         }
 
@@ -13,7 +13,7 @@ namespace AdventOfCode.Y2021.Solvers
         public override object SolvePart2(string[] input)
         {
             var entries = input.Select(line => line.Split(_separator, StringSplitOptions.RemoveEmptyEntries)
-                .Select(segments => string.Concat(segments.Order())).ToArray()).ToList();
+                .Select(segments => string.Concat(segments.Order())).ToArray()).ToArray();
             var sum = 0;
             foreach (var signals in entries)
             {

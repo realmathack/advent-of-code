@@ -1,13 +1,12 @@
 namespace AdventOfCode.Y2024.Solvers
 {
-    public class Day08 : SolverWithLines
+    public class Day08 : SolverWithCharGrid
     {
-        public override object SolvePart1(string[] input) => FindUniqueAntinodesCount(input, CalculateAntinodesPart1);
-        public override object SolvePart2(string[] input) => FindUniqueAntinodesCount(input, CalculateAntinodesPart2);
+        public override object SolvePart1(char[][] grid) => FindUniqueAntinodesCount(grid, CalculateAntinodesPart1);
+        public override object SolvePart2(char[][] grid) => FindUniqueAntinodesCount(grid, CalculateAntinodesPart2);
 
-        private static int FindUniqueAntinodesCount(string[] lines, Func<char[][], Coords, Coords, List<Coords>> calculateAntinodes)
+        private static int FindUniqueAntinodesCount(char[][] grid, Func<char[][], Coords, Coords, List<Coords>> calculateAntinodes)
         {
-            var grid = lines.ToCharGrid();
             var groupedAntennas = ToGroupedAntennas(grid);
             var antinondes = new HashSet<Coords>();
             foreach (var group in groupedAntennas)

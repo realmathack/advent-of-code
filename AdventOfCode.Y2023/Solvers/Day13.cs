@@ -16,7 +16,7 @@ namespace AdventOfCode.Y2023.Solvers
                 }
                 var tmp = lineGroup.ToCharArray();
                 tmp[i] = (tmp[i] == '#') ? '.' : '#';
-                var reflection = FindReflection(string.Concat(tmp), oldReflection);
+                var reflection = FindReflection(new string(tmp), oldReflection);
                 if (reflection > 0)
                 {
                     return reflection;

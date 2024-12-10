@@ -1,11 +1,10 @@
 namespace AdventOfCode.Y2024.Solvers
 {
-    public class Day04 : SolverWithLines
+    public class Day04 : SolverWithCharGrid
     {
-        public override object SolvePart1(string[] input)
+        public override object SolvePart1(char[][] grid)
         {
             var count = 0;
-            var grid = input.ToCharGrid();
             for (int y = 0; y < grid.Length; y++)
             {
                 for (int x = 0; x < grid[y].Length; x++)
@@ -19,10 +18,9 @@ namespace AdventOfCode.Y2024.Solvers
             return count;
         }
 
-        public override object SolvePart2(string[] input)
+        public override object SolvePart2(char[][] grid)
         {
             var count = 0;
-            var grid = input.ToCharGrid();
             for (int y = 1; y < grid.Length - 1; y++)
             {
                 for (int x = 1; x < grid[y].Length - 1; x++)
@@ -57,11 +55,7 @@ namespace AdventOfCode.Y2024.Solvers
                 return true;
             }
             current += offset;
-            if (grid.IsOutOfBounds(current))
-            {
-                return false;
-            }
-            if (grid[current.Y][current.X] != _word[index])
+            if (grid.IsOutOfBounds(current) || grid[current.Y][current.X] != _word[index])
             {
                 return false;
             }

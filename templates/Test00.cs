@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Y2000.Tests
+namespace AdventOfCode.Y2000.Tests
 {
     public class Test00
     {

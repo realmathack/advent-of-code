@@ -10,7 +10,7 @@ namespace AdventOfCode.Y2020.Solvers
                 .Select((line, index) => (Instruction: line, Index: index))
                 .Where(line => line.Instruction.StartsWith("nop") || line.Instruction.StartsWith("jmp"))
                 .Select(line => line.Index)
-                .ToList();
+                .ToArray();
             foreach (var index in indexes)
             {
                 var program = new List<string>(input);

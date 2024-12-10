@@ -1,12 +1,11 @@
 namespace AdventOfCode.Y2023.Solvers
 {
-    public class Day16 : SolverWithLines
+    public class Day16 : SolverWithCharGrid
     {
-        public override object SolvePart1(string[] input) => EnergizeTiles(input.ToCharGrid(), [new(new(0, 0), Coords.OffsetRight)]);
+        public override object SolvePart1(char[][] grid) => EnergizeTiles(grid, [new(new(0, 0), Coords.OffsetRight)]);
 
-        public override object SolvePart2(string[] input)
+        public override object SolvePart2(char[][] grid)
         {
-            var grid = input.ToCharGrid();
             var highest = 0;
             var beams = new List<Beam>();
             beams.AddRange(Enumerable.Range(0, grid.Length).Select(i => new Beam(new(0, i), Coords.OffsetRight)));

@@ -2,7 +2,7 @@ namespace AdventOfCode.Y2023.Solvers
 {
     public class Day24(double _testLow, double _testHigh) : SolverWithLines
     {
-        public Day24() : this(200000000000000, 400000000000000) { }
+        public Day24() : this(200_000_000_000_000, 400_000_000_000_000) { }
 
         public override object SolvePart1(string[] input)
         {

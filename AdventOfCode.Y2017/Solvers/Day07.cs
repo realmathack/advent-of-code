@@ -20,12 +20,12 @@ namespace AdventOfCode.Y2017.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var programs = new Dictionary<string, (int Weight, List<string> Children)>();
+            var programs = new Dictionary<string, (int Weight, string[] Children)>();
             var alllChilderen = new HashSet<string>();
             foreach (var line in input)
             {
                 var parts = line.Split(" -> ");
-                var children = (parts.Length == 1) ? [] : parts[1].Split(", ").ToList();
+                var children = (parts.Length == 1) ? [] : parts[1].Split(", ").ToArray();
                 alllChilderen.UnionWith(children);
                 parts = parts[0].Split(' ');
                 programs.Add(parts[0], (int.Parse(parts[1].Trim('(', ')')), children));
@@ -39,10 +39,10 @@ namespace AdventOfCode.Y2017.Solvers
             return correctedWeight;
         }
 
-        private static (bool Found, int CorrectedWeight, int SummedWeight) CheckWeights(Dictionary<string, (int Weight, List<string> Children)> programs, string current)
+        private static (bool Found, int CorrectedWeight, int SummedWeight) CheckWeights(Dictionary<string, (int Weight, string[] Children)> programs, string current)
         {
             var (weight, children) = programs[current];
-            if (children.Count == 0)
+            if (children.Length == 0)
             {
                 return (false, 0, weight);
             }

@@ -13,7 +13,7 @@ namespace AdventOfCode.Y2023.Solvers
         public override object SolvePart2(string[] input) => "Day 25";
 
         // https://en.wikipedia.org/wiki/Karger%27s_algorithm
-        private static int FindWithKrager(HashSet<string> nodes, List<Edge> edges)
+        private static int FindWithKrager(HashSet<string> nodes, Edge[] edges)
         {
             while (true)
             {
@@ -25,10 +25,10 @@ namespace AdventOfCode.Y2023.Solvers
             }
         }
 
-        private static (int Cuts, int MinCutSize) Contract(HashSet<string> originalNodes, List<Edge> originalEdges)
+        private static (int Cuts, int MinCutSize) Contract(HashSet<string> originalNodes, Edge[] originalEdges)
         {
             var nodes = new HashSet<string>(originalNodes);
-            var edges = new List<Edge>(originalEdges.Count);
+            var edges = new List<Edge>(originalEdges.Length);
             foreach (var edge in originalEdges)
             {
                 edges.Add(new(edge.From, edge.To));
@@ -67,7 +67,7 @@ namespace AdventOfCode.Y2023.Solvers
             return (cuts, sets[0].Count);
         }
 
-        private static (HashSet<string> Nodes, List<Edge> Edges) ToComponents(string[] lines)
+        private static (HashSet<string> Nodes, Edge[] Edges) ToComponents(string[] lines)
         {
             var nodes = new HashSet<string>();
             var edges = new HashSet<Edge>();
@@ -81,7 +81,7 @@ namespace AdventOfCode.Y2023.Solvers
                     edges.Add(new(name, connection));
                 }
             }
-            return (nodes, edges.ToList());
+            return (nodes, edges.ToArray());
         }
 
         private record class Edge(string From, string To);

@@ -1,11 +1,10 @@
 namespace AdventOfCode.Y2021.Solvers
 {
-    public class Day11 : SolverWithLines
+    public class Day11 : SolverWithIntGrid
     {
-        public override object SolvePart1(string[] input)
+        public override object SolvePart1(int[][] grid)
         {
             var sum = 0;
-            var grid = input.ToNumberGrid();
             for (int i = 0; i < 100; i++)
             {
                 sum += ExecuteStep(grid);
@@ -13,9 +12,8 @@ namespace AdventOfCode.Y2021.Solvers
             return sum;
         }
 
-        public override object SolvePart2(string[] input)
+        public override object SolvePart2(int[][] grid)
         {
-            var grid = input.ToNumberGrid();
             var cellCount = grid.Length * grid[0].Length;
             for (int i = 0; i < 1_000_000; i++)
             {

@@ -9,14 +9,14 @@
         public Screen(int width, int height)
         {
             _grid = new bool[height][];
-            for (int i = 0; i < _grid.Length; i++)
+            for (int y = 0; y < _grid.Length; y++)
             {
-                _grid[i] = new bool[width];
+                _grid[y] = new bool[width];
             }
         }
 
         public void SetPixel(int x, int y, bool value = true) => _grid[y][x] = value;
-        public string PrintScreen() => string.Concat(_grid.Select(row => Environment.NewLine + string.Concat(row.Select(value => value ? '#' : '.'))));
+        public string PrintScreen() => string.Concat(_grid.Select(row => Environment.NewLine + string.Concat(row.Select(value => value ? '█' : ' '))));
 
         public string ReadScreen()
         {
@@ -29,7 +29,8 @@
             {
                 pixels.Add(_grid.SelectMany(row => row[i..(i + 5)].Select(value => value ? 1 : 0)).ToArray());
             }
-            return string.Concat(pixels.Select(GetLetter));
+            var letters = pixels.Select(GetLetter).ToArray();
+            return letters.Contains(' ') ? PrintScreen() : new string(letters);
         }
 
         private static char GetLetter(int[] pixels)

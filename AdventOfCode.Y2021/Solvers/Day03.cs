@@ -17,25 +17,25 @@ namespace AdventOfCode.Y2021.Solvers
         public override object SolvePart2(string[] input)
         {
             var oxygen = string.Empty;
-            var lines = new List<string>(input);
+            string[] lines = [.. input];
             for (int i = 0; i < input[0].Length; i++)
             {
                 var ones = lines.Count(line => line[i] == '1');
-                var bit = (ones >= (lines.Count - ones)) ? '1' : '0';
-                lines = lines.Where(line => line[i] == bit).ToList();
-                if (lines.Count == 1)
+                var bit = (ones >= (lines.Length - ones)) ? '1' : '0';
+                lines = lines.Where(line => line[i] == bit).ToArray();
+                if (lines.Length == 1)
                 {
                     oxygen = lines[0];
                 }
             }
             var co2 = string.Empty;
-            lines = new List<string>(input);
+            lines = [.. input];
             for (int i = 0; i < input[0].Length; i++)
             {
                 var ones = lines.Count(line => line[i] == '1');
-                var bit = (ones >= (lines.Count - ones)) ? '0' : '1';
-                lines = lines.Where(line => line[i] == bit).ToList();
-                if (lines.Count == 1)
+                var bit = (ones >= (lines.Length - ones)) ? '0' : '1';
+                lines = lines.Where(line => line[i] == bit).ToArray();
+                if (lines.Length == 1)
                 {
                     co2 = lines[0];
                 }

@@ -1,10 +1,10 @@
 namespace AdventOfCode.Y2024.Solvers
 {
-    public class Day06 : SolverWithLines
+    public class Day06 : SolverWithCharGrid
     {
-        public override object SolvePart1(string[] input)
+        public override object SolvePart1(char[][] grid)
         {
-            var (grid, current) = ToGrid(input);
+            var current = GetStart(grid);
             var direction = Coords.OffsetUp;
             var visited = new HashSet<Coords>();
             while (true)
@@ -25,9 +25,9 @@ namespace AdventOfCode.Y2024.Solvers
             return visited.Count;
         }
 
-        public override object SolvePart2(string[] input)
+        public override object SolvePart2(char[][] grid)
         {
-            var (grid, start) = ToGrid(input);
+            var start = GetStart(grid);
             var current = start;
             var direction = Coords.OffsetUp;
             var loopObstacles = new HashSet<Coords>();
@@ -77,9 +77,8 @@ namespace AdventOfCode.Y2024.Solvers
             }
         }
 
-        private static (char[][] Grid, Coords Start) ToGrid(string[] lines)
+        private static Coords GetStart(char[][] grid)
         {
-            var grid = lines.ToCharGrid();
             var start = new Coords(-1, -1);
             for (int y = 0; y < grid.Length; y++)
             {
@@ -96,7 +95,7 @@ namespace AdventOfCode.Y2024.Solvers
                     break;
                 }
             }
-            return (grid, start);
+            return start;
         }
     }
 }

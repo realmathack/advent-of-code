@@ -12,14 +12,14 @@ namespace AdventOfCode.Y2015.Solvers
             var steps = 0;
             while (molecule != "e")
             {
-                var variants = FindAllPossibleVariants(replacements, molecule).ToList();
-                if (variants.Count == 0)
+                var variants = FindAllPossibleVariants(replacements, molecule).ToArray();
+                if (variants.Length == 0)
                 {
                     molecule = start;
                     steps = 0;
                     continue;
                 }
-                molecule = variants[Random.Shared.Next(variants.Count)];
+                molecule = variants[Random.Shared.Next(variants.Length)];
                 steps++;
             }
             return steps;

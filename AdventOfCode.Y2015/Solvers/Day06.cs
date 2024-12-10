@@ -9,15 +9,15 @@ namespace AdventOfCode.Y2015.Solvers
             var grid = InitBoolGrid();
             foreach (var move in ToMoves(input))
             {
-                for (int row = move.TopX; row <= move.BottomX; row++)
+                for (int y = move.TopX; y <= move.BottomX; y++)
                 {
-                    for (int col = move.TopY; col <= move.BottomY; col++)
+                    for (int x = move.TopY; x <= move.BottomY; x++)
                     {
-                        grid[row][col] = move.Change switch
+                        grid[y][x] = move.Change switch
                         {
                             Change.Off => false,
                             Change.On => true,
-                            Change.Toggle => !grid[row][col],
+                            Change.Toggle => !grid[y][x],
                             _ => throw new InvalidOperationException($"Unknown change: {move.Change}")
                         };
                     }
@@ -31,15 +31,15 @@ namespace AdventOfCode.Y2015.Solvers
             var grid = InitInt32Grid();
             foreach (var move in ToMoves(input))
             {
-                for (int row = move.TopX; row <= move.BottomX; row++)
+                for (int y = move.TopX; y <= move.BottomX; y++)
                 {
-                    for (int col = move.TopY; col <= move.BottomY; col++)
+                    for (int x = move.TopY; x <= move.BottomY; x++)
                     {
-                        grid[row][col] = move.Change switch
+                        grid[y][x] = move.Change switch
                         {
-                            Change.Off => Math.Max(0, grid[row][col] - 1),
-                            Change.On => grid[row][col] + 1,
-                            Change.Toggle => grid[row][col] + 2,
+                            Change.Off => Math.Max(0, grid[y][x] - 1),
+                            Change.On => grid[y][x] + 1,
+                            Change.Toggle => grid[y][x] + 2,
                             _ => throw new InvalidOperationException($"Unknown change: {move.Change}")
                         };
                     }

@@ -7,9 +7,9 @@ namespace AdventOfCode.Y2015.Solvers
 
         private static long FindIdealConfiguration(string[] lines, int compartments)
         {
-            var packages = lines.Select(int.Parse).ToList();
+            var packages = lines.Select(int.Parse).ToArray();
             var targetWeight = packages.Sum() / compartments;
-            for (int depth = 0; depth < packages.Count; depth++)
+            for (int depth = 0; depth < packages.Length; depth++)
             {
                 var sets = ToPackageSets(packages, 0, depth, targetWeight);
                 if (sets.Any())
@@ -20,14 +20,14 @@ namespace AdventOfCode.Y2015.Solvers
             return 0;
         }
 
-        private static IEnumerable<HashSet<int>> ToPackageSets(List<int> packages, int i, int depthLeft, int remainder)
+        private static IEnumerable<HashSet<int>> ToPackageSets(int[] packages, int i, int depthLeft, int remainder)
         {
             if (remainder == 0)
             {
                 yield return new HashSet<int>();
                 yield break;
             }
-            if (remainder < 0 || depthLeft < 0 || i >= packages.Count)
+            if (remainder < 0 || depthLeft < 0 || i >= packages.Length)
             {
                 yield break;
             }

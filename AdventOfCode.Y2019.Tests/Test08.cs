@@ -1,4 +1,4 @@
-namespace AdventOfCode.Y2019.Tests
+﻿namespace AdventOfCode.Y2019.Tests
 {
     public class Test08
     {
@@ -22,8 +22,8 @@ namespace AdventOfCode.Y2019.Tests
             var result = subject.SolvePart2();
 
             Assert.Equal(@"
-.#
-#.", result);
+ █
+█ ", result);
         }
     }
 }

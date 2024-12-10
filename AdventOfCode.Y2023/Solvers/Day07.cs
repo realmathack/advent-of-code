@@ -53,13 +53,13 @@ namespace AdventOfCode.Y2023.Solvers
 
         private static int ToRank(string hand)
         {
-            var groups = hand.GroupBy(card => card).Select(g => g.Count()).OrderByDescending(count => count).ToList();
+            var groups = hand.GroupBy(card => card).Select(g => g.Count()).OrderByDescending(count => count).ToArray();
             return groups[0] switch
             {
                 5 => 7,
                 4 => 6,
-                3 => groups.Count == 2 ? 5 : 4,
-                2 => groups.Count == 3 ? 3 : 2,
+                3 => groups.Length == 2 ? 5 : 4,
+                2 => groups.Length == 3 ? 3 : 2,
                 _ => 1
             };
         }

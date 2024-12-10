@@ -6,7 +6,7 @@ namespace AdventOfCode.Y2018.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var changes = input.Select(int.Parse).ToList();
+            var changes = input.Select(int.Parse).ToArray();
             var frequencies = new HashSet<int>();
             var i = 0;
             var current = 0;
@@ -17,7 +17,7 @@ namespace AdventOfCode.Y2018.Solvers
                 {
                     return current;
                 }
-                i = ++i % changes.Count;
+                i = ++i % changes.Length;
             }
         }
     }

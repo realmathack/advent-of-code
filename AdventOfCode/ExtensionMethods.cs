@@ -6,33 +6,25 @@ namespace AdventOfCode
 {
     public static class ExtensionMethods
     {
-        public static string[] SplitIntoLines(this string input)
-        {
-            return input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-        }
-
-        public static string[] SplitIntoLineGroups(this string input)
-        {
-            return input.Split(Environment.NewLine + Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-        }
+        // Strings
+        public static string[] SplitIntoLines(this string input) => input.TrimEnd(Environment.NewLine.ToCharArray()).Split(Environment.NewLine);
 
         public static (string Left, string Right) SplitInTwo(this string input, char separator)
         {
-            var parts = input.Split(separator, 2);
-            return (parts[0], parts[1]);
+            var pos = input.AsSpan().IndexOf(separator);
+            return (input[0..pos], input[(pos + 1)..]);
         }
 
         public static (string Left, string Right) SplitInTwo(this string input, string separator)
         {
-            var parts = input.Split(separator, 2);
-            return (parts[0], parts[1]);
+            var pos = input.AsSpan().IndexOf(separator);
+            return (input[0..pos], input[(pos + separator.Length)..]);
         }
 
-        public static char[][] ToCharGrid(this string[] input) => input.Select(line => line.ToCharArray()).ToArray();
-        public static int[][] ToNumberGrid(this string[] input) => input.Select(line => line.Select(cell => cell - '0').ToArray()).ToArray();
-        public static bool[][] ToBoolGrid(this string[] input, Func<char, bool> selector) => input.Select(line => line.Select(selector).ToArray()).ToArray();
-        public static bool IsOutOfBounds<T>(this T[][] grid, Coords coords) => (coords.X < 0 || coords.Y < 0 || coords.Y >= grid.Length || coords.X >= grid[coords.Y].Length);
+        // Grids
+        public static bool IsOutOfBounds<T>(this T[][] grid, Coords coords) => coords.Y < 0 || coords.X < 0 || coords.Y >= grid.Length || coords.X >= grid[coords.Y].Length;
 
+        // Math
         #region Product (copied from Enumerable.Sum)
         public static int Product(this IEnumerable<int> source) => Product<int, int>(source);
         public static long Product(this IEnumerable<long> source) => Product<long, long>(source);
@@ -82,13 +74,14 @@ namespace AdventOfCode
             return factors;
         }
 
-        public static IEnumerable<IList<T>> PowerSet<T>(this IReadOnlyList<T> input)
+        // Sets
+        public static IEnumerable<List<T>> PowerSet<T>(this T[] input)
         {
-            var powerSetSize = (int)Math.Pow(2, input.Count);
+            var powerSetSize = (int)Math.Pow(2, input.Length);
             for (int mask = 0; mask < powerSetSize; mask++)
             {
-                var set = new List<T>();
-                for (int i = 0; i < input.Count; i++)
+                var set = new List<T>(input.Length);
+                for (int i = 0; i < input.Length; i++)
                 {
                     if ((mask & (1 << i)) != 0)
                     {
@@ -123,6 +116,7 @@ namespace AdventOfCode
             }
         }
 
+        // MD5
         public static string ToMD5Hex(this string input) => Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes(input))).ToLower();
     }
 }

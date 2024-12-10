@@ -12,11 +12,11 @@ namespace AdventOfCode.Y2016.Solvers
             {
                 if (instruction.Operation == Operation.Rect)
                 {
-                    for (int row = 0; row < instruction.B; row++)
+                    for (int y = 0; y < instruction.B; y++)
                     {
-                        for (int col = 0; col < instruction.A; col++)
+                        for (int x = 0; x < instruction.A; x++)
                         {
-                            grid[row][col] = true;
+                            grid[y][x] = true;
                         }
                     }
                 }

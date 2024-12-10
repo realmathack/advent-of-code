@@ -7,9 +7,9 @@ namespace AdventOfCode.Y2018.Solvers
         public override object SolvePart2(string[] input)
         {
             var claimedSquares = ToClaimedSquares(input).Values;
-            var singles = claimedSquares.Where(square => square.Ids.Count == 1).ToList();
+            var singles = claimedSquares.Where(square => square.Ids.Count == 1).ToArray();
             var singleIds = singles.Select(single => single.Ids.Single()).Distinct().ToArray();
-            var others = claimedSquares.Except(singles).ToList();
+            var others = claimedSquares.Except(singles).ToArray();
             var otherIds = others.SelectMany(other => other.Ids).ToHashSet();
             foreach (var id in singleIds)
             {

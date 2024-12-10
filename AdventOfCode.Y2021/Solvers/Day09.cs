@@ -1,16 +1,14 @@
 namespace AdventOfCode.Y2021.Solvers
 {
-    public class Day09 : SolverWithLines
+    public class Day09 : SolverWithCharGrid
     {
-        public override object SolvePart1(string[] input)
+        public override object SolvePart1(char[][] grid)
         {
-            var grid = input.ToNumberGrid();
-            return GetLowestPoints(grid).Sum(point => grid[point.Y][point.X] + 1);
+            return GetLowestPoints(grid).Sum(point => 1 + (grid[point.Y][point.X] - '0'));
         }
 
-        public override object SolvePart2(string[] input)
+        public override object SolvePart2(char[][] grid)
         {
-            var grid = input.ToNumberGrid();
             var sizes = new List<int>();
             foreach (var lowest in GetLowestPoints(grid))
             {
@@ -25,9 +23,9 @@ namespace AdventOfCode.Y2021.Solvers
                         continue;
                     }
                     size++;
-                    foreach (var neighbor in FindNeighbors(grid, point))
+                    foreach (var neighbor in point.Neighbors)
                     {
-                        if (visited.Contains(neighbor) || grid[neighbor.Y][neighbor.X] == 9)
+                        if (grid.IsOutOfBounds(neighbor) || visited.Contains(neighbor) || grid[neighbor.Y][neighbor.X] == '9')
                         {
                             continue;
                         }
@@ -39,7 +37,7 @@ namespace AdventOfCode.Y2021.Solvers
             return sizes.OrderDescending().Take(3).Product();
         }
 
-        private static List<Coords> GetLowestPoints(int[][] grid)
+        private static List<Coords> GetLowestPoints(char[][] grid)
         {
             var lowest = new List<Coords>();
             for (int y = 0; y < grid.Length; y++)
@@ -55,21 +53,11 @@ namespace AdventOfCode.Y2021.Solvers
             return lowest;
         }
 
-        private static bool IsLowerThanAllNeighbors(int[][] grid, int x, int y)
+        private static bool IsLowerThanAllNeighbors(char[][] grid, int x, int y)
         {
             var value = grid[y][x];
             return (y <= 0 || grid[y - 1][x] > value) && (x <= 0 || grid[y][x - 1] > value) &&
                 (y >= grid.Length - 1 || grid[y + 1][x] > value) && (x >= grid[y].Length - 1 || grid[y][x + 1] > value);
-        }
-
-        private static List<Coords> FindNeighbors(int[][] grid, Coords current)
-        {
-            var neighbors = new List<Coords>();
-            if (current.X > 0                         ) { neighbors.Add(current.Left); }
-            if (current.Y > 0                         ) { neighbors.Add(current.Up); }
-            if (current.X < grid[current.Y].Length - 1) { neighbors.Add(current.Right); }
-            if (current.Y < grid.Length - 1           ) { neighbors.Add(current.Down); }
-            return neighbors;
         }
     }
 }

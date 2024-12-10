@@ -16,7 +16,7 @@ namespace AdventOfCode.Y2018.Solvers
                 order += current;
                 done.Add(current);
                 available.Remove(current);
-                var steps = requirements.Where(req => req.Value.All(step => done.Contains(step))).Select(req => req.Key).ToList();
+                var steps = requirements.Where(req => req.Value.All(step => done.Contains(step))).Select(req => req.Key).ToArray();
                 available.UnionWith(steps.Where(step => !done.Contains(step)));
             }
             return order;
@@ -45,7 +45,7 @@ namespace AdventOfCode.Y2018.Solvers
                     {
                         done.Add(worker.Step);
                         worker.Step = default;
-                        var steps = requirements.Where(req => req.Value.All(step => done.Contains(step))).Select(req => req.Key).ToList();
+                        var steps = requirements.Where(req => req.Value.All(step => done.Contains(step))).Select(req => req.Key).ToArray();
                         available.UnionWith(steps.Where(step => !done.Contains(step) && !workers.Any(worker => worker.Step == step)));
                     }
                     var next = available.OrderBy(step => step).FirstOrDefault();

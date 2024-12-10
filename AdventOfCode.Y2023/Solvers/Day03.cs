@@ -35,16 +35,16 @@ namespace AdventOfCode.Y2023.Solvers
         {
             var numbers = new Dictionary<List<Coords>, int>();
             var parts = new Dictionary<Coords, char>();
-            for (int row = 0; row < lines.Length; row++)
+            for (int y = 0; y < lines.Length; y++)
             {
                 var currentCoords = new List<Coords>();
                 var currentNumber = string.Empty;
-                for (int col = 0; col < lines[row].Length; col++)
+                for (int x = 0; x < lines[y].Length; x++)
                 {
-                    if (char.IsDigit(lines[row][col]))
+                    if (char.IsDigit(lines[y][x]))
                     {
-                        currentCoords.Add(new(row, col));
-                        currentNumber += lines[row][col];
+                        currentCoords.Add(new(y, x));
+                        currentNumber += lines[y][x];
                         continue;
                     }
                     if (currentNumber != string.Empty)
@@ -53,9 +53,9 @@ namespace AdventOfCode.Y2023.Solvers
                         currentNumber = string.Empty;
                         currentCoords = [];
                     }
-                    if (lines[row][col] != '.')
+                    if (lines[y][x] != '.')
                     {
-                        parts.Add(new(row, col), lines[row][col]);
+                        parts.Add(new(y, x), lines[y][x]);
                     }
                 }
                 if (currentNumber != string.Empty)

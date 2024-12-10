@@ -2,9 +2,9 @@ namespace AdventOfCode.Y2022.Solvers
 {
     public class Day17 : SolverWithText
     {
-        public override object SolvePart1(string input) => CalculateHeights(input, 2022);
+        public override object SolvePart1(string input) => CalculateHeights(input, 2022L);
 
-        public override object SolvePart2(string input) => CalculateHeights(input, 1000000000000);
+        public override object SolvePart2(string input) => CalculateHeights(input, 1_000_000_000_000);
 
         private static long CalculateHeights(string jets, long rocks)
         {
@@ -17,13 +17,13 @@ namespace AdventOfCode.Y2022.Solvers
                 var shape = GetShape(rock, currentHeight);
                 while (true)
                 {
-                    var tmp = (jets[jetIndex] == '<') ? shape.Select(coord => coord.Left).ToList() : shape.Select(coord => coord.Right).ToList();
+                    var tmp = (jets[jetIndex] == '<') ? shape.Select(coord => coord.Left).ToArray() : shape.Select(coord => coord.Right).ToArray();
                     if (tmp.All(coord => coord.X > -1 && coord.X < 7 && !fallen.Contains(coord)))
                     {
                         shape = tmp;
                     }
                     jetIndex = (jetIndex + 1) % jets.Length;
-                    tmp = shape.Select(coord => coord.Up).ToList();
+                    tmp = shape.Select(coord => coord.Up).ToArray();
                     if (tmp.Any(coord => coord.Y <= 0 || fallen.Contains(coord)))
                     {
                         fallen.UnionWith(shape);
@@ -65,7 +65,7 @@ namespace AdventOfCode.Y2022.Solvers
             return string.Concat(topRows);
         }
 
-        private static List<CoordsInt64> GetShape(long rock, long height)
+        private static CoordsInt64[] GetShape(long rock, long height)
         {
             return (rock % 5L) switch
             {

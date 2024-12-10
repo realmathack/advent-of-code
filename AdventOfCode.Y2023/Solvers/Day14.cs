@@ -1,17 +1,15 @@
 namespace AdventOfCode.Y2023.Solvers
 {
-    public class Day14 : SolverWithLines
+    public class Day14 : SolverWithCharGrid
     {
-        public override object SolvePart1(string[] input)
+        public override object SolvePart1(char[][] grid)
         {
-            var grid = input.ToCharGrid();
             MoveRoundedRocksNorth(grid);
             return CalculateLoad(grid);
         }
 
-        public override object SolvePart2(string[] input)
+        public override object SolvePart2(char[][] grid)
         {
-            var grid = input.ToCharGrid();
             var cache = new List<string>();
             var cycleStart = int.MinValue;
             for (int i = 0; i < 1_000_000_000; i++)
@@ -29,7 +27,7 @@ namespace AdventOfCode.Y2023.Solvers
                 cache.Add(tmp);
             }
             var index = cycleStart + ((1_000_000_000 - cycleStart) % (cache.Count - cycleStart)) - 1;
-            grid = cache[index].SplitIntoLines().Select(line => line.ToCharArray()).ToArray();
+            grid = ToCharGrid(cache[index]);
             return CalculateLoad(grid);
         }
 

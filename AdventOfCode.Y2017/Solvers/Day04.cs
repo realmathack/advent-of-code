@@ -6,7 +6,7 @@ namespace AdventOfCode.Y2017.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            return input.Where(line => line.Split(' ').Select(word => string.Concat(word.Order())).ToList().GroupBy(word => word).All(g => g.Count() == 1)).Count();
+            return input.Where(line => line.Split(' ').Select(word => string.Concat(word.Order())).ToArray().GroupBy(word => word).All(g => g.Count() == 1)).Count();
         }
     }
 }

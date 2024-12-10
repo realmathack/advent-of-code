@@ -2,10 +2,10 @@ namespace AdventOfCode.Y2021.Solvers
 {
     public class Day05 : SolverWithLines
     {
-        public override object SolvePart1(string[] input) => FindOverlaps(ToVents(input).Where(vent => vent.From.X == vent.To.X || vent.From.Y == vent.To.Y).ToList());
+        public override object SolvePart1(string[] input) => FindOverlaps(ToVents(input).Where(vent => vent.From.X == vent.To.X || vent.From.Y == vent.To.Y).ToArray());
         public override object SolvePart2(string[] input) => FindOverlaps(ToVents(input));
 
-        private static int FindOverlaps(List<Vent> vents)
+        private static int FindOverlaps(Vent[] vents)
         {
             var overlaps = new HashSet<Coords>();
             var points = new HashSet<Coords>();
@@ -22,13 +22,13 @@ namespace AdventOfCode.Y2021.Solvers
             return overlaps.Count;
         }
 
-        private static List<Vent> ToVents(string[] lines)
+        private static Vent[] ToVents(string[] lines)
         {
-            var vents = new List<Vent>();
-            foreach (var line in lines)
+            var vents = new Vent[lines.Length];
+            for (int i = 0; i < lines.Length; i++)
             {
-                var (from, to) = line.SplitInTwo(" -> ");
-                vents.Add(new(ToCoords(from), ToCoords(to)));
+                var (from, to) = lines[i].SplitInTwo(" -> ");
+                vents[i] = new(ToCoords(from), ToCoords(to));
             }
             return vents;
         }

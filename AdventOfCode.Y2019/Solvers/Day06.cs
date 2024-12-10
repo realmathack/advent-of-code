@@ -31,12 +31,12 @@ namespace AdventOfCode.Y2019.Solvers
                     .Where(orbit => current.Contains(orbit.Key))
                     .SelectMany(orbit => orbit.Value)
                     .Where(obj => !current.Contains(obj))
-                    .ToList();
+                    .ToArray();
                 var nextCenters = orbits
                     .Where(orbit => orbit.Value.Any(obj => current.Contains(obj)))
                     .Select(orbit => orbit.Key)
                     .Where(center => !current.Contains(center))
-                    .ToList();
+                    .ToArray();
                 current = [.. nextObjects, .. nextCenters];
                 depth++;
             }

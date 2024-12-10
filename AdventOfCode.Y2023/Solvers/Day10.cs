@@ -87,20 +87,20 @@ namespace AdventOfCode.Y2023.Solvers
         {
             var grid = new char[lines.Length][];
             Coords? start = null;
-            int col;
-            for (int row = 0; row < lines.Length; row++)
+            int x;
+            for (int y = 0; y < lines.Length; y++)
             {
-                grid[row] = lines[row].ToCharArray();
-                if (start is null && (col = lines[row].IndexOf('S')) != -1)
+                grid[y] = lines[y].ToCharArray();
+                if (start is null && (x = lines[y].IndexOf('S')) != -1)
                 {
-                    start = new Coords(col, row);
+                    start = new Coords(x, y);
                     if (start.Value.Left.X > 0 && _pipes["east"].Contains(grid[start.Value.Left.Y][start.Value.Left.X]))
                     {
-                        grid[row][col] = (start.Value.Up.Y > 0 && _pipes["south"].Contains(grid[start.Value.Up.Y][start.Value.Up.X])) ? 'J' : '7';
+                        grid[y][x] = (start.Value.Up.Y > 0 && _pipes["south"].Contains(grid[start.Value.Up.Y][start.Value.Up.X])) ? 'J' : '7';
                     }
                     else
                     {
-                        grid[row][col] = (start.Value.Up.Y > 0 && _pipes["south"].Contains(grid[start.Value.Up.Y][start.Value.Up.X])) ? 'L' : 'F';
+                        grid[y][x] = (start.Value.Up.Y > 0 && _pipes["south"].Contains(grid[start.Value.Up.Y][start.Value.Up.X])) ? 'L' : 'F';
                     }
                 }
             }

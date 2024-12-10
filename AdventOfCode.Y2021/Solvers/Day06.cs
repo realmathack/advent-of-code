@@ -7,7 +7,7 @@ namespace AdventOfCode.Y2021.Solvers
 
         private static Dictionary<int, long> GrowFish(string fishes, int days)
         {
-            var fish = fishes.Split(',').Select(int.Parse).ToList();
+            var fish = fishes.Split(',').Select(int.Parse).ToArray();
             var fishCounts = new Dictionary<int, long>()
             {
                 [0] = fish.Count(timer => timer == 0),

@@ -40,7 +40,7 @@ namespace AdventOfCode.Y2022.Solvers
             return tailVisited.Count;
         }
 
-        private static List<Motion> ToMotions(string[] lines) => lines.Select(line => new Motion(line[0], int.Parse(line[2..]))).ToList();
+        private static Motion[] ToMotions(string[] lines) => lines.Select(line => new Motion(line[0], int.Parse(line[2..]))).ToArray();
         private static int CalculateOffset(int previousAxis, int currentAxis) => (previousAxis - currentAxis == 0) ? 0 : (previousAxis - currentAxis > 0) ? 1 : -1;
 
         private readonly record struct Motion(char Direction, int Steps);

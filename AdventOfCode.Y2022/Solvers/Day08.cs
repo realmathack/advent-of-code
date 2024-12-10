@@ -1,17 +1,16 @@
 namespace AdventOfCode.Y2022.Solvers
 {
-    public class Day08 : SolverWithLines
+    public class Day08 : SolverWithCharGrid
     {
-        public override object SolvePart1(string[] input)
+        public override object SolvePart1(char[][] grid)
         {
-            var grid = input.ToNumberGrid();
             var count = (grid.Length + grid[0].Length - 2) * 2;
-            for (int row = 1; row < grid.Length - 1; row++)
+            for (int y = 1; y < grid.Length - 1; y++)
             {
-                for (int col = 1; col < grid[row].Length - 1; col++)
+                for (int x = 1; x < grid[y].Length - 1; x++)
                 {
-                    if (IsVisibleFromLeft(grid, row, col) || IsVisibleFromRight(grid, row, col) ||
-                        IsVisibleFromTop(grid, row, col) || IsVisibleFromBottom(grid, row, col))
+                    if (IsVisibleFromLeft(grid, y, x) || IsVisibleFromRight(grid, y, x) ||
+                        IsVisibleFromTop(grid, y, x) || IsVisibleFromBottom(grid, y, x))
                     {
                         count++;
                     }
@@ -20,16 +19,15 @@ namespace AdventOfCode.Y2022.Solvers
             return count;
         }
 
-        public override object SolvePart2(string[] input)
+        public override object SolvePart2(char[][] grid)
         {
-            var grid = input.ToNumberGrid();
             var biggestView = 0;
-            for (int row = 1; row < grid.Length - 1; row++)
+            for (int y = 1; y < grid.Length - 1; y++)
             {
-                for (int col = 1; col < grid[row].Length - 1; col++)
+                for (int x = 1; x < grid[y].Length - 1; x++)
                 {
-                    var currentView = CalculateDistanceFromLeft(grid, row, col) * CalculateDistanceFromRight(grid, row, col) *
-                        CalculateDistanceFromTop(grid, row, col) * CalculateDistanceFromBottom(grid, row, col);
+                    var currentView = CalculateDistanceFromLeft(grid, y, x) * CalculateDistanceFromRight(grid, y, x) *
+                        CalculateDistanceFromTop(grid, y, x) * CalculateDistanceFromBottom(grid, y, x);
                     if (currentView > biggestView)
                     {
                         biggestView = currentView;
@@ -39,11 +37,11 @@ namespace AdventOfCode.Y2022.Solvers
             return biggestView;
         }
 
-        private static bool IsVisibleFromLeft(int[][] grid, int row, int col)
+        private static bool IsVisibleFromLeft(char[][] grid, int y, int x)
         {
-            for (int i = col - 1; i >= 0; i--)
+            for (int i = x - 1; i >= 0; i--)
             {
-                if (grid[row][i] >= grid[row][col])
+                if (grid[y][i] >= grid[y][x])
                 {
                     return false;
                 }
@@ -51,11 +49,11 @@ namespace AdventOfCode.Y2022.Solvers
             return true;
         }
 
-        private static bool IsVisibleFromRight(int[][] grid, int row, int col)
+        private static bool IsVisibleFromRight(char[][] grid, int y, int x)
         {
-            for (int i = col + 1; i < grid[row].Length; i++)
+            for (int i = x + 1; i < grid[y].Length; i++)
             {
-                if (grid[row][i] >= grid[row][col])
+                if (grid[y][i] >= grid[y][x])
                 {
                     return false;
                 }
@@ -63,11 +61,11 @@ namespace AdventOfCode.Y2022.Solvers
             return true;
         }
 
-        private static bool IsVisibleFromTop(int[][] grid, int row, int col)
+        private static bool IsVisibleFromTop(char[][] grid, int y, int x)
         {
-            for (int i = row - 1; i >= 0; i--)
+            for (int i = y - 1; i >= 0; i--)
             {
-                if (grid[i][col] >= grid[row][col])
+                if (grid[i][x] >= grid[y][x])
                 {
                     return false;
                 }
@@ -75,11 +73,11 @@ namespace AdventOfCode.Y2022.Solvers
             return true;
         }
 
-        private static bool IsVisibleFromBottom(int[][] grid, int row, int col)
+        private static bool IsVisibleFromBottom(char[][] grid, int y, int x)
         {
-            for (int i = row + 1; i < grid.Length; i++)
+            for (int i = y + 1; i < grid.Length; i++)
             {
-                if (grid[i][col] >= grid[row][col])
+                if (grid[i][x] >= grid[y][x])
                 {
                     return false;
                 }
@@ -87,52 +85,52 @@ namespace AdventOfCode.Y2022.Solvers
             return true;
         }
 
-        private static int CalculateDistanceFromLeft(int[][] grid, int row, int col)
+        private static int CalculateDistanceFromLeft(char[][] grid, int y, int x)
         {
-            for (int i = col - 1; i >= 0; i--)
+            for (int i = x - 1; i >= 0; i--)
             {
-                if (grid[row][i] >= grid[row][col])
+                if (grid[y][i] >= grid[y][x])
                 {
-                    return col - i;
+                    return x - i;
                 }
             }
-            return col;
+            return x;
         }
 
-        private static int CalculateDistanceFromRight(int[][] grid, int row, int col)
+        private static int CalculateDistanceFromRight(char[][] grid, int y, int x)
         {
-            for (int i = col + 1; i < grid[row].Length; i++)
+            for (int i = x + 1; i < grid[y].Length; i++)
             {
-                if (grid[row][i] >= grid[row][col])
+                if (grid[y][i] >= grid[y][x])
                 {
-                    return i - col;
+                    return i - x;
                 }
             }
-            return grid[row].Length - 1 - col;
+            return grid[y].Length - 1 - x;
         }
 
-        private static int CalculateDistanceFromTop(int[][] grid, int row, int col)
+        private static int CalculateDistanceFromTop(char[][] grid, int y, int x)
         {
-            for (int i = row - 1; i >= 0; i--)
+            for (int i = y - 1; i >= 0; i--)
             {
-                if (grid[i][col] >= grid[row][col])
+                if (grid[i][x] >= grid[y][x])
                 {
-                    return row - i;
+                    return y - i;
                 }
             }
-            return row;
+            return y;
         }
 
-        private static int CalculateDistanceFromBottom(int[][] grid, int row, int col)
+        private static int CalculateDistanceFromBottom(char[][] grid, int y, int x)
         {
-            for (int i = row + 1; i < grid.Length; i++)
+            for (int i = y + 1; i < grid.Length; i++)
             {
-                if (grid[i][col] >= grid[row][col])
+                if (grid[i][x] >= grid[y][x])
                 {
-                    return i - row;
+                    return i - y;
                 }
             }
-            return grid.Length - 1 - row;
+            return grid.Length - 1 - y;
         }
     }
 }

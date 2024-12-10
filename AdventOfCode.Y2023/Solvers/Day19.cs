@@ -142,7 +142,7 @@ namespace AdventOfCode.Y2023.Solvers
             return action != "R";
         }
 
-        private static (Dictionary<string, Workflow> Workflows, List<Dictionary<char, int>> Parts) ToWorkflowsAndParts(string[] lineGroups)
+        private static (Dictionary<string, Workflow> Workflows, Dictionary<char, int>[] Parts) ToWorkflowsAndParts(string[] lineGroups)
         {
             var workflows = new Dictionary<string, Workflow>();
             foreach (var workflow in lineGroups[0].SplitIntoLines())
@@ -165,7 +165,7 @@ namespace AdventOfCode.Y2023.Solvers
             }
             var parts = lineGroups[1].SplitIntoLines()
                 .Select(part => part[1..^1].Split(',').Select(rating => (Category: rating[0], Value: int.Parse(rating[2..]))).ToDictionary())
-                .ToList();
+                .ToArray();
             return (workflows, parts);
         }
 

@@ -2,7 +2,7 @@ namespace AdventOfCode.Y2018.Solvers
 {
     public class Day06(int _limit) : SolverWithLines
     {
-        public Day06() : this(10000) { }
+        public Day06() : this(10_000) { }
 
         public override object SolvePart1(string[] input)
         {

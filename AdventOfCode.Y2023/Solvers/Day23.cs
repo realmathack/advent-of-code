@@ -1,10 +1,9 @@
 namespace AdventOfCode.Y2023.Solvers
 {
-    public class Day23 : SolverWithLines
+    public class Day23 : SolverWithCharGrid
     {
-        public override object SolvePart1(string[] input)
+        public override object SolvePart1(char[][] grid)
         {
-            var grid = input.ToCharGrid();
             var root = new Node(new Coords(1, 0), []);
             var queue = new Queue<(Node From, Coords Next)>();
             queue.Enqueue((root, FindNeighbors(grid, root.Position).Single()));
@@ -16,8 +15,8 @@ namespace AdventOfCode.Y2023.Solvers
                 while (true)
                 {
                     weight++;
-                    var neighbors = FindNeighbors(grid, current).Where(neighbor => neighbor != cameFrom).ToList();
-                    if (neighbors.Count == 1)
+                    var neighbors = FindNeighbors(grid, current).Where(neighbor => neighbor != cameFrom).ToArray();
+                    if (neighbors.Length == 1)
                     {
                         cameFrom = current;
                         current = neighbors[0];
@@ -37,9 +36,8 @@ namespace AdventOfCode.Y2023.Solvers
             return FindLongestPath(root, []);
         }
 
-        public override object SolvePart2(string[] input)
+        public override object SolvePart2(char[][] grid)
         {
-            var grid = input.ToCharGrid();
             var root = new Node(new Coords(1, 0), []);
             var nodes = new Dictionary<Coords, Node>() { [root.Position] = root };
             var queue = new Queue<(Node From, Coords Next)>();
@@ -52,8 +50,8 @@ namespace AdventOfCode.Y2023.Solvers
                 while (true)
                 {
                     weight++;
-                    var neighbors = FindNeighborsNonSlippery(grid, current).Where(neighbor => neighbor != cameFrom).ToList();
-                    if (neighbors.Count == 1)
+                    var neighbors = FindNeighborsNonSlippery(grid, current).Where(neighbor => neighbor != cameFrom).ToArray();
+                    if (neighbors.Length == 1)
                     {
                         cameFrom = current;
                         current = neighbors[0];
@@ -67,7 +65,7 @@ namespace AdventOfCode.Y2023.Solvers
                         }
                         else
                         {
-                            neighbors.Clear();
+                            neighbors = [];
                         }
                         to.Edges[branch.From] = weight;
                         branch.From.Edges[to] = weight;

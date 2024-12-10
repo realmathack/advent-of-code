@@ -1,13 +1,12 @@
 namespace AdventOfCode.Y2023.Solvers
 {
-    public class Day17 : SolverWithLines
+    public class Day17 : SolverWithIntGrid
     {
-        public override object SolvePart1(string[] input) => FindLeastHeatPath(input, QueuePath);
-        public override object SolvePart2(string[] input) => FindLeastHeatPath(input, QueuePathUltra);
+        public override object SolvePart1(int[][] grid) => FindLeastHeatPath(grid, QueuePath);
+        public override object SolvePart2(int[][] grid) => FindLeastHeatPath(grid, QueuePathUltra);
 
-        private static int FindLeastHeatPath(string[] lines, Action<PriorityQueue<Move, int>, Move, int, Coords> queueMethod)
+        private static int FindLeastHeatPath(int[][] grid, Action<PriorityQueue<Move, int>, Move, int, Coords> queueMethod)
         {
-            var grid = lines.ToNumberGrid();
             var start = new Coords(0, 0);
             var goal = new Coords(grid.Length - 1, grid[0].Length - 1);
             var visited = new HashSet<Move>();
@@ -25,7 +24,7 @@ namespace AdventOfCode.Y2023.Solvers
                     return heat;
                 }
                 var nextPosition = current.Position + current.Direction;
-                if (nextPosition.Y < 0 || nextPosition.X < 0 || nextPosition.Y >= grid.Length || nextPosition.X >= grid[0].Length)
+                if (grid.IsOutOfBounds(nextPosition))
                 {
                     continue;
                 }

@@ -4,13 +4,13 @@ namespace AdventOfCode.Y2023.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var history = input.Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToList();
+            var history = input.Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToArray();
             return history.Sum(values => CalculateNextValue(values));
         }
 
         public override object SolvePart2(string[] input)
         {
-            var history = input.Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToList();
+            var history = input.Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList()).ToArray();
             return history.Sum(values => CalculateNextValue(values, true));
         }
 

@@ -39,12 +39,12 @@ namespace AdventOfCode.Y2018.Solvers
 
         private static Node ToTree(string data)
         {
-            var numbers = data.Split(' ').Select(int.Parse).ToList();
+            var numbers = data.Split(' ').Select(int.Parse).ToArray();
             var stack = new Stack<Node>();
             var root = new Node(numbers[0], numbers[1]);
             stack.Push(root);
             var index = 2;
-            while (index < numbers.Count)
+            while (index < numbers.Length)
             {
                 var current = stack.Peek();
                 if (current.ChildCount != current.Children.Count)

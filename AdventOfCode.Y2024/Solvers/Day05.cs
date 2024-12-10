@@ -37,7 +37,7 @@ namespace AdventOfCode.Y2024.Solvers
 
         }
 
-        private static ((int Before, int After)[] Rules, List<int[]> Updates) ToRulesAndUpdates(string[] lineGroups)
+        private static ((int Before, int After)[] Rules, int[][] Updates) ToRulesAndUpdates(string[] lineGroups)
         {
             var rules = lineGroups[0].SplitIntoLines()
                 .Select(rule => rule.Split('|', 2))
@@ -45,7 +45,7 @@ namespace AdventOfCode.Y2024.Solvers
                 .ToArray();
             var updates = lineGroups[1].SplitIntoLines()
                 .Select(update => update.Split(',').Select(int.Parse).ToArray())
-                .ToList();
+                .ToArray();
             return (rules, updates);
         }
 

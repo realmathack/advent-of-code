@@ -1,12 +1,11 @@
 namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day18(int _steps) : SolverWithLines
+    public class Day18(int _steps) : SolverWithBoolGrid
     {
         public Day18() : this(100) { }
 
-        public override object SolvePart1(string[] input)
+        public override object SolvePart1(bool[][] grid)
         {
-            var grid = input.ToBoolGrid(light => light == '#');
             for (int step = 0; step < _steps; step++)
             {
                 grid = ExecuteStep(grid);
@@ -14,9 +13,9 @@ namespace AdventOfCode.Y2015.Solvers
             return grid.Select(row => row.Count(light => light)).Sum();
         }
 
-        public override object SolvePart2(string[] input)
+        public override object SolvePart2(bool[][] grid)
         {
-            var grid = SetCornersOn(input.ToBoolGrid(light => light == '#'));
+            SetCornersOn(grid);
             for (int step = 0; step < _steps; step++)
             {
                 grid = SetCornersOn(ExecuteStep(grid));
@@ -27,29 +26,29 @@ namespace AdventOfCode.Y2015.Solvers
         private static bool[][] ExecuteStep(bool[][] grid)
         {
             var newGrid = new bool[grid.Length][];
-            for (int row = 0; row < grid.Length; row++)
+            for (int y = 0; y < grid.Length; y++)
             {
-                newGrid[row] = new bool[grid[row].Length];
-                for (int col = 0; col < grid[row].Length; col++)
+                newGrid[y] = new bool[grid[y].Length];
+                for (int x = 0; x < grid[y].Length; x++)
                 {
-                    newGrid[row][col] = CalculateNewState(grid, row, col);
+                    newGrid[y][x] = CalculateNewState(grid, y, x);
                 }
             }
             return newGrid;
         }
 
-        private static bool CalculateNewState(bool[][] grid, int row, int col)
+        private static bool CalculateNewState(bool[][] grid, int y, int x)
         {
             var neighborsLit = 0;
-            if (row > 0 &&                  col > 0 &&                      grid[row - 1][col - 1]) { neighborsLit++; } // TL
-            if (row > 0 &&                                                  grid[row - 1][col])     { neighborsLit++; } // T
-            if (row > 0 &&                  col < grid[row].Length - 1 &&   grid[row - 1][col + 1]) { neighborsLit++; } // TR
-            if (                            col > 0 &&                      grid[row][col - 1])     { neighborsLit++; } //  L
-            if (                            col < grid[row].Length - 1 &&   grid[row][col + 1])     { neighborsLit++; } //  R
-            if (row < grid.Length - 1 &&    col > 0 &&                      grid[row + 1][col - 1]) { neighborsLit++; } // BL
-            if (row < grid.Length - 1 &&                                    grid[row + 1][col])     { neighborsLit++; } // B
-            if (row < grid.Length - 1 &&    col < grid[row].Length - 1 &&   grid[row + 1][col + 1]) { neighborsLit++; } // BR
-            return grid[row][col] ? (neighborsLit == 2 || neighborsLit == 3) : (neighborsLit == 3);
+            if (y > 0 &&                  x > 0 &&                    grid[y - 1][x - 1]) { neighborsLit++; } // TL
+            if (y > 0 &&                                              grid[y - 1][x])     { neighborsLit++; } // T
+            if (y > 0 &&                  x < grid[y].Length - 1 &&   grid[y - 1][x + 1]) { neighborsLit++; } // TR
+            if (                          x > 0 &&                    grid[y][x - 1])     { neighborsLit++; } //  L
+            if (                          x < grid[y].Length - 1 &&   grid[y][x + 1])     { neighborsLit++; } //  R
+            if (y < grid.Length - 1 &&    x > 0 &&                    grid[y + 1][x - 1]) { neighborsLit++; } // BL
+            if (y < grid.Length - 1 &&                                grid[y + 1][x])     { neighborsLit++; } // B
+            if (y < grid.Length - 1 &&    x < grid[y].Length - 1 &&   grid[y + 1][x + 1]) { neighborsLit++; } // BR
+            return grid[y][x] ? (neighborsLit == 2 || neighborsLit == 3) : (neighborsLit == 3);
         }
 
         private static bool[][] SetCornersOn(bool[][] grid)

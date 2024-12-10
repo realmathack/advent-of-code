@@ -41,19 +41,19 @@ namespace AdventOfCode.Y2022.Solvers
             var grid = new char[lines.Length][];
             Coords? start = null;
             Coords? end = null;
-            int col;
-            for (int row = 0; row < lines.Length; row++)
+            int x;
+            for (int y = 0; y < lines.Length; y++)
             {
-                grid[row] = lines[row].ToCharArray();
-                if (start is null && (col = lines[row].IndexOf('S')) != -1)
+                grid[y] = lines[y].ToCharArray();
+                if (start is null && (x = lines[y].IndexOf('S')) != -1)
                 {
-                    start = new Coords(col, row);
-                    grid[row][col] = 'a';
+                    start = new Coords(x, y);
+                    grid[y][x] = 'a';
                 }
-                if (end is null && (col = lines[row].IndexOf('E')) != -1)
+                if (end is null && (x = lines[y].IndexOf('E')) != -1)
                 {
-                    end = new Coords(col, row);
-                    grid[row][col] = 'z';
+                    end = new Coords(x, y);
+                    grid[y][x] = 'z';
                 }
             }
             if (start is null || end is null)

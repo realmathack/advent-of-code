@@ -7,7 +7,7 @@ namespace AdventOfCode.Y2024.Solvers
             var total = 0;
             foreach (var report in input)
             {
-                var levels = report.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+                var levels = report.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
                 if (IsSafe(levels))
                 {
                     total++;
@@ -21,10 +21,10 @@ namespace AdventOfCode.Y2024.Solvers
             var total = 0;
             foreach (var report in input)
             {
-                var levels = report.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
-                for (int i = 0; i < levels.Count; i++)
+                var levels = report.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+                for (int i = 0; i < levels.Length; i++)
                 {
-                    List<int> tmp = [.. levels[0..i], .. levels[(i + 1)..]];
+                    int[] tmp = [.. levels[0..i], .. levels[(i + 1)..]];
                     if (IsSafe(tmp))
                     {
                         total++;
@@ -35,10 +35,10 @@ namespace AdventOfCode.Y2024.Solvers
             return total;
         }
 
-        private static bool IsSafe(List<int> levels)
+        private static bool IsSafe(int[] levels)
         {
             var direction = Direction.None;
-            for (int i = 1; i < levels.Count; i++)
+            for (int i = 1; i < levels.Length; i++)
             {
                 var difference = levels[i] - levels[i - 1];
                 if (difference == 0 || Math.Abs(difference) > 3)

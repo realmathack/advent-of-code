@@ -1,12 +1,12 @@
 namespace AdventOfCode.Y2023.Solvers
 {
-    public class Day21(int? _steps) : SolverWithLines
+    public class Day21(int? _steps) : SolverWithCharGrid
     {
         public Day21() : this(null) { }
 
-        public override object SolvePart1(string[] input)
+        public override object SolvePart1(char[][] grid)
         {
-            var (grid, start) = ToGrid(input);
+            var start = GetStart(grid);
             var steps = _steps ?? 64;
             var queue = new HashSet<Coords>() { start };
             for (int i = 0; i < steps; i++)
@@ -24,9 +24,9 @@ namespace AdventOfCode.Y2023.Solvers
         // HACK: Implemented https://github.com/jmerle/advent-of-code-2023/blob/master/src/day21/part2.py
         // This only works because of the empty x/y-axis in the real input, test input would need this solution:
         // https://github.com/maksverver/AdventOfCode/blob/master/2023/day21/solve.py
-        public override object SolvePart2(string[] input)
+        public override object SolvePart2(char[][] grid)
         {
-            var (grid, start) = ToGrid(input);
+            var start = GetStart(grid);
             var steps = _steps ?? 26501365;
             var size = grid.Length;
             var halfSize = (size - 1) / 2;
@@ -87,9 +87,8 @@ namespace AdventOfCode.Y2023.Solvers
             return neighbors;
         }
 
-        private static (char[][] Grid, Coords Start) ToGrid(string[] lines)
+        private static Coords GetStart(char[][] grid)
         {
-            var grid = lines.ToCharGrid();
             var start = new Coords(-1, -1);
             for (int y = 0; y < grid.Length; y++)
             {
@@ -102,7 +101,7 @@ namespace AdventOfCode.Y2023.Solvers
                     }
                 }
             }
-            return (grid, start);
+            return start;
         }
     }
 }

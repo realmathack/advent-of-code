@@ -2,7 +2,7 @@ namespace AdventOfCode.Y2022.Solvers
 {
     public class Day15(int _givenNumber) : SolverWithLines
     {
-        public Day15() : this(2000000) { }
+        public Day15() : this(2_000_000) { }
 
         public override object SolvePart1(string[] input)
         {
@@ -54,7 +54,7 @@ namespace AdventOfCode.Y2022.Solvers
             {
                 throw new InvalidOperationException("Remaining bigger than 1");
             }
-            return remaining.First().Value.First().Start * 4000000L + remaining.First().Key;
+            return remaining.First().Value.First().Start * 4_000_000L + remaining.First().Key;
         }
 
         private static void ProcessRow(int row, Dictionary<int, List<Range<int>>> remaining, Coords beacon, int distanceX, int maxXY)
