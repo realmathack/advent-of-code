@@ -22,7 +22,7 @@ namespace AdventOfCode
         }
 
         // Grids
-        public static bool IsOutOfBounds<T>(this T[][] grid, Coords coords) => coords.Y < 0 || coords.X < 0 || coords.Y >= grid.Length || coords.X >= grid[coords.Y].Length;
+        public static bool IsOutOfBounds<T>(this T[][] grid, Coords<int> coords) => coords.Y < 0 || coords.X < 0 || coords.Y >= grid.Length || coords.X >= grid[coords.Y].Length;
 
         // Math
         #region Product (copied from Enumerable.Sum)

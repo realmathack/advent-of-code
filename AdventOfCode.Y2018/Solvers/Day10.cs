@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using Coords = AdventOfCode.Coords<int>;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Y2018.Solvers
 {

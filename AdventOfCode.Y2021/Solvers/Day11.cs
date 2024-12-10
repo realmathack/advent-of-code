@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2021.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2021.Solvers
 {
     public class Day11 : SolverWithIntGrid
     {

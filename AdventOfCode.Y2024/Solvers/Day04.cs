@@ -1,3 +1,5 @@
+﻿using Coords = AdventOfCode.Coords<int>;
+
 namespace AdventOfCode.Y2024.Solvers
 {
     public class Day04 : SolverWithCharGrid

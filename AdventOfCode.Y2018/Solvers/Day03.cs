@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2018.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2018.Solvers
 {
     public class Day03 : SolverWithLines
     {
@@ -21,7 +23,7 @@
             return 0;
         }
 
-        private Dictionary<Coords, ClaimedSquare> ToClaimedSquares(string[] lines)
+        private static Dictionary<Coords, ClaimedSquare> ToClaimedSquares(string[] lines)
         {
             var claimedSquares = new Dictionary<Coords, ClaimedSquare>();
             foreach (var claim in ToClaims(lines))
@@ -58,13 +60,13 @@
             {
                 for (int y = 0; y < claim.Height; y++)
                 {
-                    squares.Add(claim.Coords + (x, y));
+                    squares.Add(claim.Position + (x, y));
                 }
             }
             return squares;
         }
 
-        private record class Claim(int Id, Coords Coords, int Width, int Height);
-        private record class ClaimedSquare(Coords Coords, HashSet<int> Ids);
+        private record class Claim(int Id, Coords Position, int Width, int Height);
+        private record class ClaimedSquare(Coords Position, HashSet<int> Ids);
     }
 }

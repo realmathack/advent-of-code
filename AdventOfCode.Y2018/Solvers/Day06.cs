@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2018.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2018.Solvers
 {
     public class Day06(int _limit) : SolverWithLines
     {
@@ -7,7 +9,7 @@
         public override object SolvePart1(string[] input)
         {
             var points = ToPoints(input);
-            var bottomRight = new Coords(points.Max(point => point.Coords.X) * 110 / 100, points.Max(point => point.Coords.Y) * 110 / 100);
+            var bottomRight = new Coords(points.Max(point => point.Position.X) * 110 / 100, points.Max(point => point.Position.Y) * 110 / 100);
             var counts = new Dictionary<char, int>();
             var infiniteIds = new HashSet<char>();
             for (int y = 0; y <= bottomRight.Y; y++)
@@ -19,7 +21,7 @@
                     var nearestDistance = int.MaxValue;
                     foreach (var point in points)
                     {
-                        var tmp = current.DistanceTo(point.Coords);
+                        var tmp = current.DistanceTo(point.Position);
                         if (tmp < nearestDistance)
                         {
                             nearestId = point.Id;
@@ -55,14 +57,14 @@
         public override object SolvePart2(string[] input)
         {
             var points = ToPoints(input);
-            var bottomRight = new Coords(points.Max(point => point.Coords.X) * 110 / 100, points.Max(point => point.Coords.Y) * 110 / 100);
+            var bottomRight = new Coords(points.Max(point => point.Position.X) * 110 / 100, points.Max(point => point.Position.Y) * 110 / 100);
             var count = 0;
             for (int y = 0; y <= bottomRight.Y; y++)
             {
                 for (int x = 0; x <= bottomRight.X; x++)
                 {
                     var current = new Coords(x, y);
-                    var tmp = points.Sum(point => current.DistanceTo(point.Coords));
+                    var tmp = points.Sum(point => current.DistanceTo(point.Position));
                     if (tmp < _limit)
                     {
                         count++;
@@ -72,9 +74,9 @@
             return count;
         }
 
-        private static List<(Coords Coords, char Id)> ToPoints(string[] lines)
+        private static List<(Coords Position, char Id)> ToPoints(string[] lines)
         {
-            var points = new List<(Coords Coords, char Id)>();
+            var points = new List<(Coords Position, char Id)>();
             foreach (var line in lines)
             {
                 var parts = line.Split(", ");

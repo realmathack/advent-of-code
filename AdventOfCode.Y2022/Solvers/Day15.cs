@@ -1,4 +1,7 @@
-﻿namespace AdventOfCode.Y2022.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+using Range = AdventOfCode.Range<int>;
+
+namespace AdventOfCode.Y2022.Solvers
 {
     public class Day15(int _givenNumber) : SolverWithLines
     {
@@ -35,7 +38,7 @@
         {
             int maxXY = _givenNumber * 2;
             var beacons = ToBeacons(input);
-            var remaining = new Dictionary<int, List<Range<int>>>();
+            var remaining = new Dictionary<int, List<Range>>();
             for (int i = 0; i <= maxXY; i++)
             {
                 remaining.Add(i, [new(0, maxXY)]);
@@ -57,21 +60,21 @@
             return remaining.First().Value.First().Start * 4_000_000L + remaining.First().Key;
         }
 
-        private static void ProcessRow(int row, Dictionary<int, List<Range<int>>> remaining, Coords beacon, int distanceX, int maxXY)
+        private static void ProcessRow(int row, Dictionary<int, List<Range>> remaining, Coords beacon, int distanceX, int maxXY)
         {
             if (!remaining.TryGetValue(row, out var ranges))
             {
                 return;
             }
-            var currentRange = new Range<int>(beacon.X - distanceX, beacon.X + distanceX);
-            var affectedRanges = new List<Range<int>>();
+            var currentRange = new Range(beacon.X - distanceX, beacon.X + distanceX);
+            var affectedRanges = new List<Range>();
             for (int i = ranges.Count - 1; i >= 0; i--)
             {
-                if (currentRange.FullyOverlaps(ranges[i]))
+                if (currentRange.FullyOverlapsWith(ranges[i]))
                 {
                     ranges.RemoveAt(i);
                 }
-                else if (currentRange.AnyOverlap(ranges[i]))
+                else if (currentRange.HasAnyOverlapWith(ranges[i]))
                 {
                     affectedRanges.Add(ranges[i]);
                     ranges.RemoveAt(i);

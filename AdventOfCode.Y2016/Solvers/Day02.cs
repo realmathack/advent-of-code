@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2016.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2016.Solvers
 {
     public class Day02 : SolverWithLines
     {
@@ -12,7 +14,7 @@
                 ".789.",
                 "....."
             };
-            return ExecuteInstructions(keypad, new Coords(2, 2), input);
+            return ExecuteInstructions(keypad, new(2, 2), input);
         }
 
         public override object SolvePart2(string[] input)
@@ -27,7 +29,7 @@
                 "...D...",
                 "......."
             };
-            return ExecuteInstructions(keypad, new Coords(1, 3), input);
+            return ExecuteInstructions(keypad, new(1, 3), input);
         }
 
         private static string ExecuteInstructions(string[] keypad, Coords current, string[] lines)

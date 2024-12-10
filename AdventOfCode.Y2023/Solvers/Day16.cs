@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2023.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2023.Solvers
 {
     public class Day16 : SolverWithCharGrid
     {
@@ -31,23 +33,23 @@
                 for (int i = beams.Count - 1; i >= 0; i--)
                 {
                     var beam = beams[i];
-                    if (grid.IsOutOfBounds(beam.Pos) || !visited.Add((beam.Pos, beam.Direction)))
+                    if (grid.IsOutOfBounds(beam.Position) || !visited.Add((beam.Position, beam.Direction)))
                     {
                         beams.RemoveAt(i);
                         continue;
                     }
-                    var cell = grid[beam.Pos.Y][beam.Pos.X];
+                    var cell = grid[beam.Position.Y][beam.Position.X];
                     if (cell == '|' && (beam.Direction == Coords.OffsetLeft || beam.Direction == Coords.OffsetRight))
                     {
-                        beams.Add(new(beam.Pos.Up, Coords.OffsetUp));
-                        beams.Add(new(beam.Pos.Down, Coords.OffsetDown));
+                        beams.Add(new(beam.Position.Up, Coords.OffsetUp));
+                        beams.Add(new(beam.Position.Down, Coords.OffsetDown));
                         beams.RemoveAt(i);
                         continue;
                     }
                     else if (cell == '-' && (beam.Direction == Coords.OffsetUp || beam.Direction == Coords.OffsetDown))
                     {
-                        beams.Add(new(beam.Pos.Left, Coords.OffsetLeft));
-                        beams.Add(new(beam.Pos.Right, Coords.OffsetRight));
+                        beams.Add(new(beam.Position.Left, Coords.OffsetLeft));
+                        beams.Add(new(beam.Position.Right, Coords.OffsetRight));
                         beams.RemoveAt(i);
                         continue;
                     }
@@ -59,15 +61,15 @@
                     {
                         beam.Direction = (beam.Direction == Coords.OffsetLeft || beam.Direction == Coords.OffsetRight) ? beam.Direction.RotateRight : beam.Direction.RotateLeft;
                     }
-                    beam.Pos += beam.Direction;
+                    beam.Position += beam.Direction;
                 }
             }
             return visited.Select(tile => tile.Item1).Distinct().Count();
         }
 
-        private class Beam(Coords pos, Coords direction)
+        private class Beam(Coords position, Coords direction)
         {
-            public Coords Pos { get; set; } = pos;
+            public Coords Position { get; set; } = position;
             public Coords Direction { get; set; } = direction;
         }
     }

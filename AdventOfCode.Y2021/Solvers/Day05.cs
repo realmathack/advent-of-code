@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2021.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2021.Solvers
 {
     public class Day05 : SolverWithLines
     {
@@ -11,7 +13,7 @@
             var points = new HashSet<Coords>();
             foreach (var vent in vents)
             {
-                foreach (var point in ToCoords(vent))
+                foreach (var point in ToPositions(vent))
                 {
                     if (!points.Add(point))
                     {
@@ -28,18 +30,18 @@
             for (int i = 0; i < lines.Length; i++)
             {
                 var (from, to) = lines[i].SplitInTwo(" -> ");
-                vents[i] = new(ToCoords(from), ToCoords(to));
+                vents[i] = new(ToPosition(from), ToPosition(to));
             }
             return vents;
         }
 
-        private static Coords ToCoords(string coords)
+        private static Coords ToPosition(string position)
         {
-            var parts = coords.Split(',').Select(int.Parse).ToArray();
+            var parts = position.Split(',').Select(int.Parse).ToArray();
             return new(parts[0], parts[1]);
         }
 
-        private static List<Coords> ToCoords(Vent vent)
+        private static List<Coords> ToPositions(Vent vent)
         {
             var points = new List<Coords>() { vent.From };
             var offset = vent.From.OffsetTo(vent.To);

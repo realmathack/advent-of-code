@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2023.Solvers
+﻿using Range = AdventOfCode.Range<int>;
+
+namespace AdventOfCode.Y2023.Solvers
 {
     public class Day19 : SolverWithLineGroups
     {
@@ -171,7 +173,7 @@
 
         private record class Workflow(string Name, List<Condition> Conditions);
         private record class Condition(string Action, char? Category = null, char? Comparison = null, int? Value = null);
-        private record class WorkflowInput(string Name, Dictionary<char, Range<int>> Ranges)
+        private record class WorkflowInput(string Name, Dictionary<char, Range> Ranges)
         {
             public WorkflowInput Duplicate() => new(Name, Ranges.Select(kv => (kv.Key, kv.Value)).ToDictionary());
         }

@@ -7,27 +7,28 @@ namespace AdventOfCode
     {
         public static Range<T> operator +(Range<T> a, T offset) => new(a.Start + offset, a.End + offset);
         public static Range<T> operator -(Range<T> a, T offset) => new(a.Start - offset, a.End - offset);
+        /// <summary>Includes Start & End</summary>
         public T Length => T.One + End - Start;
         /*  this          ╠═════╣
-         *        |---|                     is after
-         *            |-------|             start overlaps
-         *                |---|             start overlaps
+         *        |---|                     is after other
+         *            |-------|             start overlaps with other
+         *                |---|             start overlaps with other
          *  this          ╠═════╣
-         *                  |-|             fully overlaps
-         *                |-----|           fully overlaps / fully encloses
-         *              |---------|         fully encloses
+         *                  |-|             fully overlaps with other
+         *                |-----|           fully overlaps with other / fully enclosed by other
+         *              |---------|         fully enclosed by other
          *  this          ╠═════╣
-         *                  |---|           end overlaps
-         *                  |-------|       end overlaps
-         *                          |---|   is before
+         *                  |---|           end overlaps with other
+         *                  |-------|       end overlaps with other
+         *                          |---|   is before other
          *  this          ╠═════╣           */
         public bool IsAfter(Range<T> other) => Start > other.End;
         public bool IsBefore(Range<T> other) => End < other.Start;
-        public bool AnyOverlap(Range<T> other) => Start <= other.End && End >= other.Start;
-        public bool StartOverlaps(Range<T> other) => Start >= other.Start && Start <= other.End;
-        public bool EndOverlaps(Range<T> other) => End >= other.Start && End <= other.End;
-        public bool FullyOverlaps(Range<T> other) => Start <= other.Start && End >= other.End;
-        public bool FullyEncloses(Range<T> other) => Start >= other.Start && End <= other.End;
+        public bool HasAnyOverlapWith(Range<T> other) => Start <= other.End && End >= other.Start;
+        public bool StartOverlapsWith(Range<T> other) => Start >= other.Start && Start <= other.End;
+        public bool EndOverlapsWith(Range<T> other) => End >= other.Start && End <= other.End;
+        public bool FullyOverlapsWith(Range<T> other) => Start <= other.Start && End >= other.End;
+        public bool IsFullyEnclosedBy(Range<T> other) => Start >= other.Start && End <= other.End;
         public override string ToString() => $"{Start}-{End}";
     }
 }

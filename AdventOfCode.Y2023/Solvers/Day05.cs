@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2023.Solvers
+﻿using Range = AdventOfCode.Range<long>;
+
+namespace AdventOfCode.Y2023.Solvers
 {
     public class Day05 : SolverWithLineGroups
     {
@@ -26,7 +28,7 @@
             var current = "seed";
             while (maps.TryGetValue(current, out var map))
             {
-                var destination = new List<Range<long>>(ranges.Count);
+                var destination = new List<Range>(ranges.Count);
                 foreach (var range in ranges)
                 {
                     destination.AddRange(FindDestinationRanges(map, range));
@@ -51,9 +53,9 @@
             return destination;
         }
 
-        private static List<Range<long>> ToRanges(long[] seeds)
+        private static List<Range> ToRanges(long[] seeds)
         {
-            var ranges = new List<Range<long>>();
+            var ranges = new List<Range>();
             for (int i = 0; i < seeds.Length; i += 2)
             {
                 ranges.Add(new(seeds[i], seeds[i] + seeds[i + 1] - 1));
@@ -61,28 +63,28 @@
             return ranges;
         }
 
-        private static List<Range<long>> FindDestinationRanges(Map map, Range<long> source)
+        private static List<Range> FindDestinationRanges(Map map, Range source)
         {
-            var ranges = new List<Range<long>>() { source };
-            var destinations = new List<Range<long>>();
+            var ranges = new List<Range>() { source };
+            var destinations = new List<Range>();
             foreach (var mapping in map.Mappings)
             {
                 for (int i = ranges.Count - 1; i >= 0; i--)
                 {
                     var range = ranges[i];
-                    if (mapping.Range.FullyOverlaps(range))
+                    if (mapping.Range.FullyOverlapsWith(range))
                     {
                         destinations.Add(range + mapping.Offset);
                     }
-                    else if (mapping.Range.FullyEncloses(range))
+                    else if (mapping.Range.IsFullyEnclosedBy(range))
                     {
                         destinations.Add(mapping.Range + mapping.Offset);
                     }
-                    else if (mapping.Range.StartOverlaps(range))
+                    else if (mapping.Range.StartOverlapsWith(range))
                     {
                         destinations.Add(new(mapping.Range.Start + mapping.Offset, range.End + mapping.Offset));
                     }
-                    else if (mapping.Range.EndOverlaps(range))
+                    else if (mapping.Range.EndOverlapsWith(range))
                     {
                         destinations.Add(new(range.Start + mapping.Offset, mapping.Range.End + mapping.Offset));
                     }
@@ -130,6 +132,6 @@
             public List<Mapping> Mappings { get; set; } = [];
         }
 
-        private record class Mapping(Range<long> Range, long Offset);
+        private record class Mapping(Range Range, long Offset);
     }
 }

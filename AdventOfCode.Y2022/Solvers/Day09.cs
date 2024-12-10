@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2022.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2022.Solvers
 {
     public class Day09 : SolverWithLines
     {

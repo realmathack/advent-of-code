@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2018.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2018.Solvers
 {
     public class Day11 : SolverWithText
     {
@@ -6,7 +8,7 @@
         {
             var powerLevels = ToPowerLevels(input);
             var largest = 0L;
-            var topLeft = new Coords();
+            var topLeft = new Coords(0, 0);
             for (int y = 1; y < powerLevels.Length - 2; y++)
             {
                 for (int x = 1; x < powerLevels[y].Length - 2; x++)
@@ -26,7 +28,7 @@
         {
             var powerLevels = ToPowerLevels(input, true);
             var largest = 0L;
-            var topLeft = new Coords();
+            var topLeft = new Coords(0, 0);
             var squareSize = 0;
             for (int size = 1; size <= 100; size++)
             {

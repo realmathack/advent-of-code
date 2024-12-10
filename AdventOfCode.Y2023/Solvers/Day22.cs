@@ -1,4 +1,7 @@
-﻿namespace AdventOfCode.Y2023.Solvers
+﻿using Coords3D = AdventOfCode.Coords3D<int>;
+using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2023.Solvers
 {
     public class Day22 : SolverWithLines
     {

@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2023.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2023.Solvers
 {
     public class Day03 : SolverWithLines
     {
@@ -37,21 +39,21 @@
             var parts = new Dictionary<Coords, char>();
             for (int y = 0; y < lines.Length; y++)
             {
-                var currentCoords = new List<Coords>();
+                var currentPositions = new List<Coords>();
                 var currentNumber = string.Empty;
                 for (int x = 0; x < lines[y].Length; x++)
                 {
                     if (char.IsDigit(lines[y][x]))
                     {
-                        currentCoords.Add(new(y, x));
+                        currentPositions.Add(new(y, x));
                         currentNumber += lines[y][x];
                         continue;
                     }
                     if (currentNumber != string.Empty)
                     {
-                        numbers[currentCoords] = int.Parse(currentNumber);
+                        numbers[currentPositions] = int.Parse(currentNumber);
                         currentNumber = string.Empty;
-                        currentCoords = [];
+                        currentPositions = [];
                     }
                     if (lines[y][x] != '.')
                     {
@@ -60,7 +62,7 @@
                 }
                 if (currentNumber != string.Empty)
                 {
-                    numbers[currentCoords] = int.Parse(currentNumber);
+                    numbers[currentPositions] = int.Parse(currentNumber);
                 }
             }
             return (numbers, parts);

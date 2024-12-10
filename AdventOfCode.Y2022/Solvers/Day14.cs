@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2022.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2022.Solvers
 {
     public class Day14 : SolverWithLines
     {
@@ -88,18 +90,18 @@
             var formations = new List<Coords[]>();
             foreach (var line in lines)
             {
-                var formation = line.Split(" -> ").Select(point => point.Split(',').Select(int.Parse).ToArray()).Select(coord => new Coords(coord[0], coord[1])).ToArray();
-                var minX = formation.Min(coords => coords.X);
+                var formation = line.Split(" -> ").Select(point => point.Split(',').Select(int.Parse).ToArray()).Select(position => new Coords(position[0], position[1])).ToArray();
+                var minX = formation.Min(positions => positions.X);
                 if (minX < topLeft.X)
                 {
                     topLeft = new(minX, topLeft.Y);
                 }
-                var maxX = formation.Max(coords => coords.X);
+                var maxX = formation.Max(positions => positions.X);
                 if (maxX > bottomRight.X)
                 {
                     bottomRight = new(maxX, bottomRight.Y);
                 }
-                var maxY = formation.Max(coords => coords.Y);
+                var maxY = formation.Max(positions => positions.Y);
                 if (maxY > bottomRight.Y)
                 {
                     bottomRight = new(bottomRight.X, maxY);
@@ -114,7 +116,7 @@
             }
             for (int i = 0; i < formations.Count; i++)
             {
-                formations[i] = formations[i].Select(coords => coords - topLeft).ToArray();
+                formations[i] = formations[i].Select(positions => positions - topLeft).ToArray();
             }
             sandStart -= topLeft;
             bottomRight -= topLeft;

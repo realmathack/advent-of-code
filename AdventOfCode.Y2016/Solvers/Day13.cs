@@ -1,10 +1,12 @@
-﻿namespace AdventOfCode.Y2016.Solvers
+﻿using Coords = AdventOfCode.Coords<int>;
+
+namespace AdventOfCode.Y2016.Solvers
 {
     public class Day13(Coords _goal) : SolverWithText
     {
         public Day13() : this(new(31, 39)) { }
 
-        public override object SolvePart1(string input) => new AStar(int.Parse(input)).FindShortestPath(new Coords(1, 1), _goal).Count;
+        public override object SolvePart1(string input) => new AStar(int.Parse(input)).FindShortestPath(new(1, 1), _goal).Count;
 
         public override object SolvePart2(string input)
         {
@@ -16,7 +18,7 @@
                 nodes.AddRange(Enumerable.Range(0, cursor.X + 1).Select(i => new Coords(i, cursor.Y)).Where(potential => !IsWall(potential, designerFavNumber)));
                 cursor = cursor.DownLeft;
             }
-            var distances = new Dijkstra(designerFavNumber).GetShortestDistances(new Coords(1, 1), nodes);
+            var distances = new Dijkstra(designerFavNumber).GetShortestDistances(new(1, 1), nodes);
             return distances.Values.Count(distance => distance <= 50);
         }
 
@@ -30,9 +32,9 @@
             return neighbors;
         }
 
-        private static bool IsWall(Coords coords, int designerFavNumber)
+        private static bool IsWall(Coords current, int designerFavNumber)
         {
-            var value = coords.X * coords.X + 3 * coords.X + 2 * coords.X * coords.Y + coords.Y + coords.Y * coords.Y;
+            var value = current.X * current.X + 3 * current.X + 2 * current.X * current.Y + current.Y + current.Y * current.Y;
             value += designerFavNumber;
             var binary = Convert.ToString(value, 2);
             return binary.Count(bit => bit == '1') % 2 == 1;
