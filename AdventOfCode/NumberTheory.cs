@@ -2,34 +2,36 @@
 {
     public static class NumberTheory
     {
-        public static long LeastCommonMultiple(params int[] numbers) => numbers.Aggregate(LCM);
-        public static long LeastCommonMultiple(IEnumerable<int> numbers) => numbers.Aggregate(LCM);
-        public static long LeastCommonMultiple(params long[] numbers) => numbers.Aggregate(LCM);
-        public static long LeastCommonMultiple(IEnumerable<long> numbers) => numbers.Aggregate(LCM);
+        #region Greatest common divisor (GCD)
+        // https://en.wikipedia.org/wiki/Greatest_common_divisor
+        /// <summary>Greatest common divisor</summary>
+        private static int GCD(int a, int b) => b == 0 ? a : GCD(b, a % b);
+        /// <summary>Greatest common divisor</summary>
+        public static long GCD(params int[] numbers) => numbers.Aggregate(GCD);
+        /// <summary>Greatest common divisor</summary>
+        public static long GCD(IEnumerable<int> numbers) => numbers.Aggregate(GCD);
+        /// <summary>Greatest common divisor</summary>
+        private static long GCD(long a, long b) => b == 0 ? a : GCD(b, a % b);
+        /// <summary>Greatest common divisor</summary>
+        public static long GCD(params long[] numbers) => numbers.Aggregate(GCD);
+        /// <summary>Greatest common divisor</summary>
+        public static long GCD(IEnumerable<long> numbers) => numbers.Aggregate(GCD);
+        #endregion
 
-        private static int LCM(int a, int b)
-        {
-            return (a * b) / GCD(a, b);
-        }
-
-        private static long LCM(long a, long b)
-        {
-            return (a * b) / GCD(a, b);
-        }
-
-        public static long GreatestCommonDivisor(params int[] numbers) => numbers.Aggregate(GCD);
-        public static long GreatestCommonDivisor(IEnumerable<int> numbers) => numbers.Aggregate(GCD);
-        public static long GreatestCommonDivisor(params long[] numbers) => numbers.Aggregate(GCD);
-        public static long GreatestCommonDivisor(IEnumerable<long> numbers) => numbers.Aggregate(GCD);
-
-        private static int GCD(int a, int b)
-        {
-            return b == 0 ? a : GCD(b, a % b);
-        }
-
-        private static long GCD(long a, long b)
-        {
-            return b == 0 ? a : GCD(b, a % b);
-        }
+        #region Least common multiple (LCM)
+        // https://en.wikipedia.org/wiki/Least_common_multiple
+        /// <summary>Least common multiple</summary>
+        private static int LCM(int a, int b) => (a * b) / GCD(a, b);
+        /// <summary>Least common multiple</summary>
+        public static long LCM(params int[] numbers) => numbers.Aggregate(LCM);
+        /// <summary>Least common multiple</summary>
+        public static long LCM(IEnumerable<int> numbers) => numbers.Aggregate(LCM);
+        /// <summary>Least common multiple</summary>
+        private static long LCM(long a, long b) => (a * b) / GCD(a, b);
+        /// <summary>Least common multiple</summary>
+        public static long LCM(params long[] numbers) => numbers.Aggregate(LCM);
+        /// <summary>Least common multiple</summary>
+        public static long LCM(IEnumerable<long> numbers) => numbers.Aggregate(LCM);
+        #endregion
     }
 }

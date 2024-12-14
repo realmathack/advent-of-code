@@ -3,7 +3,7 @@
     public class Day08 : SolverWithLineGroups
     {
         public override object SolvePart1(string[] input) => FindSteps(input, "AAA", "ZZZ")[0];
-        public override object SolvePart2(string[] input) => NumberTheory.LeastCommonMultiple(FindSteps(input, "A", "Z"));
+        public override object SolvePart2(string[] input) => NumberTheory.LCM(FindSteps(input, "A", "Z"));
 
         private static long[] FindSteps(string[] lineGroups, string start, string goal)
         {
