@@ -35,10 +35,10 @@ namespace AdventOfCode.Y2024.Solvers
                     perimeter += CheckPlot(grid, potentials, regionPlots, region, plot.Right);
                     perimeter += CheckPlot(grid, potentials, regionPlots, region, plot.Down);
                     region.Perimeter += perimeter;
-                }
-                if (calculateSides)
-                {
-                    region.Sides = 4; // TODO: Calculate sides
+                    if (calculateSides)
+                    {
+                        region.Sides += CountCorners(grid, region, plot); // Number of sides is always the same as the number of corners
+                    }
                 }
                 plotsInRegions.UnionWith(region.Plots);
             }
@@ -62,6 +62,28 @@ namespace AdventOfCode.Y2024.Solvers
             potentials.Enqueue(potential);
             return 1;
         }
+
+        private static int CountCorners(char[][] grid, Region region, Coords plot)
+        {
+            var corners = 0;
+            var leftPlantType  = GetPlantType(grid, plot.Left);
+            var upPlantType    = GetPlantType(grid, plot.Up);
+            var rightPlantType = GetPlantType(grid, plot.Right);
+            var downPlantType  = GetPlantType(grid, plot.Down);
+            if (IsCorner(region.PlantType, leftPlantType , upPlantType  , GetPlantType(grid, plot.UpLeft   ))) corners++;
+            if (IsCorner(region.PlantType, rightPlantType, upPlantType  , GetPlantType(grid, plot.UpRight  ))) corners++;
+            if (IsCorner(region.PlantType, rightPlantType, downPlantType, GetPlantType(grid, plot.DownRight))) corners++;
+            if (IsCorner(region.PlantType, leftPlantType , downPlantType, GetPlantType(grid, plot.DownLeft ))) corners++;
+            return corners;
+        }
+
+        private static bool IsCorner(char current, char horizontalNeighbor, char verticalNeighbor, char diagonalNeighbor)
+        {
+            return (horizontalNeighbor != current && verticalNeighbor != current)                                   // convex corner
+                || (horizontalNeighbor == current && verticalNeighbor == current && diagonalNeighbor != current);   // concave corner
+        }
+
+        private static char GetPlantType(char[][] grid, Coords plot) => grid.IsOutOfBounds(plot) ? ' ' : grid[plot.Y][plot.X];
 
         private record class Region(char PlantType)
         {
