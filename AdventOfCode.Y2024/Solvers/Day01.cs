@@ -18,12 +18,12 @@
             var (left, right) = ToLocations(input);
             var scores = new Dictionary<int, int>(left.Count);
             var total = 0;
-            foreach (var location in left)
+            foreach (var leftId in left)
             {
-                if (!scores.TryGetValue(location, out var score))
+                if (!scores.TryGetValue(leftId, out var score))
                 {
-                    score = right.Count(x => x == location) * location;
-                    scores[location] = score;
+                    score = right.Count(rightId => rightId == leftId) * leftId;
+                    scores[leftId] = score;
                 }
                 total += score;
             }

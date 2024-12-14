@@ -175,7 +175,7 @@ namespace AdventOfCode.Y2023.Solvers
         private record class Condition(string Action, char? Category = null, char? Comparison = null, int? Value = null);
         private record class WorkflowInput(string Name, Dictionary<char, Range> Ranges)
         {
-            public WorkflowInput Duplicate() => new(Name, Ranges.Select(kv => (kv.Key, kv.Value)).ToDictionary());
+            public WorkflowInput Duplicate() => this with { Ranges = Ranges.Select(kv => (kv.Key, kv.Value)).ToDictionary() };
         }
     }
 }

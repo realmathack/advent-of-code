@@ -117,23 +117,12 @@
         }
 
         private enum ItemType { Weapon, Armor, Ring }
-        private readonly record struct Item(ItemType ItemType, int Cost, int Damage, int Armor);
+        private record class Item(ItemType ItemType, int Cost, int Damage, int Armor);
 
-        private record class Creature()
+        private record class Creature(int HitPoints, int Damage, int Armor)
         {
-            public int HitPoints { get; set; }
-            public int Damage { get; init; }
-            public int Armor { get; init; }
-            public Creature(int hitPoints, int damage, int armor) : this()
-            {
-                HitPoints = hitPoints;
-                Damage = damage;
-                Armor = armor;
-            }
-            public Creature Duplicate()
-            {
-                return new Creature(HitPoints, Damage, Armor);
-            }
+            public int HitPoints { get; set; } = HitPoints;
+            public Creature Duplicate() => new(HitPoints, Damage, Armor);
         }
     }
 }

@@ -46,6 +46,6 @@
             return scores.Values.Max();
         }
 
-        private readonly record struct Reindeer(int Speed, int FlySeconds, int RestSeconds);
+        private record class Reindeer(int Speed, int FlySeconds, int RestSeconds);
     }
 }

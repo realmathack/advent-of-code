@@ -56,6 +56,6 @@ namespace AdventOfCode.Y2024.Solvers
             return machines;
         }
 
-        private readonly record struct ClawMachine(int Index, Coords ButtonA, Coords ButtonB, Coords Prize);
+        private record class ClawMachine(int Index, Coords ButtonA, Coords ButtonB, Coords Prize);
     }
 }

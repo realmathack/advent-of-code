@@ -28,8 +28,11 @@
             return furthest;
         }
 
-        private record struct Position(int Col, int Row)
+        private record class Position(int Col, int Row)
         {
+            public int Col { get; set; } = Col;
+            public int Row { get; set; } = Row;
+
             public void Move(string direction)
             {
                 switch (direction)

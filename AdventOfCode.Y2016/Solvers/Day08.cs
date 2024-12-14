@@ -73,6 +73,6 @@
         }
 
         private enum Operation { Rect, RotateRow, RotateColumn }
-        private readonly record struct Instruction(Operation Operation, int A, int B);
+        private record class Instruction(Operation Operation, int A, int B);
     }
 }

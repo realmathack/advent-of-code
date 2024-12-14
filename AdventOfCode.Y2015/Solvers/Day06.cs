@@ -90,6 +90,6 @@ namespace AdventOfCode.Y2015.Solvers
         private static partial Regex MoveRegex();
 
         private enum Change { Off, On, Toggle }
-        private readonly record struct Move(Change Change, int TopX, int TopY, int BottomX, int BottomY);
+        private record class Move(Change Change, int TopX, int TopY, int BottomX, int BottomY);
     }
 }

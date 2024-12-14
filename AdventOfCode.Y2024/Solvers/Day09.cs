@@ -6,7 +6,7 @@
         {
             var memory = ToMemoryPart1(input);
             var freeIndex = Array.IndexOf(memory, int.MinValue);
-            var filledIndex = Array.FindLastIndex(memory, x => x != int.MinValue);
+            var filledIndex = Array.FindLastIndex(memory, id => id != int.MinValue);
             if (freeIndex != -1 && filledIndex != -1)
             {
                 while (freeIndex < filledIndex)
@@ -14,7 +14,7 @@
                     memory[freeIndex] = memory[filledIndex];
                     memory[filledIndex] = int.MinValue;
                     freeIndex = Array.IndexOf(memory, int.MinValue, freeIndex);
-                    filledIndex = Array.FindLastIndex(memory, filledIndex, x => x != int.MinValue);
+                    filledIndex = Array.FindLastIndex(memory, filledIndex, id => id != int.MinValue);
                 }
             }
             return CalculateChecksum(memory);
@@ -23,10 +23,10 @@
         public override object SolvePart2(string input)
         {
             var (filledBlocks, emptyBlocks) = ToMemoryPart2(input);
-            var blocksToMove = new Queue<Block>(filledBlocks.OrderByDescending(x => x.Index));
+            var blocksToMove = new Queue<Block>(filledBlocks.OrderByDescending(block => block.Index));
             while (blocksToMove.TryDequeue(out var current))
             {
-                var destinationIndex = emptyBlocks.FindIndex(x => x.Size >= current.Size && x.Index < current.Index);
+                var destinationIndex = emptyBlocks.FindIndex(block => block.Size >= current.Size && block.Index < current.Index);
                 if (destinationIndex == -1)
                 {
                     continue;
@@ -46,7 +46,7 @@
         private static long CalculateChecksum(int[] memory)
         {
             var checksum = 0L;
-            var filledBlocks = memory.Where(x => x != int.MinValue).ToArray();
+            var filledBlocks = memory.Where(id => id != int.MinValue).ToArray();
             for (int i = 0; i < filledBlocks.Length; i++)
             {
                 checksum += i * memory[i];
@@ -57,7 +57,7 @@
         private static long CalculateChecksum(List<Block> blocks)
         {
             var checksum = 0L;
-            var sorted = blocks.OrderBy(x => x.Index).ToArray();
+            var sorted = blocks.OrderBy(block => block.Index).ToArray();
             foreach (var block in sorted)
             {
                 for (int i = 0; i < block.Size; i++)
@@ -108,11 +108,9 @@
             return (filledBlocks, emptyBlocks);
         }
 
-        private class Block(int id, int size, int index)
+        private record class Block(int Id, int Size, int Index)
         {
-            public int Id => id;
-            public int Size => size;
-            public int Index { get; set; } = index;
+            public int Index { get; set; } = Index;
         }
     }
 }

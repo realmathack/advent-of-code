@@ -20,7 +20,7 @@
         public override object SolvePart2(string[] input)
         {
             var tmp = ToScratchCards(input);
-            tmp.Insert(0, new(0, [], []) { Count = 0 });
+            tmp.Insert(0, new(0, [], [], 0));
             var cards = tmp.ToArray();
             for (int i = 1; i < cards.Length; i++)
             {
@@ -43,14 +43,14 @@
                 parts = parts[1].Split(" | ", StringSplitOptions.RemoveEmptyEntries);
                 var winning = parts[0].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
                 var numbers = parts[1].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
-                cards.Add(new(id, winning, numbers));
+                cards.Add(new(id, winning, numbers, 1));
             }
             return cards;
         }
 
-        private record class ScratchCard(int Id, int[] WinningNumbers, int[] Numbers)
+        private record class ScratchCard(int Id, int[] WinningNumbers, int[] Numbers, int Count)
         {
-            public int Count { get; set; } = 1;
+            public int Count { get; set; } = Count;
         }
     }
 }

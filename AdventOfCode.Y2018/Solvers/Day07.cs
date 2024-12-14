@@ -89,7 +89,7 @@
         }
 
         private record class Instruction(char Step, char Requires);
-        private class Worker
+        private record class Worker
         {
             public char Step { get; set; }
             public int Remaining { get; set; }

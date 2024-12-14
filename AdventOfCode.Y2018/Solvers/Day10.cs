@@ -83,10 +83,9 @@ namespace AdventOfCode.Y2018.Solvers
         [GeneratedRegex(@".+< *(-?\d+), +(-?\d+)>.+< *(-?\d+), +(-?\d+)>")]
         private static partial Regex LightRegex();
 
-        private class Light(Coords position, Coords direction)
+        private record class Light(Coords Position, Coords Direction)
         {
-            public Coords Position { get; set; } = position;
-            public Coords Direction { get; } = direction;
+            public Coords Position { get; set; } = Position;
         }
     }
 }

@@ -43,7 +43,7 @@
                 }
                 else
                 {
-                    current.ActiveEffects.Add(new Effect(spellToCast.Name) { Duration = spellToCast.Duration });
+                    current.ActiveEffects.Add(new Effect(spellToCast.Name, spellToCast.Duration));
                 }
                 // Boss turn
                 if (IsGameOver(current)) { continue; }
@@ -113,33 +113,30 @@
         };
 
         private enum SpellNames { None, MagicMissile, Drain, Shield, Poison, Recharge }
-        private readonly record struct Spell(SpellNames Name, int Cost, int Damage, int Armor, int Heal, int Mana, int Duration);
-        private readonly record struct Boss(int HitPoints, int Damage);
+        private record class Spell(SpellNames Name, int Cost, int Damage, int Armor, int Heal, int Mana, int Duration);
+        private record class Boss(int HitPoints, int Damage);
 
-        private record class Effect(SpellNames SpellName)
+        private record class Effect(SpellNames SpellName, int Duration)
         {
-            public int Duration { get; set; }
-            public Effect Duplicate() => new(SpellName) { Duration = Duration };
+            public int Duration { get; set; } = Duration;
+            public Effect Duplicate() => new(SpellName, Duration);
         }
 
-        private class GameState(int playerHitPoints, int playerArmor, int playerMana, int bossHitPoints, int bossDamage, int totalManaCost)
+        private record class GameState(int PlayerHitPoints, int PlayerArmor, int PlayerMana, int BossHitPoints, int BossDamage, int TotalManaCost)
         {
-            public int PlayerHitPoints { get; set; } = playerHitPoints;
-            public int PlayerArmor { get; set; } = playerArmor;
-            public int PlayerMana { get; set; } = playerMana;
-            public int BossHitPoints { get; set; } = bossHitPoints;
-            public int BossDamage { get; set; } = bossDamage;
-            public int TotalManaCost { get; set; } = totalManaCost;
+            public int PlayerHitPoints { get; set; } = PlayerHitPoints;
+            public int PlayerArmor { get; set; } = PlayerArmor;
+            public int PlayerMana { get; set; } = PlayerMana;
+            public int BossHitPoints { get; set; } = BossHitPoints;
+            public int BossDamage { get; set; } = BossDamage;
+            public int TotalManaCost { get; set; } = TotalManaCost;
             public SpellNames NextSpell { get; init; }
             public List<Effect> ActiveEffects { get; init; } = [];
-            public GameState NextRound(SpellNames nextSpell)
+            public GameState NextRound(SpellNames nextSpell) => this with
             {
-                return new GameState(PlayerHitPoints, PlayerArmor, PlayerMana, BossHitPoints, BossDamage, TotalManaCost)
-                {
-                    NextSpell = nextSpell,
-                    ActiveEffects = ActiveEffects.Select(effect => effect.Duplicate()).ToList()
-                };
-            }
+                NextSpell = nextSpell,
+                ActiveEffects = ActiveEffects.Select(effect => effect.Duplicate()).ToList()
+            };
         }
     }
 }

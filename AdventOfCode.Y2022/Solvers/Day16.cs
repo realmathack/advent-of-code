@@ -110,18 +110,15 @@
             public static Valve Empty => new(string.Empty, 0);
         }
 
-        private class State(int[] minutesLeft, Valve[] next, HashSet<Valve> opened, int totalFlowRate)
+        private record class State(int[] MinutesLeft, Valve[] Next, HashSet<Valve> Opened, int TotalFlowRate)
         {
-            public int[] MinutesLeft { get; set; } = minutesLeft;
-            public Valve[] Current { get; set; } = next;
-            public HashSet<Valve> Opened { get; set; } = opened;
-            public int TotalFlowRate { get; set; } = totalFlowRate;
-            public State MoveNext(int actor, int minutesLeft, Valve next)
-            {
-                return (actor == 0)
-                    ? new([minutesLeft, MinutesLeft[1]], [next, Current[1]], new(Opened) { next }, TotalFlowRate + minutesLeft * next.FlowRate)
-                    : new([MinutesLeft[0], minutesLeft], [Current[0], next], new(Opened) { next }, TotalFlowRate + minutesLeft * next.FlowRate);
-            }
+            public int[] MinutesLeft { get; set; } = MinutesLeft;
+            public Valve[] Current { get; set; } = Next;
+            public HashSet<Valve> Opened { get; set; } = Opened;
+            public int TotalFlowRate { get; set; } = TotalFlowRate;
+            public State MoveNext(int actor, int minutesLeft, Valve next) => (actor == 0)
+                ? new([minutesLeft, MinutesLeft[1]], [next, Current[1]], new(Opened) { next }, TotalFlowRate + minutesLeft * next.FlowRate)
+                : new([MinutesLeft[0], minutesLeft], [Current[0], next], new(Opened) { next }, TotalFlowRate + minutesLeft * next.FlowRate);
         }
     }
 }

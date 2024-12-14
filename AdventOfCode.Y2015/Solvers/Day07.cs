@@ -134,6 +134,6 @@
         }
 
         private enum Operator { Assignment, Not, And, Or, LeftShift, RightShift }
-        private record Instruction(Operator Operator, string[] Operands);
+        private record class Instruction(Operator Operator, string[] Operands);
     }
 }

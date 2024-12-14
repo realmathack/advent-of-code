@@ -63,9 +63,8 @@ namespace AdventOfCode.Y2024.Solvers
             return 1;
         }
 
-        private class Region(char plantType)
+        private record class Region(char PlantType)
         {
-            public char PlantType { get; } = plantType;
             public HashSet<Coords> Plots { get; set; } = [];
             public int Perimeter { get; set; }
             public int Sides { get; set; }

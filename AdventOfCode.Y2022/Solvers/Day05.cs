@@ -69,11 +69,11 @@
             foreach (var line in lineGroup.SplitIntoLines())
             {
                 var parts = line.Split(' ');
-                moves.Add(new Move(int.Parse(parts[1]), int.Parse(parts[3]), int.Parse(parts[5])));
+                moves.Add(new(int.Parse(parts[1]), int.Parse(parts[3]), int.Parse(parts[5])));
             }
             return moves;
         }
 
-        private readonly record struct Move(int Count, int Source, int Destination);
+        private record class Move(int Count, int Source, int Destination);
     }
 }

@@ -68,18 +68,18 @@
             if (parts[3] == "+")
             {
                 var value = int.Parse(parts[4]);
-                return x => x + value;
+                return item => item + value;
             }
             if (parts[3] == "*")
             {
                 if (parts[4] == "old")
                 {
-                    return x => x * x;
+                    return item => item * item;
                 }
                 var value = int.Parse(parts[4]);
-                return x => x * value;
+                return item => item * value;
             }
-            return x => x;
+            return item => item;
         }
 
         private class Monkey(int number, IEnumerable<long> items, Func<long, long> operation, int testDivision, int testTrueMonkey, int testFalseMonkey)

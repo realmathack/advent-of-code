@@ -69,6 +69,6 @@
             return hash;
         }
 
-        private readonly record struct Lens(string Label, int FocalStrength);
+        private record class Lens(string Label, int FocalStrength);
     }
 }
