@@ -6,7 +6,7 @@ namespace AdventOfCode.Y2024.Solvers
     {
         public override object SolvePart1(string[] input)
         {
-            var (grid, boxes, robot) = ToGridPart1(input[0]);
+            var (walls, boxes, robot) = ToGridPart1(input[0]);
             var moves = input[1].Replace(Environment.NewLine, string.Empty);
             foreach (var move in moves)
             {
@@ -18,7 +18,7 @@ namespace AdventOfCode.Y2024.Solvers
                     boxesToMove.Add(next);
                     next += offset;
                 }
-                if (grid[next.Y][next.X] == '#')
+                if (walls.Contains(next))
                 {
                     continue;
                 }
@@ -34,13 +34,13 @@ namespace AdventOfCode.Y2024.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var (grid, boxes, robot) = ToGridPart2(input[0]);
+            var (walls, boxes, robot) = ToGridPart2(input[0]);
             var moves = input[1].Replace(Environment.NewLine, string.Empty);
             foreach (var move in moves)
             {
                 var offset = GetOffset(move);
                 var next = robot + offset;
-                if (grid[next.Y][next.X] == '#')
+                if (walls.Contains(next))
                 {
                     continue;
                 }
@@ -58,7 +58,7 @@ namespace AdventOfCode.Y2024.Solvers
                         {
                             continue;
                         }
-                        if (grid[next.Y][next.X] == '#')
+                        if (walls.Contains(next))
                         {
                             hitWall = true;
                             break;
@@ -101,51 +101,49 @@ namespace AdventOfCode.Y2024.Solvers
             _ => throw new ArgumentException($"Unknown direction: {direction}", nameof(direction))
         };
 
-        private static (char[][] Grid, HashSet<Coords> Boxes, Coords Robot) ToGridPart1(string input)
+        private static (HashSet<Coords> Walls, HashSet<Coords> Boxes, Coords Robot) ToGridPart1(string input)
         {
             var lines = input.SplitIntoLines();
-            var grid = new char[lines.Length][];
+            var walls = new HashSet<Coords>();
             var boxes = new HashSet<Coords>();
             Coords? robot = null;
-            for (int y = 0; y < grid.Length; y++)
+            for (int y = 0; y < lines.Length; y++)
             {
                 var line = lines[y];
-                var row = new char[line.Length];
                 for (int x = 0; x < line.Length; x++)
                 {
                     if (line[x] == 'O')
                     {
                         boxes.Add(new(x, y));
-                        row[x] = '.';
                         continue;
                     }
                     if (line[x] == '@')
                     {
                         robot = new(x, y);
-                        row[x] = '.';
                         continue;
                     }
-                    row[x] = line[x];
+                    if (line[x] == '#')
+                    {
+                        walls.Add(new(x, y));
+                    }
                 }
-                grid[y] = row;
             }
             if (robot is null)
             {
                 throw new InvalidOperationException("Robot not found!");
             }
-            return (grid, boxes, robot.Value);
+            return (walls, boxes, robot.Value);
         }
 
-        private static (char[][] Grid, Dictionary<Coords, (Coords Left, Coords Right)> Boxes, Coords Robot) ToGridPart2(string input)
+        private static (HashSet<Coords> Walls, Dictionary<Coords, (Coords Left, Coords Right)> Boxes, Coords Robot) ToGridPart2(string input)
         {
             var lines = input.SplitIntoLines();
-            var grid = new char[lines.Length][];
+            var walls = new HashSet<Coords>();
             var boxes = new Dictionary<Coords, (Coords Left, Coords Right)>();
             Coords? robot = null;
-            for (int y = 0; y < grid.Length; y++)
+            for (int y = 0; y < lines.Length; y++)
             {
                 var line = lines[y];
-                var row = new char[line.Length * 2];
                 for (int x = 0; x < line.Length; x++)
                 {
                     if (line[x] == 'O')
@@ -153,27 +151,25 @@ namespace AdventOfCode.Y2024.Solvers
                         var box = (new Coords(x * 2, y), new Coords(x * 2 + 1, y));
                         boxes.Add(new(x * 2, y), box);
                         boxes.Add(new(x * 2 + 1, y), box);
-                        row[x * 2] = '.';
-                        row[x * 2 + 1] = '.';
                         continue;
                     }
                     if (line[x] == '@')
                     {
                         robot = new(x * 2, y);
-                        row[x * 2] = '.';
-                        row[x * 2 + 1] = '.';
                         continue;
                     }
-                    row[x * 2] = line[x];
-                    row[x * 2 + 1] = line[x];
+                    if (line[x] == '#')
+                    {
+                        walls.Add(new(x * 2, y));
+                        walls.Add(new(x * 2 + 1, y));
+                    }
                 }
-                grid[y] = row;
             }
             if (robot is null)
             {
                 throw new InvalidOperationException("Robot not found!");
             }
-            return (grid, boxes, robot.Value);
+            return (walls, boxes, robot.Value);
         }
     }
 }
