@@ -1,8 +1,9 @@
 ﻿using Coords = AdventOfCode.Coords<int>;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Y2024.Solvers
 {
-    public class Day14(int _width, int _height) : SolverWithLines
+    public partial class Day14(int _width, int _height) : SolverWithLines
     {
         public Day14() : this(101, 103) { }
 
@@ -84,13 +85,14 @@ namespace AdventOfCode.Y2024.Solvers
             var robots = new List<Robot>();
             foreach (var line in lines)
             {
-                var (position, velocity) = line[2..].SplitInTwo(" v=");
-                var (positionX, positionY) = position.SplitInTwo(',');
-                var (velocityX, velocityY) = velocity.SplitInTwo(',');
-                robots.Add(new(new(int.Parse(positionX), int.Parse(positionY)), new(int.Parse(velocityX), int.Parse(velocityY))));
+                var match = RobotRegex().Match(line);
+                robots.Add(new(new(int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value)), new(int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value))));
             }
             return robots;
         }
+
+        [GeneratedRegex(@"p=(\d+),(\d+) v=(-?\d+),(-?\d+)")]
+        private static partial Regex RobotRegex();
 
         private record class Robot(Coords Position, Coords Velocity)
         {

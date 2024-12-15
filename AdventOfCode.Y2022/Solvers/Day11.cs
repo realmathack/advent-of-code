@@ -50,13 +50,13 @@
             var monkeys = new List<Monkey>();
             foreach (var lineGroup in lineGroups)
             {
-                var lines = lineGroup.SplitIntoLines().Select(line => line.Trim()).ToArray();
-                var number = int.Parse(lines[0].TrimEnd(':').Split(' ')[1]);
-                var items = lines[1].Split(": ")[1].Split(", ").Select(long.Parse).ToArray();
-                var operation = GenerateOperation(lines[2].Split(": ")[1]);
-                var testDivision = int.Parse(lines[3].Split(' ')[3]);
-                var testTrueMonkey = int.Parse(lines[4].Split(' ')[5]);
-                var testFalseMonkey = int.Parse(lines[5].Split(' ')[5]);
+                var lines = lineGroup.SplitIntoLines();
+                var number = int.Parse(lines[0][7..^1]);
+                var items = lines[1][18..].Split(", ").Select(long.Parse).ToArray();
+                var operation = GenerateOperation(lines[2][23..]);
+                var testDivision = int.Parse(lines[3][21..]);
+                var testTrueMonkey = int.Parse(lines[4][29..]);
+                var testFalseMonkey = int.Parse(lines[5][30..]);
                 monkeys.Add(new(number, items, operation, testDivision, testTrueMonkey, testFalseMonkey));
             }
             return monkeys;
@@ -64,19 +64,18 @@
 
         private static Func<long, long> GenerateOperation(string text)
         {
-            var parts = text.Split(' ');
-            if (parts[3] == "+")
+            if (text[0] == '+')
             {
-                var value = int.Parse(parts[4]);
+                var value = long.Parse(text[2..]);
                 return item => item + value;
             }
-            if (parts[3] == "*")
+            if (text[0] == '*')
             {
-                if (parts[4] == "old")
+                if (text[2..] == "old")
                 {
                     return item => item * item;
                 }
-                var value = int.Parse(parts[4]);
+                var value = long.Parse(text[2..]);
                 return item => item * value;
             }
             return item => item;

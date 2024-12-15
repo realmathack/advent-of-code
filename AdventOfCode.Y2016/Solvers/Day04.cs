@@ -1,20 +1,20 @@
-﻿namespace AdventOfCode.Y2016.Solvers
-{
-    public class Day04 : SolverWithLines
-    {
-        private static readonly char[] _separator = ['-', '[', ']'];
+﻿using System.Text.RegularExpressions;
 
+namespace AdventOfCode.Y2016.Solvers
+{
+    public partial class Day04 : SolverWithLines
+    {
         public override object SolvePart1(string[] input)
         {
             var realRoomSectorIds = new List<int>();
             foreach (var line in input)
             {
-                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-                var name = string.Concat(parts[..^2]);
+                var match = RoomRegex().Match(line);
+                var name = match.Groups[1].Value.Replace("-", string.Empty);
                 var top5 = name.GroupBy(c => c).Select(g => (g.Key, Count: g.Count())).OrderByDescending(g => g.Count).ThenBy(g => g.Key).Take(5).Select(g => g.Key).ToHashSet();
-                if (parts[^1].All(top5.Contains))
+                if (match.Groups[3].Value.All(top5.Contains))
                 {
-                    realRoomSectorIds.Add(int.Parse(parts[^2]));
+                    realRoomSectorIds.Add(int.Parse(match.Groups[2].Value));
                 }
             }
             return realRoomSectorIds.Sum();
@@ -25,9 +25,9 @@
             var rooms = new Dictionary<string, int>();
             foreach (var line in input)
             {
-                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-                var name = string.Join(' ', parts[..^2]);
-                var sectorId = int.Parse(parts[^2]);
+                var match = RoomRegex().Match(line);
+                var name = match.Groups[1].Value.Replace('-', ' ');
+                var sectorId = int.Parse(match.Groups[2].Value);
                 var shift = sectorId % 26;
                 var room = string.Empty;
                 foreach (var letter in name)
@@ -43,5 +43,8 @@
             }
             return rooms.First(room => room.Key.Contains("north")).Value;
         }
+
+        [GeneratedRegex(@"(.+)-(\d+)\[(.+)\]")]
+        private static partial Regex RoomRegex();
     }
 }

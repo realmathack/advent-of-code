@@ -1,6 +1,8 @@
-﻿namespace AdventOfCode.Y2020.Solvers
+﻿using System.Text.RegularExpressions;
+
+namespace AdventOfCode.Y2020.Solvers
 {
-    public class Day02 : SolverWithLines
+    public partial class Day02 : SolverWithLines
     {
         public override object SolvePart1(string[] input)
         {
@@ -31,17 +33,19 @@
             return validPasswords;
         }
 
-        private static readonly char[] _separator = [' ', '-', ':'];
         private static List<Record> ToRecords(string[] lines)
         {
             var records = new List<Record>();
             foreach (var line in lines)
             {
-                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-                records.Add(new(int.Parse(parts[0]), int.Parse(parts[1]), parts[2][0], parts[3]));
+                var match = RecordRegex().Match(line);
+                records.Add(new(int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value), match.Groups[3].Value[0], match.Groups[4].Value));
             }
             return records;
         }
+
+        [GeneratedRegex(@"(\d+)-(\d+) (.): (.+)")]
+        private static partial Regex RecordRegex();
 
         private record class Record(int Lower, int Upper, char Character, string Password);
     }

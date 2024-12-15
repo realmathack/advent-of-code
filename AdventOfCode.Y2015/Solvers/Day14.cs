@@ -1,6 +1,8 @@
-﻿namespace AdventOfCode.Y2015.Solvers
+﻿using System.Text.RegularExpressions;
+
+namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day14 : SolverWithLines
+    public partial class Day14 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => ToReindeers(input).Max(reindeer => Fly(reindeer, 2503));
         public override object SolvePart2(string[] input) => FindHighestScoreAtSeconds(ToReindeers(input), 2503);
@@ -10,8 +12,8 @@
             var reindeers = new List<Reindeer>();
             foreach (var line in lines)
             {
-                var parts = line.Split(' ');
-                reindeers.Add(new(int.Parse(parts[3]), int.Parse(parts[6]), int.Parse(parts[13])));
+                var match = ReindeerRegex().Match(line);
+                reindeers.Add(new(int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value)));
             }
             return reindeers;
         }
@@ -45,6 +47,9 @@
             }
             return scores.Values.Max();
         }
+
+        [GeneratedRegex(@".+ can fly (\d+) km/s for (\d+) seconds, but then must rest for (\d+) seconds\.")]
+        private static partial Regex ReindeerRegex();
 
         private record class Reindeer(int Speed, int FlySeconds, int RestSeconds);
     }

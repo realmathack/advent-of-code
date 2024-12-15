@@ -20,16 +20,16 @@
             var games = new List<Game>();
             foreach (var line in lines)
             {
-                var parts = line.Split(": ");
-                var game = new Game(int.Parse(parts[0][5..]));
-                var sets = parts[1].Split("; ");
+                var pos = line.IndexOf(':');
+                var game = new Game(int.Parse(line[5..pos]));
+                var sets = line[(pos + 2)..].Split("; ");
                 foreach (var set in sets)
                 {
                     var cubes = new int[] { 0, 0, 0 };
-                    parts = set.Split(", ");
+                    var parts = set.Split(", ");
                     foreach (var part in parts)
                     {
-                        var pos = part.IndexOf(' ');
+                        pos = part.IndexOf(' ');
                         var cube = part[(pos + 1)..] switch
                         {
                             "red" => _red,

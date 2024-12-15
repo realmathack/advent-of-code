@@ -1,6 +1,8 @@
-﻿namespace AdventOfCode.Y2022.Solvers
+﻿using System.Text.RegularExpressions;
+
+namespace AdventOfCode.Y2022.Solvers
 {
-    public class Day16 : SolverWithLines
+    public partial class Day16 : SolverWithLines
     {
         public override object SolvePart1(string[] input)
         {
@@ -67,17 +69,16 @@
             return highest;
         }
 
-        private static readonly char[] _separator = [' ', '=', ';', ','];
         private static Valve ToValves(string[] lines)
         {
             var valves = new Dictionary<string, Valve>();
             var tunnels = new Dictionary<string, string[]>();
             foreach (var line in lines)
             {
-                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-                var valveId = parts[1];
-                tunnels.Add(valveId, parts[10..]);
-                var flowRate = int.Parse(parts[5]);
+                var match = ValveRegex().Match(line);
+                var valveId = match.Groups[1].Value;
+                tunnels.Add(valveId, match.Groups[3].Value.Split(", "));
+                var flowRate = int.Parse(match.Groups[2].Value);
                 if (valveId == "AA" || flowRate > 0)
                 {
                     valves[valveId] = new(valveId, flowRate);
@@ -97,6 +98,9 @@
             }
             return valves["AA"];
         }
+
+        [GeneratedRegex(@"Valve (.{2}) has flow rate=(\d+); tunnels? leads? to valves? (.+)")]
+        private static partial Regex ValveRegex();
 
         private class BFS(Dictionary<string, string[]> tunnels, string goal) : Graphs.BFS<string>
         {

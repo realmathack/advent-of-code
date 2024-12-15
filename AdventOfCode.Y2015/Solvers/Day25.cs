@@ -1,6 +1,8 @@
-﻿namespace AdventOfCode.Y2015.Solvers
+﻿using System.Text.RegularExpressions;
+
+namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day25 : SolverWithText
+    public partial class Day25 : SolverWithText
     {
         public override object SolvePart1(string input)
         {
@@ -17,11 +19,13 @@
 
         public override object SolvePart2(string input) => "Day 25";
 
-        private static readonly char[] _separator = [' ', ',', '.'];
         private static (long Row, long Col) ToTarget(string message)
         {
-            var parts = message.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-            return (long.Parse(parts[15]), long.Parse(parts[17]));
+            var match = ManualRegex().Match(message);
+            return (long.Parse(match.Groups[1].Value), long.Parse(match.Groups[2].Value));
         }
+
+        [GeneratedRegex(@"To continue, please consult the code grid in the manual.  Enter the code at row (\d+), column (\d+)\.")]
+        private static partial Regex ManualRegex();
     }
 }

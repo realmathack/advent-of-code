@@ -107,7 +107,6 @@ namespace AdventOfCode.Y2023.Solvers
             return destinations;
         }
 
-        private static readonly char[] _seperator = [' ', '-'];
         private static (long[] Seeds, Dictionary<string, Map> Maps) ToSeedsAndMaps(string[] lineGroups)
         {
             var seeds = lineGroups[0][7..].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
@@ -115,8 +114,8 @@ namespace AdventOfCode.Y2023.Solvers
             for (int i = 1; i < lineGroups.Length; i++)
             {
                 var lines = lineGroups[i].SplitIntoLines();
-                var parts = lines[0].Split(_seperator, StringSplitOptions.RemoveEmptyEntries);
-                var map = new Map(parts[0], parts[2]);
+                var (source, destination) = lines[0][..^5].SplitInTwo("-to-");
+                var map = new Map(source, destination);
                 maps[map.Source] = map;
                 for (int j = 1; j < lines.Length; j++)
                 {

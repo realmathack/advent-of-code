@@ -1,6 +1,8 @@
-﻿namespace AdventOfCode.Y2023.Solvers
+﻿using System.Text.RegularExpressions;
+
+namespace AdventOfCode.Y2023.Solvers
 {
-    public class Day04 : SolverWithLines
+    public partial class Day04 : SolverWithLines
     {
         public override object SolvePart1(string[] input)
         {
@@ -38,15 +40,17 @@
             var cards = new List<ScratchCard>();
             foreach (var line in lines)
             {
-                var parts = line[5..].Split(':', StringSplitOptions.TrimEntries);
-                var id = int.Parse(parts[0]);
-                parts = parts[1].Split(" | ", StringSplitOptions.RemoveEmptyEntries);
-                var winning = parts[0].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
-                var numbers = parts[1].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+                var match = CardRegex().Match(line);
+                var id = int.Parse(match.Groups[1].Value);
+                var winning = match.Groups[2].Value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+                var numbers = match.Groups[3].Value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
                 cards.Add(new(id, winning, numbers, 1));
             }
             return cards;
         }
+
+        [GeneratedRegex(@"Card\s+(\d+): (.+) \| (.+)")]
+        private static partial Regex CardRegex();
 
         private record class ScratchCard(int Id, int[] WinningNumbers, int[] Numbers, int Count)
         {

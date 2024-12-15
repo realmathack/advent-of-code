@@ -46,10 +46,9 @@
         private static Dictionary<string, HashSet<string>> ToOrbits(string[] lines)
         {
             return lines
-                .Select(line => line.Split(')'))
-                .Select(parts => (Center: parts[0], Object: parts[1]))
-                .GroupBy(orbit => orbit.Center)
-                .Select(g => (g.Key, Value: g.Select(orbit => orbit.Object).ToHashSet()))
+                .Select(line => line.SplitInTwo(')'))
+                .GroupBy(orbit => orbit.Left)
+                .Select(g => (g.Key, Value: g.Select(orbit => orbit.Right).ToHashSet()))
                 .ToDictionary();
         }
     }

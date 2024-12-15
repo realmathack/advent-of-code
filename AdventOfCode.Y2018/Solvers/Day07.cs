@@ -62,7 +62,7 @@
             return seconds;
         }
 
-        private static Dictionary<char, HashSet<char>> ToRequirements(List<Instruction> instructions)
+        private static Dictionary<char, HashSet<char>> ToRequirements(Instruction[] instructions)
         {
             var requirements = new Dictionary<char, HashSet<char>>();
             foreach (var instruction in instructions)
@@ -77,16 +77,7 @@
             return requirements;
         }
 
-        private static List<Instruction> ToInstructions(string[] lines)
-        {
-            var instructions = new List<Instruction>();
-            foreach (var line in lines)
-            {
-                var parts = line.Split(' ');
-                instructions.Add(new(parts[7][0], parts[1][0]));
-            }
-            return instructions;
-        }
+        private static Instruction[] ToInstructions(string[] lines) => lines.Select(line => new Instruction(line[36], line[5])).ToArray();
 
         private record class Instruction(char Step, char Requires);
         private record class Worker

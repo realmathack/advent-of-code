@@ -1,6 +1,8 @@
-﻿namespace AdventOfCode.Y2017.Solvers
+﻿using System.Text.RegularExpressions;
+
+namespace AdventOfCode.Y2017.Solvers
 {
-    public class Day07 : SolverWithLines
+    public partial class Day07 : SolverWithLines
     {
         public override object SolvePart1(string[] input)
         {
@@ -8,12 +10,12 @@
             var childeren = new HashSet<string>();
             foreach (var line in input)
             {
-                var parts = line.Split(" -> ");
-                if (parts.Length > 1)
+                var match = ProgramRegex().Match(line);
+                if (match.Groups[4].Length > 0)
                 {
-                    childeren.UnionWith(parts[1].Split(", "));
+                    childeren.UnionWith(match.Groups[4].Value.Split(", "));
                 }
-                programs.Add(parts[0].Split(' ')[0]);
+                programs.Add(match.Groups[1].Value);
             }
             return programs.Except(childeren).Single();
         }
@@ -24,11 +26,10 @@
             var alllChilderen = new HashSet<string>();
             foreach (var line in input)
             {
-                var parts = line.Split(" -> ");
-                var children = (parts.Length == 1) ? [] : parts[1].Split(", ").ToArray();
+                var match = ProgramRegex().Match(line);
+                var children = (match.Groups[4].Length > 0) ? match.Groups[4].Value.Split(", ").ToArray() : [];
                 alllChilderen.UnionWith(children);
-                parts = parts[0].Split(' ');
-                programs.Add(parts[0], (int.Parse(parts[1].Trim('(', ')')), children));
+                programs.Add(match.Groups[1].Value, (int.Parse(match.Groups[2].Value), children));
             }
             var root = programs.Keys.ToHashSet().Except(alllChilderen).Single();
             var (found, correctedWeight, _) = CheckWeights(programs, root);
@@ -74,5 +75,8 @@
             }
             return (false, 0, weight + childWeights.Values.Sum());
         }
+
+        [GeneratedRegex(@"(.+) \((\d+)\)( -> (.+))?")]
+        private static partial Regex ProgramRegex();
     }
 }

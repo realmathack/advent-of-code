@@ -1,6 +1,8 @@
-﻿namespace AdventOfCode.Y2015.Solvers
+﻿using System.Text.RegularExpressions;
+
+namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day16 : SolverWithLines
+    public partial class Day16 : SolverWithLines
     {
         public override object SolvePart1(string[] input)
         {
@@ -77,22 +79,25 @@ perfumes: 1
             return parameters;
         }
 
-        private static readonly char[] _separator = [':', ',', ' '];
         private static List<Sue> ToSues(string[] lines)
         {
             var sues = new List<Sue>(lines.Length);
             foreach (var line in lines)
             {
-                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-                var sue = new Sue(int.Parse(parts[1]), []);
-                for (int i = 3; i < parts.Length; i+=2)
+                var match = SueRegex().Match(line);
+                var sue = new Sue(int.Parse(match.Groups[1].Value), []);
+                foreach (var property in match.Groups[2].Value.Split(", "))
                 {
-                    sue.Properties.Add(parts[i - 1], int.Parse(parts[i]));
+                    var (name, value) = property.SplitInTwo(": ");
+                    sue.Properties.Add(name, int.Parse(value));
                 }
                 sues.Add(sue);
             }
             return sues;
         }
+
+        [GeneratedRegex(@"Sue (\d+): (.+)")]
+        private static partial Regex SueRegex();
 
         private record class Sue(int Number, Dictionary<string, int> Properties);
     }

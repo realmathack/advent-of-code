@@ -1,8 +1,9 @@
 ﻿using Coords = AdventOfCode.Coords<int>;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Y2018.Solvers
 {
-    public class Day03 : SolverWithLines
+    public partial class Day03 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => ToClaimedSquares(input).Values.Count(square => square.Ids.Count >= 2);
 
@@ -41,14 +42,13 @@ namespace AdventOfCode.Y2018.Solvers
             return claimedSquares;
         }
 
-        private static readonly char[] _separator = [' ', '#', '@', ',', ':', 'x'];
         private static List<Claim> ToClaims(string[] lines)
         {
             var claims = new List<Claim>();
             foreach (var line in lines)
             {
-                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
-                claims.Add(new(parts[0], new(parts[1], parts[2]), parts[3], parts[4]));
+                var match = ClaimRegex().Match(line);
+                claims.Add(new(int.Parse(match.Groups[1].Value), new(int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value)), int.Parse(match.Groups[4].Value), int.Parse(match.Groups[5].Value)));
             }
             return claims;
         }
@@ -65,6 +65,9 @@ namespace AdventOfCode.Y2018.Solvers
             }
             return squares;
         }
+
+        [GeneratedRegex(@"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)")]
+        private static partial Regex ClaimRegex();
 
         private record class Claim(int Id, Coords Position, int Width, int Height);
         private record class ClaimedSquare(Coords Position, HashSet<int> Ids);

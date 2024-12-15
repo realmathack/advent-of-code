@@ -1,9 +1,10 @@
 ﻿using Coords = AdventOfCode.Coords<int>;
 using Range = AdventOfCode.Range<int>;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Y2022.Solvers
 {
-    public class Day15(int _givenNumber) : SolverWithLines
+    public partial class Day15(int _givenNumber) : SolverWithLines
     {
         public Day15() : this(2_000_000) { }
 
@@ -100,16 +101,18 @@ namespace AdventOfCode.Y2022.Solvers
             }
         }
 
-        private static readonly char[] _separator = [' ', ',', ':', '='];
         private static Dictionary<Coords, Coords> ToBeacons(string[] lines)
         {
             var beacons = new Dictionary<Coords, Coords>();
             foreach (var line in lines)
             {
-                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-                beacons.Add(new(int.Parse(parts[3]), int.Parse(parts[5])), new(int.Parse(parts[11]), int.Parse(parts[13])));
+                var match = BeaconRegex().Match(line);
+                beacons.Add(new(int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value)), new(int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value)));
             }
             return beacons;
         }
+
+        [GeneratedRegex(@"Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)")]
+        private static partial Regex BeaconRegex();
     }
 }

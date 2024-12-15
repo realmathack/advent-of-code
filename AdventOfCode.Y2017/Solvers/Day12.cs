@@ -46,9 +46,9 @@
             var programs = new Dictionary<int, List<int>>();
             foreach (var line in lines)
             {
-                var parts = line.Split(" <-> ");
-                var neighbors = parts[1].Split(", ").Select(int.Parse).ToList();
-                programs.Add(int.Parse(parts[0]), neighbors);
+                var (id, pipes) = line.SplitInTwo(" <-> ");
+                var neighbors = pipes.Split(", ").Select(int.Parse).ToList();
+                programs.Add(int.Parse(id), neighbors);
             }
             return programs;
         }

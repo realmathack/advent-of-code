@@ -1,20 +1,21 @@
-﻿namespace AdventOfCode.Y2015.Solvers
+﻿using System.Text.RegularExpressions;
+
+namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day15 : SolverWithLines
+    public partial class Day15 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => ToScores(input).Max(score => score.Score);
         public override object SolvePart2(string[] input) => ToScores(input).Where(score => score.Calories == 500).Max(score => score.Score);
 
         private static RecipeScore[] ToScores(string[] lines) => FindPossibilties(ToIngredients(lines), 0, 100).Select(CalculateScore).ToArray();
 
-        private static readonly char[] _separator = [' ', ':', ','];
         private static List<Ingredient> ToIngredients(string[] lines)
         {
             var ingredients = new List<Ingredient>();
             foreach (var line in lines)
             {
-                var parts = line.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
-                ingredients.Add(new(parts[0], int.Parse(parts[2]), int.Parse(parts[4]), int.Parse(parts[6]), int.Parse(parts[8]), int.Parse(parts[10])));
+                var match = IngredientRegex().Match(line);
+                ingredients.Add(new(match.Groups[1].Value, int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value), int.Parse(match.Groups[5].Value), int.Parse(match.Groups[6].Value)));
             }
             return ingredients;
         }
@@ -55,6 +56,9 @@
             }
             return new(Math.Max(0, capacity) * Math.Max(0, durability) * Math.Max(0, flavor) * Math.Max(0, texture), calories);
         }
+
+        [GeneratedRegex(@"(.+): capacity (-?\d+), durability (-?\d+), flavor (-?\d+), texture (-?\d+), calories (-?\d+)")]
+        private static partial Regex IngredientRegex();
 
         private record class Ingredient(string Name, int Capacity, int Durability, int Flavor, int Texture, int Calories);
         private record class RecipeScore(int Score, int Calories);

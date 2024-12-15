@@ -1,6 +1,8 @@
-﻿namespace AdventOfCode.Y2015.Solvers
+﻿using System.Text.RegularExpressions;
+
+namespace AdventOfCode.Y2015.Solvers
 {
-    public class Day13 : SolverWithLines
+    public partial class Day13 : SolverWithLines
     {
         public override object SolvePart1(string[] input) => ToNodes(input).Max(node => CalculateHapiness(node, node, [node]));
 
@@ -21,8 +23,8 @@
             var nodes = new Dictionary<string, Node>();
             foreach (var line in lines)
             {
-                var parts = line.TrimEnd('.').Split(' ');
-                var (person, amount, neighbor) = (parts[0], int.Parse((parts[2] == "lose" ? "-" : null) + parts[3]), parts[10]);
+                var match = HapinessRegex().Match(line);
+                var (person, amount, neighbor) = (match.Groups[1].Value, int.Parse((match.Groups[2].Value == "lose" ? "-" : null) + match.Groups[3].Value), match.Groups[4].Value);
                 if (!nodes.TryGetValue(person, out var nodePerson))
                 {
                     nodePerson = new Node(person);
@@ -52,6 +54,9 @@
             }
             return (distances.Count == 0) ? node.Neighbors[start] + start.Neighbors[node] : distances.Max();
         }
+
+        [GeneratedRegex(@"(.+) would (lose|gain) (\d+) happiness units by sitting next to (.+)\.")]
+        public static partial Regex HapinessRegex();
 
         private record class Node(string Name)
         {

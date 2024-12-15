@@ -19,12 +19,12 @@ namespace AdventOfCode.Y2018.Solvers
                     var current = new Coords(x, y);
                     char? nearestId = null;
                     var nearestDistance = int.MaxValue;
-                    foreach (var point in points)
+                    foreach (var (position, id) in points)
                     {
-                        var tmp = current.DistanceTo(point.Position);
+                        var tmp = current.DistanceTo(position);
                         if (tmp < nearestDistance)
                         {
-                            nearestId = point.Id;
+                            nearestId = id;
                             nearestDistance = tmp;
                         }
                         else if (tmp == nearestDistance)
@@ -79,8 +79,8 @@ namespace AdventOfCode.Y2018.Solvers
             var points = new List<(Coords Position, char Id)>();
             foreach (var line in lines)
             {
-                var parts = line.Split(", ");
-                points.Add((new(int.Parse(parts[0]), int.Parse(parts[1])), (char)('A' + points.Count)));
+                var (left, right) = line.SplitInTwo(", ");
+                points.Add((new(int.Parse(left), int.Parse(right)), (char)('A' + points.Count)));
             }
             return points;
         }

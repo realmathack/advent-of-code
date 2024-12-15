@@ -4,25 +4,25 @@
     {
         public override object SolvePart1(string[] input)
         {
-            var (left, right) = ToLocations(input);
+            var (leftIds, rightIds) = ToLocations(input);
             var total = 0;
-            for (int i = 0; i < left.Count; i++)
+            for (int i = 0; i < leftIds.Count; i++)
             {
-                total += Math.Abs(left[i] - right[i]);
+                total += Math.Abs(leftIds[i] - rightIds[i]);
             }
             return total;
         }
 
         public override object SolvePart2(string[] input)
         {
-            var (left, right) = ToLocations(input);
-            var scores = new Dictionary<int, int>(left.Count);
+            var (leftIds, rightIds) = ToLocations(input);
+            var scores = new Dictionary<int, int>(leftIds.Count);
             var total = 0;
-            foreach (var leftId in left)
+            foreach (var leftId in leftIds)
             {
                 if (!scores.TryGetValue(leftId, out var score))
                 {
-                    score = right.Count(rightId => rightId == leftId) * leftId;
+                    score = rightIds.Count(rightId => rightId == leftId) * leftId;
                     scores[leftId] = score;
                 }
                 total += score;
@@ -32,17 +32,17 @@
 
         private static (List<int> Left, List<int> Right) ToLocations(string[] input)
         {
-            var left = new List<int>(input.Length);
-            var right = new List<int>(input.Length);
+            var leftIds = new List<int>(input.Length);
+            var rightIds = new List<int>(input.Length);
             foreach (var line in input)
             {
-                var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                left.Add(int.Parse(parts[0]));
-                right.Add(int.Parse(parts[1]));
+                var (left, right) = line.SplitInTwo("   ");
+                leftIds.Add(int.Parse(left));
+                rightIds.Add(int.Parse(right));
             }
-            left.Sort();
-            right.Sort();
-            return (left, right);
+            leftIds.Sort();
+            rightIds.Sort();
+            return (leftIds, rightIds);
         }
     }
 }

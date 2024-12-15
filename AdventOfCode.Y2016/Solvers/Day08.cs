@@ -61,13 +61,13 @@
                 var parts = split[0].Split(' ');
                 if (parts.Length == 2)
                 {
-                    var dimensions = parts[1].Split('x');
-                    instructions.Add(new(Operation.Rect, int.Parse(dimensions[0]), int.Parse(dimensions[1])));
+                    var (width, height) = parts[1].SplitInTwo('x');
+                    instructions.Add(new(Operation.Rect, int.Parse(width), int.Parse(height)));
                     continue;
                 }
                 var operation = (parts[1] == "row") ? Operation.RotateRow : Operation.RotateColumn;
-                var numbers = split[1].Split(' ');
-                instructions.Add(new(operation, int.Parse(numbers[0]), int.Parse(numbers[2])));
+                var (index, shift) = split[1].SplitInTwo(" by ");
+                instructions.Add(new(operation, int.Parse(index), int.Parse(shift)));
             }
             return instructions;
         }
