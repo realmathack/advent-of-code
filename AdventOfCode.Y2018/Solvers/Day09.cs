@@ -26,7 +26,7 @@
                     }
                     if (current is null)
                     {
-                        throw new InvalidOperationException();
+                        throw new InvalidOperationException("No next marble found!");
                     }
                     players[(marble - 1) % playerCount] += marble + current.Value;
                     var tmp = current.Next;
@@ -37,7 +37,7 @@
                 current = current?.Next ?? circle.First;
                 if (current is null)
                 {
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException("No next marble found!");
                 }
                 current = circle.AddAfter(current, marble);
             }

@@ -41,17 +41,14 @@ namespace AdventOfCode.Y2016.Solvers
             return 0;
         }
 
-        private static Coords ToOffset(Direction direction)
+        private static Coords ToOffset(Direction direction) => direction switch
         {
-            return direction switch
-            {
-                Direction.North => Coords.OffsetUp,
-                Direction.East => Coords.OffsetRight,
-                Direction.South => Coords.OffsetDown,
-                Direction.West => Coords.OffsetLeft,
-                _ => throw new ArgumentException($"Unknown value: {direction}", nameof(direction))
-            };
-        }
+            Direction.North => Coords.OffsetUp,
+            Direction.East => Coords.OffsetRight,
+            Direction.South => Coords.OffsetDown,
+            Direction.West => Coords.OffsetLeft,
+            _ => throw new ArgumentException($"Unknown value: {direction}", nameof(direction))
+        };
 
         private enum Direction { North, East, South, West }
     }

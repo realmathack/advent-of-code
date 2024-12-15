@@ -76,7 +76,7 @@ namespace AdventOfCode.Y2022.Solvers
                 2L => [new(4, height + 6), new(4, height + 5), new(2, height + 4), new(3, height + 4), new(4, height + 4)],
                 3L => [new(2, height + 7), new(2, height + 6), new(2, height + 5), new(2, height + 4)],
                 4L => [new(2, height + 5), new(3, height + 5), new(2, height + 4), new(3, height + 4)],
-                _ => throw new InvalidOperationException()
+                _ => throw new InvalidOperationException($"Unknown shape {rock % 5L}")
             };
         }
     }

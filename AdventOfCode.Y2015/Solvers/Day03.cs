@@ -31,16 +31,13 @@ namespace AdventOfCode.Y2015.Solvers
             return houses.Count;
         }
 
-        private static Coords Move(Coords current, char direction)
+        private static Coords Move(Coords current, char direction) => direction switch
         {
-            return direction switch
-            {
-                '^' => current.Up,
-                '>' => current.Right,
-                'v' => current.Down,
-                '<' => current.Left,
-                _ => throw new InvalidOperationException($"Unknown direction: {direction}")
-            };
-        }
+            '^' => current.Up,
+            '>' => current.Right,
+            'v' => current.Down,
+            '<' => current.Left,
+            _ => throw new ArgumentException($"Unknown direction: {direction}", nameof(direction))
+        };
     }
 }

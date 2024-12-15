@@ -81,7 +81,7 @@ namespace AdventOfCode.Y2024.Solvers
 
         private static Coords GetStart(char[][] grid)
         {
-            var start = new Coords(-1, -1);
+            Coords? start = null;
             for (int y = 0; y < grid.Length; y++)
             {
                 for (int x = 0; x < grid[y].Length; x++)
@@ -92,12 +92,16 @@ namespace AdventOfCode.Y2024.Solvers
                         break;
                     }
                 }
-                if (start.X != -1)
+                if (start.HasValue)
                 {
                     break;
                 }
             }
-            return start;
+            if (start is null)
+            {
+                throw new InvalidOperationException("Start not found!");
+            }
+            return start.Value;
         }
     }
 }

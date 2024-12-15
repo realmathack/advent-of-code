@@ -5,7 +5,7 @@
         [Theory]
         [InlineData(_input1, 140)]
         [InlineData(_input2, 772)]
-        [InlineData(_input, 1930)]
+        [InlineData(_input5, 1930)]
         public void TestPart1(string input, int expected)
         {
             var subject = new Day12();
@@ -21,7 +21,7 @@
         [InlineData(_input2, 436)]
         [InlineData(_input3, 236)]
         [InlineData(_input4, 368)]
-        [InlineData(_input, 1206)]
+        [InlineData(_input5, 1206)]
         public void TestPart2(string input, int expected)
         {
             var subject = new Day12();
@@ -32,17 +32,6 @@
             Assert.Equal(expected, result);
         }
 
-        private const string _input = @"RRRRIICCFF
-RRRRIICCCF
-VVRRRCCFFF
-VVRCCCJFFF
-VVVVCJJCFE
-VVIVCCJJEE
-VVIIICJJEE
-MIIIIIJJEE
-MIIISIJEEE
-MMMISSJEEE
-";
         private const string _input1 = @"AAAA
 BBCD
 BBCC
@@ -66,6 +55,17 @@ AAABBA
 ABBAAA
 ABBAAA
 AAAAAA
+";
+        private const string _input5 = @"RRRRIICCFF
+RRRRIICCCF
+VVRRRCCFFF
+VVRCCCJFFF
+VVVVCJJCFE
+VVIVCCJJEE
+VVIIICJJEE
+MIIIIIJJEE
+MIIISIJEEE
+MMMISSJEEE
 ";
     }
 }
