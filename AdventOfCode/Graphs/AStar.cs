@@ -4,7 +4,7 @@
     public abstract class AStar<T>
         where T : notnull
     {
-        public List<T> FindShortestPath(T start, T goal)
+        public GraphPath<T> FindShortestPath(T start, T goal)
         {
             var visited = new HashSet<T>();
             var cameFrom = new Dictionary<T, T>();
@@ -15,7 +15,7 @@
             {
                 if (current.Equals(goal))
                 {
-                    return ReconstructPath(cameFrom, current);
+                    return new(ReconstructPath(cameFrom, current), GetDistance(distances, current));
                 }
                 visited.Add(current);
                 foreach (var neighbor in FindNeighbors(current))
@@ -33,7 +33,7 @@
                     }
                 }
             }
-            return [];
+            return GraphPath<T>.Empty;
         }
 
         protected virtual int GetEdgeWeight(T node1, T node2) => 1;

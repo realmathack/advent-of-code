@@ -6,7 +6,7 @@ namespace AdventOfCode.Y2016.Solvers
     {
         public Day13() : this(new(31, 39)) { }
 
-        public override object SolvePart1(string input) => new AStar(int.Parse(input)).FindShortestPath(new(1, 1), _goal).Count;
+        public override object SolvePart1(string input) => new AStar(int.Parse(input)).FindShortestPath(new(1, 1), _goal).Distance;
 
         public override object SolvePart2(string input)
         {
@@ -18,7 +18,7 @@ namespace AdventOfCode.Y2016.Solvers
                 nodes.AddRange(Enumerable.Range(0, cursor.X + 1).Select(i => new Coords(i, cursor.Y)).Where(potential => !IsWall(potential, designerFavNumber)));
                 cursor = cursor.DownLeft;
             }
-            var distances = new Dijkstra(designerFavNumber).GetShortestDistances(new(1, 1), nodes);
+            var distances = new Dijkstra(designerFavNumber).FindShortestDistances(new(1, 1), nodes);
             return distances.Values.Count(distance => distance <= 50);
         }
 

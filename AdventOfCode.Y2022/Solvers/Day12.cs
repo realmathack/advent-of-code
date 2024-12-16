@@ -7,13 +7,13 @@ namespace AdventOfCode.Y2022.Solvers
         public override object SolvePart1(string[] input)
         {
             var (grid, start, end) = ToGrid(input);
-            return new AStar(grid).FindShortestPath(start, end).Count;
+            return new AStar(grid).FindShortestPath(start, end).Distance;
         }
 
         public override object SolvePart2(string[] input)
         {
             var (grid, _, end) = ToGrid(input);
-            return new Dijkstra(grid, 'a').FindShortestPath(end).Count;
+            return new Dijkstra(grid, 'a').FindShortestPath(end).Distance;
         }
 
         private static List<Coords> FindPossibleNeighbors(char[][] grid, Coords current)

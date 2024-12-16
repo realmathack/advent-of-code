@@ -111,7 +111,6 @@ namespace AdventOfCode.Y2022.Solvers
         private record class Valve(string Name, int FlowRate)
         {
             public Dictionary<Valve, int> Distances { get; } = [];
-            public static Valve Empty => new(string.Empty, 0);
         }
 
         private record class State(int[] MinutesLeft, Valve[] Next, HashSet<Valve> Opened, int TotalFlowRate)

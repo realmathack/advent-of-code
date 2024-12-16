@@ -4,7 +4,7 @@
     public abstract class Dijkstra<T>
         where T : notnull
     {
-        public List<T> FindShortestPath(T start)
+        public GraphPath<T> FindShortestPath(T start)
         {
             var visited = new HashSet<T>();
             var cameFrom = new Dictionary<T, T>();
@@ -15,7 +15,7 @@
             {
                 if (IsGoal(current))
                 {
-                    return ReconstructPath(cameFrom, current);
+                    return new(ReconstructPath(cameFrom, current), GetDistance(distances, current));
                 }
                 visited.Add(current);
                 foreach (var neighbor in FindNeighbors(current))
@@ -33,10 +33,11 @@
                     }
                 }
             }
-            return [];
+            return GraphPath<T>.Empty;
         }
 
-        public Dictionary<T, int> GetShortestDistances(T start, IEnumerable<T> nodes)
+        /// <summary>Find the shortest distance between each node in <paramref name="nodes"/> and <paramref name="start"/>.</summary>
+        public Dictionary<T, int> FindShortestDistances(T start, IEnumerable<T> nodes)
         {
             var visited = new HashSet<T>();
             var cameFrom = new Dictionary<T, T>();
