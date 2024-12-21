@@ -19,7 +19,7 @@ namespace AdventOfCode.Y2015.Solvers
         {
             var current = new Coords(0, 0);
             var houses = new HashSet<Coords> { current };
-            for (int i = 0; i < input.Length; i+=2)
+            for (int i = 0; i < input.Length; i += 2)
             {
                 houses.Add(current = Move(current, input[i]));
             }
