@@ -1,0 +1,39 @@
+﻿namespace AdventOfCode.Y2025.Tests
+{
+    public class Test01
+    {
+        [Fact]
+        public void TestPart1()
+        {
+            var subject = new Day01();
+            subject.SetInput(_input);
+
+            var result = subject.SolvePart1();
+
+            Assert.Equal(3, result);
+        }
+
+        [Fact]
+        public void TestPart2()
+        {
+            var subject = new Day01();
+            subject.SetInput(_input);
+
+            var result = subject.SolvePart2();
+
+            Assert.Equal(6, result);
+        }
+
+        private const string _input = @"L68
+L30
+R48
+L5
+R60
+L55
+L1
+L99
+R14
+L82
+";
+    }
+}
