@@ -4,7 +4,7 @@ Fast is everything below 100 ms.
 | Day | Part 1 | Performance | Part 2 | Performance |
 | - | - | -: | - | -: |
 | 01 | 1066 | Fast | 6223 | Fast |
-| 02 | ??? | ? | ??? | ? |
+| 02 | 31839939622 | Fast | 41662374059 | 300ms |
 | 03 | ??? | ? | ??? | ? |
 | 04 | ??? | ? | ??? | ? |
 | 05 | ??? | ? | ??? | ? |
