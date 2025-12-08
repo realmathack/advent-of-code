@@ -15,33 +15,41 @@
   </Folder>
   <Folder Name="/templates/">
     <File Path="templates/00.txt" />
-    <File Path="templates/AdventOfCode.Y2000.Tests/Test01.cs" />
-    <File Path="templates/AdventOfCode.Y2000/Program.cs" />
-    <File Path="templates/AdventOfCode.Y2000/Solvers/Day01.cs" />
     <File Path="templates/Day00.cs" />
     <File Path="templates/Test00.cs" />
   </Folder>
-  <Project Path="AdventOfCode/AdventOfCode.csproj" />
-  <Project Path="AdventOfCode.Y2015.Tests/AdventOfCode.Y2015.Tests.csproj" />
+  <Folder Name="/templates/year/">
+    <File Path="templates/year/Answers-2000.md" />
+  </Folder>
+  <Folder Name="/templates/year/Y2000/">
+    <File Path="templates/year/AdventOfCode.Y2000/AdventOfCode.Y2000.csproj" />
+    <File Path="templates/year/AdventOfCode.Y2000/Program.cs" />
+  </Folder>
+  <Folder Name="/templates/year/Y2000.Tests/">
+    <File Path="templates/year/AdventOfCode.Y2000.Tests/AdventOfCode.Y2000.Tests.csproj" />
+    <File Path="templates/year/AdventOfCode.Y2000.Tests/Usings.cs" />
+  </Folder>
   <Project Path="AdventOfCode.Y2015/AdventOfCode.Y2015.csproj" />
-  <Project Path="AdventOfCode.Y2016.Tests/AdventOfCode.Y2016.Tests.csproj" />
+  <Project Path="AdventOfCode.Y2015.Tests/AdventOfCode.Y2015.Tests.csproj" />
   <Project Path="AdventOfCode.Y2016/AdventOfCode.Y2016.csproj" />
-  <Project Path="AdventOfCode.Y2017.Tests/AdventOfCode.Y2017.Tests.csproj" />
+  <Project Path="AdventOfCode.Y2016.Tests/AdventOfCode.Y2016.Tests.csproj" />
   <Project Path="AdventOfCode.Y2017/AdventOfCode.Y2017.csproj" />
-  <Project Path="AdventOfCode.Y2018.Tests/AdventOfCode.Y2018.Tests.csproj" />
+  <Project Path="AdventOfCode.Y2017.Tests/AdventOfCode.Y2017.Tests.csproj" />
   <Project Path="AdventOfCode.Y2018/AdventOfCode.Y2018.csproj" />
-  <Project Path="AdventOfCode.Y2019.Tests/AdventOfCode.Y2019.Tests.csproj" />
+  <Project Path="AdventOfCode.Y2018.Tests/AdventOfCode.Y2018.Tests.csproj" />
   <Project Path="AdventOfCode.Y2019/AdventOfCode.Y2019.csproj" />
-  <Project Path="AdventOfCode.Y2020.Tests/AdventOfCode.Y2020.Tests.csproj" />
+  <Project Path="AdventOfCode.Y2019.Tests/AdventOfCode.Y2019.Tests.csproj" />
   <Project Path="AdventOfCode.Y2020/AdventOfCode.Y2020.csproj" />
-  <Project Path="AdventOfCode.Y2021.Tests/AdventOfCode.Y2021.Tests.csproj" />
+  <Project Path="AdventOfCode.Y2020.Tests/AdventOfCode.Y2020.Tests.csproj" />
   <Project Path="AdventOfCode.Y2021/AdventOfCode.Y2021.csproj" />
-  <Project Path="AdventOfCode.Y2022.Tests/AdventOfCode.Y2022.Tests.csproj" />
+  <Project Path="AdventOfCode.Y2021.Tests/AdventOfCode.Y2021.Tests.csproj" />
   <Project Path="AdventOfCode.Y2022/AdventOfCode.Y2022.csproj" />
-  <Project Path="AdventOfCode.Y2023.Tests/AdventOfCode.Y2023.Tests.csproj" />
+  <Project Path="AdventOfCode.Y2022.Tests/AdventOfCode.Y2022.Tests.csproj" />
   <Project Path="AdventOfCode.Y2023/AdventOfCode.Y2023.csproj" />
-  <Project Path="AdventOfCode.Y2024.Tests/AdventOfCode.Y2024.Tests.csproj" />
+  <Project Path="AdventOfCode.Y2023.Tests/AdventOfCode.Y2023.Tests.csproj" />
   <Project Path="AdventOfCode.Y2024/AdventOfCode.Y2024.csproj" />
-  <Project Path="AdventOfCode.Y2025.Tests/AdventOfCode.Y2025.Tests.csproj" />
+  <Project Path="AdventOfCode.Y2024.Tests/AdventOfCode.Y2024.Tests.csproj" />
   <Project Path="AdventOfCode.Y2025/AdventOfCode.Y2025.csproj" />
+  <Project Path="AdventOfCode.Y2025.Tests/AdventOfCode.Y2025.Tests.csproj" />
+  <Project Path="AdventOfCode/AdventOfCode.csproj" />
 </Solution>
