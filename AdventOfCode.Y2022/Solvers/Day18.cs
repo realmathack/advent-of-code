@@ -61,8 +61,7 @@ namespace AdventOfCode.Y2022.Solvers
             var cubes = new HashSet<Coords3D>();
             foreach (var line in lines)
             {
-                var numbers = line.Split(',').Select(int.Parse).ToArray();
-                cubes.Add(new(numbers[0], numbers[1], numbers[2]));
+                cubes.Add(Coords3D.Parse(line));
             }
             return cubes;
         }

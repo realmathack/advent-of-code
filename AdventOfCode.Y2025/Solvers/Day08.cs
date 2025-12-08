@@ -90,8 +90,7 @@ namespace AdventOfCode.Y2025.Solvers
             var boxes = new Coords3D[lines.Length];
             for (int i = 0; i < lines.Length; i++)
             {
-                var coords = lines[i].Split(',');
-                boxes[i] = new(int.Parse(coords[0]), int.Parse(coords[1]), int.Parse(coords[2]));
+                boxes[i] = Coords3D.Parse(lines[i]);
             }
             return boxes;
         }

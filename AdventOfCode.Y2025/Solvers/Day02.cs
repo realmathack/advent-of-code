@@ -77,8 +77,7 @@ namespace AdventOfCode.Y2025.Solvers
             var ranges = new List<Range>(blocks.Length);
             foreach (var block in blocks)
             {
-                var (start, end) = block.SplitInTwo('-');
-                ranges.Add(new(long.Parse(start), long.Parse(end)));
+                ranges.Add(Range.Parse(block));
             }
             return ranges;
         }

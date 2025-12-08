@@ -52,8 +52,7 @@ namespace AdventOfCode.Y2024.Solvers
             var corruptions = new HashSet<Coords>(count);
             for (int i = 0; i < count; i++)
             {
-                var (x, y) = lines[i].SplitInTwo(',');
-                corruptions.Add(new(int.Parse(x), int.Parse(y)));
+                corruptions.Add(Coords.Parse(lines[i]));
             }
             return corruptions;
         }
@@ -63,8 +62,7 @@ namespace AdventOfCode.Y2024.Solvers
             var corruptions = new Coords[lines.Length];
             for (int i = 0; i < lines.Length; i++)
             {
-                var (x, y) = lines[i].SplitInTwo(',');
-                corruptions[i] = new(int.Parse(x), int.Parse(y));
+                corruptions[i] = Coords.Parse(lines[i]);
             }
             return corruptions;
         }

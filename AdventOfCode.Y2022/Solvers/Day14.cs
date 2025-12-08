@@ -90,7 +90,7 @@ namespace AdventOfCode.Y2022.Solvers
             var formations = new List<Coords[]>();
             foreach (var line in lines)
             {
-                var formation = line.Split(" -> ").Select(point => point.Split(',').Select(int.Parse).ToArray()).Select(position => new Coords(position[0], position[1])).ToArray();
+                var formation = line.Split(" -> ").Select(Coords.Parse).ToArray();
                 var minX = formation.Min(positions => positions.X);
                 if (minX < topLeft.X)
                 {

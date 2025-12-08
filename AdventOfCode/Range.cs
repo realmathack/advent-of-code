@@ -30,5 +30,10 @@ namespace AdventOfCode
         public bool FullyOverlapsWith(Range<T> other) => Start <= other.Start && End >= other.End;
         public bool IsFullyEnclosedBy(Range<T> other) => Start >= other.Start && End <= other.End;
         public override string ToString() => $"{Start}-{End}";
+        public static Range<T> Parse(string s)
+        {
+            var limits = s.Split('-', 2);
+            return new(T.Parse(limits[0], null), T.Parse(limits[1], null));
+        }
     }
 }

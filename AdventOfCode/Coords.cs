@@ -43,5 +43,10 @@ namespace AdventOfCode
         public Coords<T> RotateLeft => new(Y, -X);
         public Coords<T> RotateRight => new(-Y, X);
         public override string ToString() => $"{X},{Y}";
+        public static Coords<T> Parse(string s)
+        {
+            var coords = s.Split(',', 2);
+            return new(T.Parse(coords[0], null), T.Parse(coords[1], null));
+        }
     }
 }

@@ -30,15 +30,9 @@ namespace AdventOfCode.Y2021.Solvers
             for (int i = 0; i < lines.Length; i++)
             {
                 var (from, to) = lines[i].SplitInTwo(" -> ");
-                vents[i] = new(ToPosition(from), ToPosition(to));
+                vents[i] = new(Coords.Parse(from), Coords.Parse(to));
             }
             return vents;
-        }
-
-        private static Coords ToPosition(string position)
-        {
-            var parts = position.Split(',').Select(int.Parse).ToArray();
-            return new(parts[0], parts[1]);
         }
 
         private static List<Coords> ToPositions(Vent vent)

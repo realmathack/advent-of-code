@@ -46,8 +46,7 @@ namespace AdventOfCode.Y2025.Solvers
         private static (Range[] FreshRanges, long[] Ingredients) ToFreshRangesAndIngredients(string[] lineGroups)
         {
             var freshRanges = lineGroups[0].SplitIntoLines()
-                .Select(line => line.SplitInTwo('-'))
-                .Select(ids => new Range(long.Parse(ids.Left), long.Parse(ids.Right)))
+                .Select(Range.Parse)
                 .OrderBy(range => range.Start)
                 .ToArray();
             var ingredients = lineGroups[1].SplitIntoLines()

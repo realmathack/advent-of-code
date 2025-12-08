@@ -23,5 +23,10 @@ namespace AdventOfCode
         public Coords3D<T> Up => new(X, Y, Z + T.One);
         public Coords3D<T>[] Neighbors => [Left, Right, Forward, Back, Down, Up];
         public override string ToString() => $"{X},{Y},{Z}";
+        public static Coords3D<T> Parse(string s)
+        {
+            var coords = s.Split(',', 3);
+            return new(T.Parse(coords[0], null), T.Parse(coords[1], null), T.Parse(coords[2], null));
+        }
     }
 }
