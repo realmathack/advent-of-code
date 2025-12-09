@@ -52,4 +52,5 @@
   <Project Path="AdventOfCode.Y2025/AdventOfCode.Y2025.csproj" />
   <Project Path="AdventOfCode.Y2025.Tests/AdventOfCode.Y2025.Tests.csproj" />
   <Project Path="AdventOfCode/AdventOfCode.csproj" />
+  <Project Path="AdventOfCode.Tests/AdventOfCode.Tests.csproj" />
 </Solution>

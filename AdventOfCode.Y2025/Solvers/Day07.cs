@@ -39,18 +39,19 @@ namespace AdventOfCode.Y2025.Solvers
 
         public override object SolvePart2(char[][] input)
         {
-            var cache = new Dictionary<Coords, long>();
+            var memo = new Dictionary<Coords, long>();
             var start = new Coords(Array.IndexOf(input[0], 'S'), 0);
-            return Part2Inner(cache, input, start);
+            return Part2Inner(memo, input, start);
         }
 
-        private static long Part2Inner(Dictionary<Coords, long> cache, char[][] input, Coords current)
+        private static long Part2Inner(Dictionary<Coords, long> memo, char[][] input, Coords current)
         {
             if (current.Y == input.Length)
             {
                 return 1L;
             }
-            if (cache.TryGetValue(current, out var count))
+            // https://en.wikipedia.org/wiki/Memoization
+            if (memo.TryGetValue(current, out var count))
             {
                 return count;
             }
@@ -58,11 +59,11 @@ namespace AdventOfCode.Y2025.Solvers
             var item = input[current.Y][current.X];
             if (item == '^')
             {
-                count = Part2Inner(cache, input, new(current.X - 1, nextY)) + Part2Inner(cache, input, new(current.X + 1, nextY));
-                cache[current] = count;
+                count = Part2Inner(memo, input, new(current.X - 1, nextY)) + Part2Inner(memo, input, new(current.X + 1, nextY));
+                memo[current] = count;
                 return count;
             }
-            return Part2Inner(cache, input, new(current.X, nextY));
+            return Part2Inner(memo, input, new(current.X, nextY));
         }
     }
 }

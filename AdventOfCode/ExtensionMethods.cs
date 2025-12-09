@@ -25,7 +25,7 @@ namespace AdventOfCode
         public static bool IsOutOfBounds<T>(this T[][] grid, Coords<int> coords) => coords.Y < 0 || coords.X < 0 || coords.Y >= grid.Length || coords.X >= grid[coords.Y].Length;
 
         // Math
-        #region Product (copied from Enumerable.Sum)
+        #region Product, inspired by Enumerable.Sum (net6.0)
         public static int Product(this IEnumerable<int> source) => Product<int, int>(source);
         public static long Product(this IEnumerable<long> source) => Product<long, long>(source);
         private static TResult Product<TSource, TResult>(this IEnumerable<TSource> source)
@@ -92,26 +92,50 @@ namespace AdventOfCode
             }
         }
 
-        public static IEnumerable<T[]> Permutations<T>(this T[] input, int indexFrom = 0)
+        // https://en.wikipedia.org/wiki/Heap%27s_algorithm
+        public static IEnumerable<T[]> Permutations<T>(this T[] input) => Permutations(input, input.Length);
+        private static IEnumerable<T[]> Permutations<T>(this T[] input, int size)
         {
-            if (indexFrom + 1 == input.Length)
+            if (size == 1)
             {
-                yield return input;
+                yield return [.. input];
             }
             else
             {
-                foreach (var permutation in Permutations(input, indexFrom + 1))
+                for (int i = 0; i < size; i++)
                 {
-                    yield return permutation;
-                }
-                for (var i = indexFrom + 1; i < input.Length; i++)
-                {
-                    (input[indexFrom], input[i]) = (input[i], input[indexFrom]);
-                    foreach (var permutation in Permutations(input, indexFrom + 1))
+                    foreach (var permutation in Permutations(input, size - 1))
                     {
                         yield return permutation;
                     }
-                    (input[indexFrom], input[i]) = (input[i], input[indexFrom]);
+                    if (size % 2 == 0)
+                    {
+                        (input[size - 1], input[i]) = (input[i], input[size - 1]);
+                    }
+                    else
+                    {
+                        (input[size - 1], input[0]) = (input[0], input[size - 1]);
+                    }
+                }
+            }
+        }
+
+        public static IEnumerable<T[]> Combinations<T>(this T[] input, int length) => Combinations(input, length, length, 0);
+        private static IEnumerable<T[]> Combinations<T>(this T[] input, int length, int depth, int indexFrom)
+        {
+            if (depth == 0)
+            {
+                yield return new T[length];
+            }
+            else
+            {
+                for (int i = indexFrom; i < input.Length; i++)
+                {
+                    foreach (var combination in Combinations(input, length, depth - 1, i + 1))
+                    {
+                        combination[^depth] = input[i];
+                        yield return combination;
+                    }
                 }
             }
         }
