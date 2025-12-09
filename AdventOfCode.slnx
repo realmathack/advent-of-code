@@ -27,7 +27,6 @@
   </Folder>
   <Folder Name="/templates/year/Y2000.Tests/">
     <File Path="templates/year/AdventOfCode.Y2000.Tests/AdventOfCode.Y2000.Tests.csproj" />
-    <File Path="templates/year/AdventOfCode.Y2000.Tests/Usings.cs" />
   </Folder>
   <Project Path="AdventOfCode.Y2015/AdventOfCode.Y2015.csproj" />
   <Project Path="AdventOfCode.Y2015.Tests/AdventOfCode.Y2015.Tests.csproj" />

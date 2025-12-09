@@ -1,6 +1,3 @@
-﻿global using AdventOfCode;
-
-var year = "2016";
-var day = ProgramHelper.GetDayFromInput(year);
-var type = Type.GetType($"AdventOfCode.Y{year}.Solvers.Day{day}");
-ProgramHelper.CreateSolver(type).Run(day);
+﻿var day = AdventOfCode.ProgramHelper.GetDayFromInput("2016");
+var type = Type.GetType($"AdventOfCode.Y2016.Solvers.Day{day}");
+AdventOfCode.ProgramHelper.Run(type, day);

@@ -64,7 +64,7 @@ namespace AdventOfCode.Y2018.Solvers
             var screen = new Screen(maxX + 1, maxY + 1);
             foreach (var light in lights)
             {
-                screen.SetPixel(light.Position.X, light.Position.Y);
+                screen.SetPixel(light.Position);
             }
             return screen.PrintScreen();
         }

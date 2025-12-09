@@ -16,6 +16,7 @@
         }
 
         public void SetPixel(int x, int y, bool value = true) => _grid[y][x] = value;
+        public void SetPixel(Coords<int> coords, bool value = true) => _grid[coords.Y][coords.X] = value;
         public string PrintScreen() => string.Concat(_grid.Select(row => Environment.NewLine + string.Concat(row.Select(value => value ? '█' : ' '))));
 
         public string ReadScreen()
@@ -27,7 +28,7 @@
             var pixels = new List<int[]>();
             for (int i = 0; i < _grid[0].Length; i += 5)
             {
-                pixels.Add(_grid.SelectMany(row => row[i..(i + 5)].Select(value => value ? 1 : 0)).ToArray());
+                pixels.Add([.. _grid.SelectMany(row => row[i..(i + 5)].Select(value => value ? 1 : 0))]);
             }
             var letters = pixels.Select(GetLetter).ToArray();
             return letters.Contains(' ') ? PrintScreen() : new string(letters);

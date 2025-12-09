@@ -17,21 +17,13 @@ namespace AdventOfCode
             return day.ToString("D2");
         }
 
-        public static ISolver CreateSolver(Type? type)
+        public static void Run(Type? type, string day)
         {
-            if (type is null)
+            ArgumentNullException.ThrowIfNull(type);
+            if (Activator.CreateInstance(type) is not ISolver solver)
             {
-                throw new InvalidOperationException($"Type not found for day!");
+                throw new InvalidOperationException($"Type {type.FullName} is not an {nameof(ISolver)}!");
             }
-            if (Activator.CreateInstance(type) is ISolver solver)
-            {
-                return solver;
-            }
-            throw new InvalidOperationException($"Type {type.FullName} is not an {nameof(ISolver)}!");
-        }
-
-        public static void Run(this ISolver solver, string day)
-        {
             var startTime = Stopwatch.GetTimestamp();
             solver.SetInput(File.ReadAllText(@$"inputs\{day}.txt"));
             var inputTime = Stopwatch.GetElapsedTime(startTime);
