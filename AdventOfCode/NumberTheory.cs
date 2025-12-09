@@ -7,9 +7,9 @@
         /// <summary>Greatest common divisor</summary>
         private static int GCD(int a, int b) => b == 0 ? a : GCD(b, a % b);
         /// <summary>Greatest common divisor</summary>
-        public static long GCD(params int[] numbers) => numbers.Aggregate(GCD);
+        public static int GCD(params int[] numbers) => numbers.Aggregate(GCD);
         /// <summary>Greatest common divisor</summary>
-        public static long GCD(IEnumerable<int> numbers) => numbers.Aggregate(GCD);
+        public static int GCD(IEnumerable<int> numbers) => numbers.Aggregate(GCD);
         /// <summary>Greatest common divisor</summary>
         private static long GCD(long a, long b) => b == 0 ? a : GCD(b, a % b);
         /// <summary>Greatest common divisor</summary>
