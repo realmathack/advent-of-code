@@ -50,10 +50,6 @@ var programFile = File.ReadAllText(@"templates\year\AdventOfCode.Y2000\Program.c
 programFile = programFile.Replace("2000", year);
 File.WriteAllText(@$"AdventOfCode.Y{year}\Program.cs", programFile, utf8BomEncoding);
 
-var usingsFile = File.ReadAllText(@"templates\year\AdventOfCode.Y2000.Tests\Usings.cs");
-usingsFile = usingsFile.Replace("2000", year);
-File.WriteAllText(@$"AdventOfCode.Y{year}.Tests\Usings.cs", usingsFile, utf8BomEncoding);
-
 File.Copy(@"templates\year\AdventOfCode.Y2000\AdventOfCode.Y2000.csproj", @$"AdventOfCode.Y{year}\AdventOfCode.Y{year}.csproj");
 
 var testProjectFile = File.ReadAllText(@"templates\year\AdventOfCode.Y2000.Tests\AdventOfCode.Y2000.Tests.csproj");
