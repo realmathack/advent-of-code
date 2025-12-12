@@ -5,7 +5,7 @@
         public override object SolvePart1(string[] input)
         {
             var devices = ToDevices(input);
-            return FindPathCount(devices["you"], devices["out"]);
+            return FindPathCount(devices["you"], devices["out"], []);
         }
 
         public override object SolvePart2(string[] input)
@@ -15,21 +15,27 @@
             var dac = devices["dac"];
             var fft = devices["fft"];
             var end = devices["out"];
-            // TODO: Implement
-            return 0;
+            var memo = new Dictionary<(Device Start, Device End), long>();
+            return FindPathCount(start, dac, memo) * FindPathCount(dac, fft, memo) * FindPathCount(fft, end, memo)
+                + FindPathCount(start, fft, memo) * FindPathCount(fft, dac, memo) * FindPathCount(dac, end, memo);
         }
 
-        private static int FindPathCount(Device current, Device end)
+        private static long FindPathCount(Device current, Device end, Dictionary<(Device Start, Device End), long> memo)
         {
+            // https://en.wikipedia.org/wiki/Memoization
+            if (memo.TryGetValue((current, end), out var count))
+            {
+                return count;
+            }
             if (current == end)
             {
-                return 1;
+                return 1L;
             }
-            var count = 0;
             foreach (var output in current.Outputs)
             {
-                count += FindPathCount(output, end);
+                count += FindPathCount(output, end, memo);
             }
+            memo[(current, end)] = count;
             return count;
         }
 

@@ -10,7 +10,7 @@
 
             var result = subject.SolvePart1();
 
-            Assert.Equal(5, result);
+            Assert.Equal(5L, result);
         }
 
         [Fact]
@@ -21,7 +21,7 @@
 
             var result = subject.SolvePart2();
 
-            Assert.Equal(2, result);
+            Assert.Equal(2L, result);
         }
 
         private const string _input1 = @"aaa: you hhh
