@@ -10,7 +10,7 @@
             return minCutSize * (count - minCutSize);
         }
 
-        public override object SolvePart2(string[] input) => "Day 25";
+        public override object SolvePart2(string[] input) => "Last Day";
 
         // https://en.wikipedia.org/wiki/Karger%27s_algorithm
         private static int FindWithKrager(HashSet<string> nodes, Edge[] edges)

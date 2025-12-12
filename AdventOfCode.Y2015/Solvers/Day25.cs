@@ -17,7 +17,7 @@ namespace AdventOfCode.Y2015.Solvers
             return code;
         }
 
-        public override object SolvePart2(string input) => "Day 25";
+        public override object SolvePart2(string input) => "Last Day";
 
         private static (long Row, long Col) ToTarget(string message)
         {
