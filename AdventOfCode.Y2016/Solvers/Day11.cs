@@ -46,12 +46,12 @@ namespace AdventOfCode.Y2016.Solvers
                 foreach (var match in (IReadOnlyList<Match>)InputRegex().Matches(lines[i]))
                 {
                     int shift;
-                    if ((shift = names.IndexOf(match.Groups["Name"].Value)) == -1)
+                    if ((shift = names.IndexOf(match.Groups[1].Value)) == -1)
                     {
                         shift = names.Count;
-                        names.Add(match.Groups["Name"].Value);
+                        names.Add(match.Groups[1].Value);
                     }
-                    floors |= ((match.Groups["Type"].Value == "microchip") ? 1L : 2L) << (16 * (3 - i) + shift * 2);
+                    floors |= ((match.Groups[3].Value == "microchip") ? 1L : 2L) << (16 * (3 - i) + shift * 2);
                 }
             }
             if (addExtraItems)
@@ -61,7 +61,7 @@ namespace AdventOfCode.Y2016.Solvers
             return new(0, floors);
         }
 
-        [GeneratedRegex(@"(?<Name>[a-z]+)(\-compatible)? (?<Type>generator|microchip)")]
+        [GeneratedRegex(@"([a-z]+)(\-compatible)? (generator|microchip)")]
         private static partial Regex InputRegex();
 
         // Every 16 bits is a floor (first set is floor 1, fourth set is floor 4)
