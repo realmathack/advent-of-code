@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace AdventOfCode.Y2018.Solvers
+﻿namespace AdventOfCode.Y2018.Solvers
 {
     public class Day05 : SolverWithText
     {
@@ -23,7 +21,7 @@ namespace AdventOfCode.Y2018.Solvers
 
         private static int ReduceReturnLength(string polymer)
         {
-            var reduced = new StringBuilder(polymer);
+            var reduced = new System.Text.StringBuilder(polymer);
             do
             {
                 polymer = reduced.ToString();
@@ -43,7 +41,7 @@ namespace AdventOfCode.Y2018.Solvers
 
         private static string Improve(string polymer, char c)
         {
-            var improved = new StringBuilder(polymer.Length);
+            var improved = new System.Text.StringBuilder(polymer.Length);
             for (int i = 0; i < polymer.Length; i++)
             {
                 if (char.ToLower(polymer[i]) != c)

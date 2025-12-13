@@ -35,7 +35,7 @@
                             "red" => _red,
                             "green" => _green,
                             "blue" => _blue,
-                            _ => throw new InvalidOperationException($"Unknown color {part[(pos + 1)..]}")
+                            _ => throw new ArgumentException($"Unknown color {part[(pos + 1)..]}")
                         };
                         cubes[cube] = int.Parse(part[..pos]);
                     }

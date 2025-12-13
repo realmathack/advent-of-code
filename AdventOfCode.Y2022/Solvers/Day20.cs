@@ -78,7 +78,7 @@
             }
             if (zeroListItem is null)
             {
-                throw new InvalidOperationException("ListItem with number 0 not found!");
+                throw new ImpossibleException("ListItem with number 0 not found!");
             }
             return (list, zeroListItem);
         }

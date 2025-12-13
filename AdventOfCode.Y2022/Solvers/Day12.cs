@@ -60,7 +60,7 @@ namespace AdventOfCode.Y2022.Solvers
             }
             if (start is null || end is null)
             {
-                throw new InvalidOperationException("Start and/or End not found!");
+                throw new ImpossibleException("Start and/or End not found!");
             }
             return (grid, start.Value, end.Value);
         }

@@ -56,7 +56,7 @@ namespace AdventOfCode.Y2022.Solvers
             }
             if (remaining.Count != 1 || remaining.First().Value.Count != 1 || remaining.First().Value.First().Start != remaining.First().Value.First().End)
             {
-                throw new InvalidOperationException("Remaining bigger than 1");
+                throw new ImpossibleException("Remaining bigger than 1");
             }
             return remaining.First().Value.First().Start * 4_000_000L + remaining.First().Key;
         }

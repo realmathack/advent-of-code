@@ -8,7 +8,7 @@ namespace AdventOfCode.Y2025.Solvers
 
         public override object SolvePart1(string[] input)
         {
-            var boxes = ToJunctionBoxes(input);
+            var boxes = input.Select(Coords3D.Parse).ToArray();
             var distances = CalculateDistances(boxes);
             var groups = new List<HashSet<Coords3D>>();
             foreach (var (a, b, _) in distances.Take(connections))
@@ -21,7 +21,7 @@ namespace AdventOfCode.Y2025.Solvers
 
         public override object SolvePart2(string[] input)
         {
-            var boxes = ToJunctionBoxes(input);
+            var boxes = input.Select(Coords3D.Parse).ToArray();
             var distances = CalculateDistances(boxes);
             var groups = new List<HashSet<Coords3D>>();
             foreach (var (a, b, _) in distances)
@@ -32,7 +32,7 @@ namespace AdventOfCode.Y2025.Solvers
                     return (long)a.X * b.X;
                 }
             }
-            return 0L;
+            throw new SolutionNotFoundException();
         }
 
         private static void ConnectBoxes(Coords3D a, Coords3D b, List<HashSet<Coords3D>> groups)
@@ -83,16 +83,6 @@ namespace AdventOfCode.Y2025.Solvers
             long y = a.Y - b.Y;
             long z = a.Z - b.Z;
             return Math.Sqrt(x * x + y * y + z * z);
-        }
-
-        private static Coords3D[] ToJunctionBoxes(string[] lines)
-        {
-            var boxes = new Coords3D[lines.Length];
-            for (int i = 0; i < lines.Length; i++)
-            {
-                boxes[i] = Coords3D.Parse(lines[i]);
-            }
-            return boxes;
         }
     }
 }

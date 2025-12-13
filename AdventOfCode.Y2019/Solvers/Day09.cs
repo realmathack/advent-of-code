@@ -84,7 +84,7 @@
                 '0' => GetMemory(GetMemory(pointer)),
                 '1' => GetMemory(pointer),
                 '2' => GetMemory(_relativeBase + GetMemory(pointer)),
-                _ => throw new InvalidOperationException($"Unknown read mode: {mode}")
+                _ => throw new ArgumentException($"Unknown read mode: {mode}", nameof(mode))
             };
 
             private void SetMemory(long pointer, char mode, long value)
@@ -98,7 +98,7 @@
                         _memory[_relativeBase + GetMemory(pointer)] = value;
                         break;
                     default:
-                        throw new InvalidOperationException($"Unknown write mode: {mode}");
+                        throw new ArgumentException($"Unknown write mode: {mode}", nameof(mode));
                 }
             }
         }

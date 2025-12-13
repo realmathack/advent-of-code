@@ -108,7 +108,7 @@ namespace AdventOfCode.Y2023.Solvers
             }
             if (start is null)
             {
-                throw new InvalidOperationException("Start not found!");
+                throw new ImpossibleException("Start not found!");
             }
             return (grid, start.Value);
         }

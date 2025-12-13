@@ -5,7 +5,14 @@
     {
         private TInput? _input = null;
 
-        public void SetInput(string input) => _input = ParseInput(input);
+        protected bool IsRealInput { get; private set; }
+
+        public void SetInput(string input, bool isRealInput = false)
+        {
+            _input = ParseInput(input);
+            IsRealInput = isRealInput;
+        }
+
         public object SolvePart1() => SolvePart1(_input ?? throw new InvalidOperationException($"No input set, call {nameof(SetInput)} first!"));
         public object SolvePart2() => SolvePart2(_input ?? throw new InvalidOperationException($"No input set, call {nameof(SetInput)} first!"));
 

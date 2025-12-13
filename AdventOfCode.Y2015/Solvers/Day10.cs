@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace AdventOfCode.Y2015.Solvers
+﻿namespace AdventOfCode.Y2015.Solvers
 {
     public class Day10 : SolverWithText
     {
@@ -18,7 +16,7 @@ namespace AdventOfCode.Y2015.Solvers
 
         private static string LookAndSay(string digits)
         {
-            var sequence = new StringBuilder(digits.Length);
+            var sequence = new System.Text.StringBuilder(digits.Length);
             var last = 0;
             for (int i = 0; i < digits.Length; i++)
             {

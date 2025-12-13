@@ -1,12 +1,10 @@
-﻿using System.Text;
-
-namespace AdventOfCode.Y2016.Solvers
+﻿namespace AdventOfCode.Y2016.Solvers
 {
     public class Day09 : SolverWithText
     {
         public override object SolvePart1(string input)
         {
-            var decompressed = new StringBuilder();
+            var decompressed = new System.Text.StringBuilder();
             var current = 0;
             while (current < input.Length)
             {

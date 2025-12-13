@@ -33,7 +33,7 @@ namespace AdventOfCode.Y2019.Solvers
                     'L' => Coords.OffsetLeft,
                     'R' => Coords.OffsetRight,
                     'U' => Coords.OffsetUp,
-                    _ => throw new InvalidOperationException($"Unknown direction {direction[0]}!")
+                    _ => throw new ArgumentException($"Unknown direction {direction[0]}!")
                 };
                 for (int i = 0; i < int.Parse(direction[1..]); i++)
                 {

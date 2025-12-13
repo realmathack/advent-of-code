@@ -22,7 +22,7 @@
                     return reflection;
                 }
             }
-            throw new InvalidOperationException("Smudge not found");
+            throw new SolutionNotFoundException("Smudge not found");
         }
 
         private static int FindReflection(string lineGroup, int oldReflection = -1)

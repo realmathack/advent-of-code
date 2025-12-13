@@ -2,7 +2,7 @@
 {
     public class Test12
     {
-        [Fact(Skip = "Solution only works for real input")]
+        [Fact]
         public void TestPart1()
         {
             var subject = new Day12();

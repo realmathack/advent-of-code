@@ -130,7 +130,7 @@ namespace AdventOfCode.Y2024.Solvers
             }
             if (robot is null)
             {
-                throw new InvalidOperationException("Robot not found!");
+                throw new ImpossibleException("Robot not found!");
             }
             return (walls, boxes, robot.Value);
         }
@@ -167,7 +167,7 @@ namespace AdventOfCode.Y2024.Solvers
             }
             if (robot is null)
             {
-                throw new InvalidOperationException("Robot not found!");
+                throw new ImpossibleException("Robot not found!");
             }
             return (walls, boxes, robot.Value);
         }

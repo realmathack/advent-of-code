@@ -33,7 +33,7 @@
                     "OR" => Operator.Or,
                     "LSHIFT" => Operator.LeftShift,
                     "RSHIFT" => Operator.RightShift,
-                    _ => throw new InvalidOperationException($"Unknown operator: {parts[1]}")
+                    _ => throw new ArgumentException($"Unknown operator: {parts[1]}")
                 };
                 instructions.Add(parts[4], new(op, [parts[0], parts[2]]));
             }

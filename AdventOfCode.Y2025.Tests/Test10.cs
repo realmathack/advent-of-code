@@ -21,7 +21,7 @@
 
             var result = subject.SolvePart2();
 
-            Assert.Equal(null!, result);
+            Assert.Equal(33, result);
         }
 
         private const string _input = @"[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}

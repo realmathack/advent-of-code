@@ -6,8 +6,8 @@ namespace AdventOfCode.Y2025.Solvers
     {
         public override object SolvePart1(string input)
         {
-            var ranges = ToIdRanges(input);
             var total = 0L;
+            var ranges = input.Split(',').Select(Range.Parse);
             foreach (var range in ranges)
             {
                 for (long i = range.Start; i <= range.End; i++)
@@ -29,8 +29,8 @@ namespace AdventOfCode.Y2025.Solvers
 
         public override object SolvePart2(string input)
         {
-            var ranges = ToIdRanges(input);
             var total = 0L;
+            var ranges = input.Split(',').Select(Range.Parse);
             foreach (var range in ranges)
             {
                 for (long i = range.Start; i <= range.End; i++)
@@ -69,17 +69,6 @@ namespace AdventOfCode.Y2025.Solvers
                 }
             }
             return false;
-        }
-
-        private static List<Range> ToIdRanges(string input)
-        {
-            var blocks = input.Split(',');
-            var ranges = new List<Range>(blocks.Length);
-            foreach (var block in blocks)
-            {
-                ranges.Add(Range.Parse(block));
-            }
-            return ranges;
         }
     }
 }

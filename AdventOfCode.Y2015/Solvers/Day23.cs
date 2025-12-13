@@ -39,7 +39,7 @@
                         }
                         break;
                     default:
-                        throw new InvalidOperationException($"Unknown opcode {lines[pc][..2]}!");
+                        throw new ArgumentException($"Unknown opcode {lines[pc][..2]}!");
                 }
                 pc++;
             }

@@ -45,7 +45,7 @@ namespace AdventOfCode.Y2016.Solvers
                         'U' => current.Up,
                         'R' => current.Right,
                         'D' => current.Down,
-                        _ => throw new InvalidOperationException($"Unknown instruction {instruction}")
+                        _ => throw new ArgumentException($"Unknown instruction {instruction}")
                     };
                     if (keypad[newCoords.Y][newCoords.X] != '.')
                     {

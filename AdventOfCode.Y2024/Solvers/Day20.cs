@@ -96,7 +96,7 @@ namespace AdventOfCode.Y2024.Solvers
             }
             if (start is null || end is null)
             {
-                throw new InvalidOperationException("Start and/or End not found!");
+                throw new ImpossibleException("Start and/or End not found!");
             }
             return (start.Value, end.Value);
         }

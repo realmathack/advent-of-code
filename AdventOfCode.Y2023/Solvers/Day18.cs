@@ -17,7 +17,7 @@ namespace AdventOfCode.Y2023.Solvers
                     'L' => Coords.OffsetLeft,
                     'R' => Coords.OffsetRight,
                     'U' => Coords.OffsetUp,
-                    _ => throw new InvalidOperationException($"Unknown direction {trench.Direction}!")
+                    _ => throw new ArgumentException($"Unknown direction {trench.Direction}!")
                 };
                 vertices.Add(current += offset * trench.Length);
             }
@@ -37,7 +37,7 @@ namespace AdventOfCode.Y2023.Solvers
                     '1' => Coords.OffsetDown,
                     '2' => Coords.OffsetLeft,
                     '3' => Coords.OffsetUp,
-                    _ => throw new InvalidOperationException($"Unknown direction {trench.Direction}!")
+                    _ => throw new ArgumentException($"Unknown direction {trench.Direction}!")
                 };
                 var length = Convert.ToInt32(trench.ColorCode[..^1], 16);
                 vertices.Add(current += offset * length);

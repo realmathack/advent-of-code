@@ -22,7 +22,7 @@ namespace AdventOfCode.Y2022.Solvers
                         'U' => segments[0].Up,
                         'R' => segments[0].Right,
                         'D' => segments[0].Down,
-                        _ => throw new InvalidOperationException($"Unknown direction: {motion.Direction}")
+                        _ => throw new ArgumentException($"Unknown direction: {motion.Direction}")
                     };
                     for (int i = 1; i < segmentCount; i++)
                     {

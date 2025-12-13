@@ -35,7 +35,7 @@ namespace AdventOfCode.Y2017.Solvers
             var (found, correctedWeight, _) = CheckWeights(programs, root);
             if (!found)
             {
-                throw new InvalidOperationException("Solution not found");
+                throw new SolutionNotFoundException();
             }
             return correctedWeight;
         }

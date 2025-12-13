@@ -16,7 +16,7 @@ namespace AdventOfCode.Y2021.Solvers
                     "forward" => new Coords(number, 0),
                     "down" => new Coords(0, number),
                     "up" => new Coords(0, -number),
-                    _ => throw new InvalidOperationException($"Unknown command {direction}")
+                    _ => throw new ArgumentException($"Unknown command {direction}")
                 };
             }
             return current.X * current.Y;

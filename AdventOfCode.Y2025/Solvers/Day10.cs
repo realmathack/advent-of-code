@@ -1,53 +1,42 @@
-﻿using System.Text.RegularExpressions;
-
-namespace AdventOfCode.Y2025.Solvers
+﻿namespace AdventOfCode.Y2025.Solvers
 {
-    public partial class Day10 : SolverWithLines
+    public class Day10 : SolverWithLines
     {
-        public override object SolvePart1(string[] input)
-        {
-            var machines = ToMachines(input);
-            return machines.Sum(FindFewestButtonPresses);
-        }
+        public override object SolvePart1(string[] input) => ToMachines(input).Sum(FindFewestButtonPressesIndicator);
+        public override object SolvePart2(string[] input) => ToMachines(input).Sum(FindFewestButtonPressesJoltage);
 
-        public override object SolvePart2(string[] input)
+        private static int FindFewestButtonPressesJoltage(Machine machine)
         {
             // TODO:
             // https://old.reddit.com/r/adventofcode/comments/1pk87hl/2025_day_10_part_2_bifurcate_your_way_to_victory/
-            return null!;
+            // https://aoc.winslowjosiah.com/solutions/2025/day/10/
+            // -> https://github.com/WinslowJosiah/adventofcode/blob/main/solutions/2025/day10/solution.py
+            return 0;
         }
 
-        private static int FindFewestButtonPresses(Machine machine)
+        private static int FindFewestButtonPressesIndicator(Machine machine)
         {
-            var queue = new Queue<ButtonPressed>();
-            queue.Enqueue(new(0, []));
+            var distance = new Dictionary<int, int>() { [0] = 0 };
+            var queue = new Queue<int>();
+            queue.Enqueue(0);
             while (queue.TryDequeue(out var current))
             {
-                if (machine.Indicators == current.Lights)
+                foreach (var buttonMask in machine.Buttons)
                 {
-                    return current.Pressed.Count;
-                }
-                for (int i = 0; i < machine.Buttons.Count; i++)
-                {
-                    if (current.Pressed.Contains(i)) // Pressing buttons more than once is not useful (0 ^ 1 ^ 1 == 0)
+                    var afterPress = current ^ buttonMask;
+                    if (distance.ContainsKey(afterPress))
                     {
                         continue;
                     }
-                    var afterPress = PressButtons(current.Lights, machine.Buttons[i], machine.Joltages.Length - 1);
-                    var pressed = new HashSet<int>(current.Pressed) { i };
-                    queue.Enqueue(new(afterPress, pressed));
+                    distance[afterPress] = distance[current] + 1;
+                    if (afterPress == machine.Indicators)
+                    {
+                        return distance[afterPress];
+                    }
+                    queue.Enqueue(afterPress);
                 }
             }
             return int.MaxValue;
-        }
-
-        private static int PressButtons(int lights, int[] buttons, int lightCount)
-        {
-            foreach (var button in buttons)
-            {
-                lights ^= 1 << (lightCount - button);
-            }
-            return lights;
         }
 
         private static Machine[] ToMachines(string[] lines)
@@ -55,19 +44,25 @@ namespace AdventOfCode.Y2025.Solvers
             var machines = new Machine[lines.Length];
             for (int i = 0; i < lines.Length; i++)
             {
-                var match = MachineRegex().Match(lines[i]);
-                var indicators = Convert.ToInt32(match.Groups[1].Value.Replace('#', '1').Replace('.', '0'), 2);
-                var buttons = match.Groups[2].Value.Split(' ').Select(group => group[1..^1].Split(',').Select(int.Parse).ToArray()).ToList();
-                var joltages = match.Groups[3].Value.Split(',').Select(int.Parse).ToArray();
+                var parts = lines[i].Split(' ');
+                var indicators = Convert.ToInt32(parts[0][1..^1].Replace('#', '1').Replace('.', '0'), 2);
+                var buttons = parts[1..^1].Select(group => ToButtonsMask(group[1..^1].Split(',').Select(int.Parse), parts[0].Length - 2 - 1)).ToArray();
+                var joltages = parts[^1][1..^1].Split(',').Select(int.Parse).ToArray();
                 machines[i] = new(indicators, buttons, joltages);
             }
             return machines;
         }
 
-        [GeneratedRegex(@"\[([.#]+)\] (.+) \{([\d,]+)\}")]
-        private static partial Regex MachineRegex();
+        private static int ToButtonsMask(IEnumerable<int> buttons, int maxLightIndex)
+        {
+            var mask = 0;
+            foreach (var button in buttons)
+            {
+                mask ^= 1 << (maxLightIndex - button);
+            }
+            return mask;
+        }
 
-        private record class Machine(int Indicators, List<int[]> Buttons, int[] Joltages);
-        private record class ButtonPressed(int Lights, HashSet<int> Pressed);
+        private record class Machine(int Indicators, int[] Buttons, int[] Joltages);
     }
 }

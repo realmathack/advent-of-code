@@ -22,10 +22,10 @@ namespace AdventOfCode
             ArgumentNullException.ThrowIfNull(type);
             if (Activator.CreateInstance(type) is not ISolver solver)
             {
-                throw new InvalidOperationException($"Type {type.FullName} is not an {nameof(ISolver)}!");
+                throw new ArgumentException($"'{type.FullName}' is not an {nameof(ISolver)}!", nameof(type));
             }
             var startTime = Stopwatch.GetTimestamp();
-            solver.SetInput(File.ReadAllText(@$"inputs\{day}.txt"));
+            solver.SetInput(File.ReadAllText(@$"inputs\{day}.txt"), true);
             var inputTime = Stopwatch.GetElapsedTime(startTime);
             startTime = Stopwatch.GetTimestamp();
             var part1Answer = solver.SolvePart1();

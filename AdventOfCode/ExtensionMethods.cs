@@ -1,6 +1,4 @@
 ﻿using System.Numerics;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace AdventOfCode
 {
@@ -141,6 +139,6 @@ namespace AdventOfCode
         }
 
         // MD5
-        public static string ToMD5Hex(this string input) => Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes(input))).ToLower();
+        public static string ToMD5Hex(this string input) => Convert.ToHexString(System.Security.Cryptography.MD5.HashData(System.Text.Encoding.ASCII.GetBytes(input))).ToLower();
     }
 }

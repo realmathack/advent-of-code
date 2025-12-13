@@ -95,7 +95,7 @@
                 4 => _a,
                 5 => _b,
                 6 => _c,
-                7 => throw new InvalidOperationException("Operand 7 should not be used"),
+                7 => throw new ImpossibleException("Operand 7 should not be used"),
                 _ => throw new ArgumentException($"Unknown operand: {operand}", nameof(operand))
             };
         }

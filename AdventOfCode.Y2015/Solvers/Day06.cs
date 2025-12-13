@@ -18,7 +18,7 @@ namespace AdventOfCode.Y2015.Solvers
                             Change.Off => false,
                             Change.On => true,
                             Change.Toggle => !grid[y][x],
-                            _ => throw new InvalidOperationException($"Unknown change: {move.Change}")
+                            _ => throw new ArgumentException($"Unknown change: {move.Change}")
                         };
                     }
                 }
@@ -40,7 +40,7 @@ namespace AdventOfCode.Y2015.Solvers
                             Change.Off => Math.Max(0, grid[y][x] - 1),
                             Change.On => grid[y][x] + 1,
                             Change.Toggle => grid[y][x] + 2,
-                            _ => throw new InvalidOperationException($"Unknown change: {move.Change}")
+                            _ => throw new ArgumentException($"Unknown change: {move.Change}")
                         };
                     }
                 }
@@ -59,7 +59,7 @@ namespace AdventOfCode.Y2015.Solvers
                     "turn off" => Change.Off,
                     "turn on" => Change.On,
                     "toggle" => Change.Toggle,
-                    _ => throw new InvalidOperationException($"Unknown change: {match.Groups[1].Value}")
+                    _ => throw new ArgumentException($"Unknown change: {match.Groups[1].Value}")
                 };
                 moves.Add(new(change, int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value), int.Parse(match.Groups[5].Value)));
             }

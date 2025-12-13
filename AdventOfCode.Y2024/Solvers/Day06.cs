@@ -99,7 +99,7 @@ namespace AdventOfCode.Y2024.Solvers
             }
             if (start is null)
             {
-                throw new InvalidOperationException("Start not found!");
+                throw new ImpossibleException("Start not found!");
             }
             return start.Value;
         }

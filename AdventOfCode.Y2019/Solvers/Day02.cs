@@ -42,7 +42,7 @@
                 {
                     1 => value1 + value2,
                     2 => value1 * value2,
-                    _ => throw new InvalidOperationException($"Unknown opcode {program[pointer]}")
+                    _ => throw new ArgumentException($"Unknown opcode {program[pointer]}")
                 };
                 program[program[pointer + 3]] = result;
                 pointer += 4;

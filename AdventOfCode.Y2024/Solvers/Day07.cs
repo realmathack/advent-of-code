@@ -35,7 +35,7 @@
                     '+' => current + next,
                     '*' => current * next,
                     '|' => Concat(current, next),
-                    _ => throw new InvalidOperationException($"Unknown operator: {op}")
+                    _ => throw new ArgumentException($"Unknown operator: {op}")
                 };
                 if (result > target)
                 {
